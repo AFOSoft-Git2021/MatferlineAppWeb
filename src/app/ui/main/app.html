@@ -1,0 +1,14 @@
+<section id="section_app">
+
+  <!-- APP MAIN BLOCK -->
+  <div class="router_app">
+    <router-outlet></router-outlet>
+  </div>
+
+  <!-- LANDSCAPE SCREEN -->
+  @if(deviceOrientation() === 'landscape') { <app-horizontal-screen /> }
+
+  <!-- LOADING SPINNER -->
+  @if(loading()) { <app-spinner-loading /> }
+
+</section>

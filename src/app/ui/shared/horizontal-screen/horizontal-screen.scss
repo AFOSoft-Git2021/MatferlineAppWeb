@@ -1,0 +1,15 @@
+@import '../../../../styles.scss';
+
+#horizontal_screen_layer {
+    // animation: fade 0.25s ease-in-out;
+    background-color: $BlueLight;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+}

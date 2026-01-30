@@ -1,0 +1,25 @@
+@import '../../../../styles.scss';
+
+#section_loader {
+    animation: fade .5s ease;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        width: 92%;
+        padding-bottom: 3rem;
+
+        &:first-child {
+            width: 84%;
+        }
+    }
+
+    span {
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+}

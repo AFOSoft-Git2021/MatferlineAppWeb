@@ -1,0 +1,13 @@
+@import '../../../../styles.scss';
+
+#section_intro {
+    animation: fade .3s ease;
+    width: 100vw;
+    height: 100vh;
+    padding: 1rem;
+    overflow: auto;
+
+    .autoescuela_item {
+        padding: .2rem 0;
+    }
+}

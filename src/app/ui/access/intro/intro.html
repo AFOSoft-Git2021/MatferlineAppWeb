@@ -1,0 +1,12 @@
+<section id="section_intro">
+
+    @if(listaAutoescuelas().length > 0) {
+
+        @for(autoescuela of listaAutoescuelas(); track autoescuela.cdiae) {
+            <div class="autoescuela_item">
+                <span>{{autoescuela.nombre}}</span>
+            </div>  
+        }
+    }
+
+</section>
