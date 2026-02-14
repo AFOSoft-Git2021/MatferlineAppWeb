@@ -1,25 +1,27 @@
-@import '../../../../styles.scss';
+@import "../../../../styles.scss";
 
 #section_loader {
-    animation: fade .5s ease;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 
-    img {
-        width: 92%;
-        padding-bottom: 3rem;
+    > div {
+        text-align: center;
+        > img {
+            width: 92%;
 
-        &:first-child {
-            width: 84%;
+            &:first-child {
+                width: 84%;
+                padding-bottom: 3rem;
+            }
         }
-    }
 
-    span {
-        font-size: 1.2rem;
-        font-weight: 500;
+        > span {
+            font-size: 1.2rem;
+            font-weight: 500;
+
+            > img {
+                vertical-align: middle;
+                width: 30px;
+                margin-left: .4rem;
+            }
+        }
     }
 }

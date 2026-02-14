@@ -1,10 +1,10 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { State } from '../data/repository/state';
+import { StateService } from '../data/repository/state.service';
 
 export const appInterceptor: HttpInterceptorFn = (req, next) => {
 
-  const stateService = inject(State);
+  const stateService = inject(StateService);
   const TOKEN = stateService.token;
 
   if (TOKEN) {

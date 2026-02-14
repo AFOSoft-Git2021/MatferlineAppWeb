@@ -1,10 +1,11 @@
 import { Injectable, signal } from '@angular/core';
 import { DeviceOrientation } from '../model/deviceOrientationEnum';
+import { Autoescuela } from '../model/autoescuela';
 
 @Injectable({
   providedIn: 'root',
 })
-export class State {
+export class StateService {
 
   /**********************/
   /* VARIABLES GLOBALES */
@@ -26,6 +27,10 @@ export class State {
 
   // pantallazo cargando en cualquier pantalla de la app
   loadingSpinner = signal(false);
+
+  // autoescuela seleccionada
+  autoescuelaSelected = signal<Autoescuela | null>(null);
+
 
 
   /*********************************/

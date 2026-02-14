@@ -100,7 +100,6 @@ html {
   );
 }
 
-
 /* You can add global styles to this file, and also import other style files */
 
 html,
@@ -111,7 +110,7 @@ body {
 
 body {
   background-color: $BlueLight;
-  background-image: url('../public/svg/fondo_oscuro.svg');
+  background-image: url("../public/svg/fondo_oscuro.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -180,4 +179,20 @@ body {
   to {
     opacity: 1;
   }
+}
+
+.pantallasAcceso {
+  animation: fade 0.5s ease;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.p_matfer {
+  margin: 0;
+  color: $BlueDark;
 }

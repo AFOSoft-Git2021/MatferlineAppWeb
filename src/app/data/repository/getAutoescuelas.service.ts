@@ -7,18 +7,28 @@ import { Autoescuela } from '../model/autoescuela';
 @Injectable({
   providedIn: 'root',
 })
-export class GetAutoescuelas {
+export class GetAutoescuelasService {
 
   private http = inject(HttpClient);
   private url = environment.BASE_URL;
 
-  listaAutoescuelas = signal<Autoescuela[]>([]);
+  listaAutoescuelas: Autoescuela[] = [];
+  listaProvincias: string[] = [];
 
   getAutoescuelas(): Observable<any> {
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded');
 
     return this.http.get(this.url + 'get-autoescuelas', { headers });
+  }
+
+  getProvincias() {
+    this.listaProvincias = [
+      ...new Set(this.listaAutoescuelas.map(autoescuela => autoescuela.provincia.trim()))
+    ].sort((a, b) => a.localeCompare(b))
+
+    console.log(this.listaProvincias);
+
   }
 
 }

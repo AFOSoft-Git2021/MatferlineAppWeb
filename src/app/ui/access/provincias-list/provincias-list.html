@@ -1,0 +1,18 @@
+<section id="section_lista_provincias" class="pantallasAcceso">
+
+    <div>
+        <button (click)="gotoIntro()" mat-icon-button type="button">
+            <mat-icon>keyboard_backspace</mat-icon>
+        </button>
+        <span>Selecciona tu provincia</span>
+    </div>
+
+    <ul>
+        @for(provincia of listaProvincias; track provincia) {
+        <li [innerHTML]="provincia"></li>
+        }
+    </ul>
+
+    <p class="p_matfer">&copy; EDICIONES MATFER S.L. {{stateService.annoDomine}}</p>
+
+</section>

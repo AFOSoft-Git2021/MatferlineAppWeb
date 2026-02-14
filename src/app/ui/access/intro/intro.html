@@ -1,12 +1,31 @@
-<section id="section_intro">
+<section id="section_intro" class="pantallasAcceso">
 
-    @if(listaAutoescuelas().length > 0) {
+    <div>
+        <mat-form-field appearance="outline">
+            <mat-icon matPrefix>mode_edit</mat-icon>
+            <input type="text" matInput placeholder="Busca tu autoescuela">
+        </mat-form-field>
+    </div>
 
-        @for(autoescuela of listaAutoescuelas(); track autoescuela.cdiae) {
-            <div class="autoescuela_item">
-                <span>{{autoescuela.nombre}}</span>
-            </div>  
-        }
-    }
+    <div class="intro_info">
+        <img src="./svg/logo_matferline.svg" alt="matferline">
+
+        <img src="./svg/image_buscador.svg" alt="buscador">
+
+        <div>
+            <p>
+                <img src="./svg/image_ico_info.svg" alt="info">
+                <span>Escribe el nombre de tu autoescuela o busca por provincia.</span>
+            </p>
+            <p>
+                <button (click)="searchProvincias()" mat-flat-button type="button">
+                    <mat-icon>room</mat-icon>
+                    Busca en tu provincia
+                </button>
+            </p>
+        </div>
+    </div>
+
+    <p class="p_matfer">&copy; EDICIONES MATFER S.L. {{stateService.annoDomine}}</p>
 
 </section>

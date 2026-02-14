@@ -5,6 +5,7 @@ export const routes: Routes = [
     { path: 'inicio', loadComponent: () => import('../ui/main/app').then(m => m.App)},
     { path: 'loader', loadComponent: () => import('../ui/access/loader/loader').then(m => m.Loader) },
     { path: 'intro', loadComponent: () => import('../ui/access/intro/intro').then(m => m.Intro) },
+    { path: 'provincias', loadComponent: () => import('../ui/access/provincias-list/provincias-list').then(m => m.ProvinciasList) },
     { path: 'login', loadComponent: () => import('../ui/access/login/login').then(m => m.Login) },
     { path: '**', redirectTo: 'inicio' }
 ];

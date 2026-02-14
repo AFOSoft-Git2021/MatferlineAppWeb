@@ -1,0 +1,40 @@
+@import "../../../../styles.scss";
+
+#section_lista_provincias {
+
+    >div{
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 0;
+
+        button {
+            color: white;
+        }
+    }
+
+    >ul {
+        flex: 1;
+        overflow-y: scroll;
+        list-style: none;
+        padding: 8px;
+        margin: 0 0 1.24rem 0;
+        width: 100%;
+        border-radius: 1rem;
+        background-color: rgba($color: white, $alpha: .6);
+
+        li {
+            background-color: white;
+            border-radius: .5rem;
+            color: black;
+            padding: .86rem;
+
+            &:not(:last-child) {
+                margin-bottom: .5rem;
+            }
+        }
+    }
+
+}

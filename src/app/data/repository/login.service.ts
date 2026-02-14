@@ -7,13 +7,13 @@ import { Usuario } from '../model/usuario';
 @Injectable({
   providedIn: 'root',
 })
-export class Login {
+export class LoginService {
 
   private http = inject(HttpClient);
   private url = environment.BASE_URL;
 
   login(usuario: Usuario): Observable<any> {
-    return this.http.post(this.url + 'login', { params: usuario });
+    return this.http.post(this.url + 'login', usuario);
   }
   
 }

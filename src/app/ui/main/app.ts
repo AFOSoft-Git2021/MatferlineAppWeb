@@ -1,6 +1,6 @@
 import { Component, computed, HostListener, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { State } from '../../data/repository/state';
+import { StateService } from '../../data/repository/state.service';
 import { SpinnerLoading } from "../shared/spinner-loading/spinner-loading";
 import { DeviceOrientation } from '../../data/model/deviceOrientationEnum';
 import { HorizontalScreen } from "../shared/horizontal-screen/horizontal-screen";
@@ -14,7 +14,7 @@ import { HorizontalScreen } from "../shared/horizontal-screen/horizontal-screen"
 export class App {
 
   private router = inject(Router);
-  private stateService = inject(State);
+  private stateService = inject(StateService);
 
   loading = computed(() => this.stateService.loadingSpinner());
   deviceOrientation = computed(() => this.stateService.deviceOrientation());
