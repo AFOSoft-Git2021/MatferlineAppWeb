@@ -8,8 +8,11 @@
     </div>
 
     <ul>
-        @for(provincia of listaProvincias; track provincia) {
-        <li [innerHTML]="provincia"></li>
+        @for(provincia of listaProvincias; track $index) {
+        <li (click)="selectProvincia($index)">
+            <span [ngStyle]="{'background-color': (provincia | firstChar)[1]}">{{(provincia | firstChar)[0]}}</span>
+            <span [innerHTML]="provincia"></span>
+        </li>
         }
     </ul>
 

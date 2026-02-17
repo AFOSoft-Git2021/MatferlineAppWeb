@@ -1,0 +1,97 @@
+@import "../../../../styles.scss";
+
+#section_login {
+    > div {
+        &:first-child {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0 0.4rem 0;
+
+            button {
+                color: white;
+            }
+        }
+
+        &.bloque_autoescuela {
+            width: 90%;
+
+            img {
+                width: 100%;
+                border-radius: 0.5rem;
+            }
+
+            p {
+                margin: 0;
+                padding-top: 1rem;
+                text-align: center;
+                font-weight: 500;
+                color: yellow;
+            }
+        }
+
+        &.bloque_form {
+            background-color: white;
+            border-radius: 1rem;
+            padding: 1.1rem;
+            width: 90%;
+            margin: 0 auto;
+
+            h3 {
+                color: $ButtonMagenta;
+                margin: 0;
+                padding-bottom: 1rem;
+                font-weight: 500;
+                text-align: center;
+            }
+
+            mat-form-field {
+                width: 100%;
+            }
+
+            mat-icon {
+                color: $BlueMedium;
+            }
+
+            div {
+                margin: 0;
+                text-align: center;
+
+                button {
+                    animation: fade 0.5s ease;
+                    background-color: $OrangeDark;
+                    width: 100%;
+
+                    mat-icon {
+                        color: white;
+                        margin-right: 1rem;
+                    }
+                }
+
+                div.span_login {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 1rem;
+                    color: $OrangeDark;
+                    padding: .56rem 0;
+
+                    mat-spinner {
+                        width: 1.4rem !important;
+                        height: 1.4rem !important;
+                    }
+                }
+
+                ::ng-deep mat-spinner circle {
+                    stroke: $OrangeDark !important;
+                }
+            }
+        }
+    }
+
+    > img {
+        width: 90%;
+    }
+}

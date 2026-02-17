@@ -1,25 +1,47 @@
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { StateService } from '../../../data/repository/state.service';
 import { LoginService } from '../../../data/repository/login.service';
-import { Autoescuela } from '../../../data/model/autoescuela';
 import { Usuario } from '../../../data/model/usuario';
+import { environment } from '../../../../environments/environment';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatProgressSpinner } from "@angular/material/progress-spinner";
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { PopupConfirmComponent } from '../../shared/popup-confirm/popup-confirm.component';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
+    MatProgressSpinner
+  ],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
 export class Login implements OnInit {
 
-  private stateService = inject(StateService);
+  public stateService = inject(StateService);
   private loginService = inject(LoginService);
   private router = inject(Router);
+  private dialog = inject(MatDialog);
 
+  BASE_STORAGE = environment.BASE_STORAGE;
   autoescuelaSelected = computed(() => this.stateService.autoescuelaSelected());
-  usuario = 'pacosoft';
-  clave = 'pacosoft';
+  hide = signal(true);
+  isLogin = signal(false);
+  usuario = '';
+  clave = '';
 
   ngOnInit() {
     if (!this.autoescuelaSelected()) {
@@ -28,31 +50,63 @@ export class Login implements OnInit {
   }
 
   login() {
-    this.stateService.loadingSpinner.set(true);
     const user: Usuario = {
       cdiae: this.autoescuelaSelected()?.cdiae.toString() ?? '',
       usuario: this.usuario,
       clave: this.clave
     }
+    this.isLogin.set(true);
     this.loginService.login(user).subscribe(
       {
         next: (response) => {
-          this.stateService.loadingSpinner.set(false);
+          this.isLogin.set(false);
+          this.stateService.token = response.token;
           if (Array.isArray(response)) {
-
 
             // this.router.navigate(['dashboard']);
 
           } else {
             console.log('response', response);
+            this.popUpConfirm(
+              'Atención',
+              response.message ?? 'Login incorrecto. Inténtalo de nuevo.',
+              1,
+              0
+            )
           }
         },
         error: (error) => {
+          this.isLogin.set(false);
           console.log('error: ', error.message);
-          this.stateService.loadingSpinner.set(false);
         }
       }
     )
+  }
+
+  gotoIntro() {
+    this.router.navigate(['intro']);
+  }
+
+  // abre popup de confirm
+  popUpConfirm(titulo: string, mensaje: string, modo: number, tipo: number) {
+    const dialogRef = this.dialog.open(PopupConfirmComponent, {
+      disableClose: true, width: '50%',
+      data: {
+        titulo,
+        mensaje,
+        modo,
+        tipo
+      }
+    });
+
+    // al cerrar popup ...
+    dialogRef.afterClosed().subscribe(
+      (respuesta) => {
+        if (respuesta.accion) {
+          //  TODO: ???
+        }
+      }
+    );
   }
 }
 

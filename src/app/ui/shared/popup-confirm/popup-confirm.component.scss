@@ -1,0 +1,15 @@
+#section_confirm {
+  padding: 2rem 0 0 0;
+  text-align: center;
+
+  img {
+    width: 30%;
+    margin: 0 auto;
+  }
+
+  mat-dialog-content {
+    padding-top: 0.4em;
+    padding-bottom: 2em;
+    border-bottom: 1px solid #dcecff;
+  }
+}

@@ -4,10 +4,12 @@ import { GetAutoescuelasService } from '../../../data/repository/getAutoescuelas
 import { StateService } from '../../../data/repository/state.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { FirstCharPipe } from "../../shared/first-char-pipe";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-provincias-list',
-  imports: [MatIconModule, MatButtonModule],
+  imports: [CommonModule, MatIconModule, MatButtonModule, FirstCharPipe],
   templateUrl: './provincias-list.html',
   styleUrl: './provincias-list.scss',
 })
@@ -19,7 +21,9 @@ export class ProvinciasList {
 
   listaProvincias = this.getAutoescuelasService.listaProvincias;
 
-  selectProvincia(index: number) {}
+  selectProvincia(index: number) {
+    this.router.navigate(['autoescuelas', this.listaProvincias[index]]);
+  }
 
   gotoIntro() {
     this.router.navigate(['intro']);

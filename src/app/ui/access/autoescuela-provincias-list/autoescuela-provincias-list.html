@@ -1,0 +1,24 @@
+<section id="section_lista_aes_provincia" class="pantallasAcceso">
+
+    <div>
+        <button (click)="gotoProvincias()" mat-icon-button type="button">
+            <mat-icon>keyboard_backspace</mat-icon>
+        </button>
+        <span>Autoescuelas de {{provincia()}}</span>
+    </div>
+
+    <ul>
+        @for(autoescuela of listaAutoescuelasProvincia(); track autoescuela.cdiae) {
+            @defer (on viewport) {
+                <li>
+                    <app-item-list-autoescuela [autoescuela]="autoescuela" (clickEmitter)="gotoLogin(autoescuela)" />
+                </li>
+            }@placeholder {
+               <span>&nbsp;</span>
+            }
+        }
+    </ul>
+
+    <p class="p_matfer">&copy; EDICIONES MATFER S.L. {{stateService.annoDomine}}</p>
+
+</section>

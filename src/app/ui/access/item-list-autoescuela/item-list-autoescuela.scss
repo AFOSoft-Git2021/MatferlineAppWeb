@@ -1,0 +1,45 @@
+section.item_autoescuela {
+    width: 90%;
+    margin: 0 auto;
+    transition: opacity 0.2s ease-in-out;
+
+    &:active {
+        opacity: 0.66;
+    }
+
+    > div {
+        background-color: white;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+        height: 160px;
+        padding: 0.7rem;
+        text-align: center;
+
+        img {
+            height: 100%;
+            max-width: 100%;
+            opacity: 0;
+            border-radius: .4rem;
+            transition: opacity 0.4s ease-in-out;
+        }
+    }
+
+    > p {
+        color: black;
+        margin: 0;
+        padding: 0.7rem;
+        background-color: rgba($color: white, $alpha: 0.8);
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+
+        strong {
+            display: block;
+            font-weight: 500;
+        }
+
+        span {
+            display: block;
+            font-size: 0.9rem;
+        }
+    }
+}

@@ -1,11 +1,53 @@
-<section id="section_login">
+@defer (when autoescuelaSelected()) {
+<section id="section_login" class="pantallasAcceso">
+
+    <div>
+        <button (click)="gotoIntro()" mat-icon-button type="button">
+            <mat-icon>keyboard_backspace</mat-icon>
+        </button>
+        <span>Acceso al aula virtual</span>
+    </div>
+
+    <img src="./svg/logo_matferline.svg" alt="matferline">
 
     <div class="bloque_autoescuela">
-
+        <img #logoae (load)="logoae.style.opacity = '1'" [src]="autoescuelaSelected()?.logotipo ? (BASE_STORAGE + autoescuelaSelected()?.logotipo) : './svg/imagen_no_autoescuela.svg'" alt="logo">
+        <p [innerHTML]="autoescuelaSelected()?.nombre"></p>
     </div>
 
     <div class="bloque_form">
-        <button (click)="login()">Login</button>
+        <form ngNativeValidate #formLogin="ngForm" id="form_login">
+            <h3>Login</h3>
+            <mat-form-field appearance="outline">
+                <mat-label>Usuario</mat-label>
+                <mat-icon matPrefix>person</mat-icon>
+                <input matInput placeholder="Tu nombre de usuario" [(ngModel)]="usuario" type="text" name="login_user" required>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Contraseña</mat-label>
+                <mat-icon matPrefix>lock</mat-icon>
+                <input [(ngModel)]="clave" matInput [type]="hide() ? 'password' : 'text'" name="login_pass" required autocomplete="new-password">
+                <mat-icon matSuffix (click)="hide.set(!hide())">{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </mat-form-field>
+            <div>
+                @if(!isLogin()) {
+                    <button (click)="login()" mat-flat-button type="submit">
+                        <mat-icon>check_circle</mat-icon>
+                        Login
+                    </button>
+                }
+                @else {
+                    <div class="span_login">
+                        <span>Login en curso...</span>
+                        <mat-spinner></mat-spinner>
+                    </div>
+                }
+            </div>
+        </form>
+
     </div>
 
+    <p class="p_matfer">&copy; EDICIONES MATFER S.L. {{stateService.annoDomine}}</p>
+
 </section>
+}

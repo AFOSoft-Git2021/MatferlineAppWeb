@@ -1,0 +1,18 @@
+<section id="section_confirm">
+
+  <img [src]="modo === 0 ? './svg/image_ico_info.svg' : './svg/icono_alert_error.svg'" alt="info">
+
+  <h2 mat-dialog-title>    
+    <span [innerHTML]="titulo"></span>
+  </h2>
+
+  <mat-dialog-content>
+    <div [innerHTML]="mensaje"></div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    @if (tipo === 1) { <button (click)="cerrarPopUp(false)" mat-button>Cancelar</button> }
+    <button (click)="cerrarPopUp(true)" mat-button cdkFocusInitial>Continuar</button>
+  </mat-dialog-actions>
+
+</section>

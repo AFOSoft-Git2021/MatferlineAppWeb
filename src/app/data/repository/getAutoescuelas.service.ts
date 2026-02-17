@@ -26,9 +26,12 @@ export class GetAutoescuelasService {
     this.listaProvincias = [
       ...new Set(this.listaAutoescuelas.map(autoescuela => autoescuela.provincia.trim()))
     ].sort((a, b) => a.localeCompare(b))
+  }
 
-    console.log(this.listaProvincias);
-
+  getAutoescuelasProvincia(provincia: string): Autoescuela[] {
+    return this.listaAutoescuelas
+    .filter(autoescuela => autoescuela.provincia.trim() === provincia)
+    .sort((a, b) => a.nombre.localeCompare(b.nombre));
   }
 
 }

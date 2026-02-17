@@ -1,0 +1,10 @@
+<section (click)="clickAutoescuela()" class="item_autoescuela">
+    <div>
+        <img #logoae (load)="logoae.style.opacity = '1'" [src]="(autoescuela().logotipo.length > 0) ? (BASE_STORAGE + autoescuela().logotipo) : './svg/imagen_no_autoescuela.svg'" alt="logo">
+    </div>
+
+    <p>
+        <strong [innerHTML]="autoescuela().nombre"></strong>
+        <span [innerHTML]="autoescuela().provincia"></span>
+    </p>
+</section>

@@ -119,6 +119,7 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: $font-size;
   overflow: hidden;
+  overscroll-behavior-y: contain;
 }
 
 /***********************************/
