@@ -1,0 +1,62 @@
+@import "../../../../styles.scss";
+
+#section_intro_buscador {
+    animation: fade 0.5s ease;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+
+    > div {
+        width: 100%;
+        padding: 1rem;
+        border-bottom: 1px solid white;
+
+        form {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.6rem;
+
+            > input {
+                flex: 1;
+                background-color: transparent;
+                border: none;
+                outline: none;
+                color: white;
+                text-align: left;
+                font-family: Roboto, "Helvetica Neue", sans-serif;
+                font-size: $font-size;
+
+                &::placeholder {
+                    color: white;
+                    font-style: normal;
+                    opacity: 1;
+                }
+            }
+
+            button {
+                color: white;
+            }
+        }
+    }
+
+    > ul {
+        display: block;
+        list-style: none !important;
+        margin: 1rem;
+        padding: 1rem;
+        width: 100%;
+        flex: 1;
+        overflow-y: scroll;
+
+        li {
+            &:not(:last-child) {
+                margin-bottom: 1.5rem;
+            }
+        }
+    }
+}

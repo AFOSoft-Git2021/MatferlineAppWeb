@@ -21,6 +21,8 @@
             img {
                 width: 100%;
                 border-radius: 0.5rem;
+                opacity: 0;
+                transition: opacity 0.25s ease-in-out;
             }
 
             p {
@@ -76,7 +78,7 @@
                     align-items: center;
                     gap: 1rem;
                     color: $OrangeDark;
-                    padding: .56rem 0;
+                    padding: 0.56rem 0;
 
                     mat-spinner {
                         width: 1.4rem !important;

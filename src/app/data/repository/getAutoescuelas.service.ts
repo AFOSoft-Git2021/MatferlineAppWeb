@@ -34,4 +34,10 @@ export class GetAutoescuelasService {
     .sort((a, b) => a.nombre.localeCompare(b.nombre));
   }
 
+  getAutoescuelasBuscador(buscador: string): Autoescuela[] {
+    return this.listaAutoescuelas
+    .filter(autoescuela => autoescuela.nombre.toLowerCase().trim().includes(buscador.toLowerCase().trim()))
+    .sort((a, b) => a.nombre.localeCompare(b.nombre));
+  }
+
 }

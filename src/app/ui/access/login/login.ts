@@ -60,19 +60,25 @@ export class Login implements OnInit {
       {
         next: (response) => {
           this.isLogin.set(false);
-          this.stateService.token = response.token;
-          if (Array.isArray(response)) {
 
-            // this.router.navigate(['dashboard']);
+          if (response.status === 200) {
 
-          } else {
-            console.log('response', response);
-            this.popUpConfirm(
-              'Atención',
-              response.message ?? 'Login incorrecto. Inténtalo de nuevo.',
-              1,
-              0
-            )
+            if (response.body.cdialumno) {
+
+              // TODO: procesar response.body para crear el objeto alumno y navegar a dashboard
+              // this.stateService.token = response.body.token;
+              // this.stateService.alumnoLogeado.set(response.body);
+              // this.router.navigate(['dashboard']);
+
+            } else {
+              console.log('response', response.body.message);
+              this.popUpConfirm(
+                'Atención',
+                response.body.message ?? 'Login incorrecto. Inténtalo de nuevo.',
+                1,
+                0
+              )
+            }
           }
         },
         error: (error) => {

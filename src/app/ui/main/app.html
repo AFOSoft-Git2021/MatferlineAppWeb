@@ -5,6 +5,9 @@
     <router-outlet></router-outlet>
   </div>
 
+  <!-- OFFLINE -->
+  @if(offline()) { <app-connection-error /> }
+
   <!-- LANDSCAPE SCREEN -->
   @if(deviceOrientation() === 'landscape') { <app-horizontal-screen /> }
 

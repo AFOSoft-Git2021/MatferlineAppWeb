@@ -1,0 +1,71 @@
+@import "../../../../styles.scss";
+
+#server_error {
+    background-color: $BlueLight;
+    background-image: url("../../../../../public/svg/fondo_oscuro.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 99;
+
+    > div:not(.info) {
+        text-align: center;
+        > img {
+            width: 92%;
+
+            &:first-child {
+                width: 84%;
+                padding-bottom: 3rem;
+            }
+        }
+    }
+
+    > div.info {
+        background-color: white;
+        border-radius: 1rem;
+        padding: 1rem;
+        width: 92%;
+        margin: 0 auto;
+
+        > h2 {
+            text-align: center;
+            margin: 1rem 0 2rem 0;
+            color: $ButtonMagenta;
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        > p {
+            margin: 0;
+
+            &:not(:last-child) {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 0.6rem;
+                text-align: left;
+
+                > img {
+                    width: 14%;
+                }
+
+                span {
+                    color: gray;
+                }
+            }
+
+            &:last-child {
+                padding-top: 1.5rem;
+                text-align: center;
+
+                button {
+                    background-color: $OrangeDark;
+                    width: 80%;
+                }
+            }
+        }
+    }
+}

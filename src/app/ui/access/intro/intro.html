@@ -1,10 +1,8 @@
 <section id="section_intro" class="pantallasAcceso">
 
-    <div>
-        <mat-form-field appearance="outline">
-            <mat-icon matPrefix>mode_edit</mat-icon>
-            <input type="text" matInput placeholder="Busca tu autoescuela">
-        </mat-form-field>
+    <div (click)="searchBuscador()" class="intro_buscador">
+        <mat-icon matPrefix>search</mat-icon>
+        <span>Busca tu autoescuela</span>
     </div>
 
     <div class="intro_info">

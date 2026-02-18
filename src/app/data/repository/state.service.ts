@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core'
 import { DeviceOrientation } from '../model/deviceOrientationEnum'
 import { Autoescuela } from '../model/autoescuela'
+import { Alumno } from '../model/alumno'
 
 @Injectable({
   providedIn: 'root',
@@ -29,8 +30,14 @@ export class StateService {
   // pantallazo cargando en cualquier pantalla de la app
   loadingSpinner = signal(false)
 
+  // pantallazo offline
+  offline = signal(false)
+
   // autoescuela seleccionada
   autoescuelaSelected = signal<Autoescuela | null>(null)
+
+  // alumno logeado
+  alumnoLogeado = signal<Alumno | null>(null)
 
 
 

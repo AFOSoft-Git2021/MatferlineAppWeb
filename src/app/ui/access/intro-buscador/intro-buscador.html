@@ -1,0 +1,20 @@
+<section id="section_intro_buscador">
+
+    <div>
+        <form ngNativeValidate #form_buscador #form="ngForm">
+            <button mat-icon-button (click)="goBack()" type="button"><mat-icon>keyboard_backspace</mat-icon></button>
+            <input [(ngModel)]="txtSearch" (input)="buscarAES()" name="txt_buscador" type="text" placeholder="Busca tu autoescuela">
+            <button mat-icon-button (click)="txtSearch = ''" type="button"><mat-icon matSuffix>close</mat-icon></button>
+        </form>
+    </div>
+
+    <ul>
+        @for(autoescuela of listaAutoescuelas(); track autoescuela.cdiae) {
+        <li>
+            <app-item-list-autoescuela [autoescuela]="autoescuela" (clickEmitter)="gotoLogin(autoescuela)" />
+        </li>
+        }
+    </ul>
+
+    <p class="p_matfer">&copy; EDICIONES MATFER S.L. {{stateService.annoDomine}}</p>
+</section>

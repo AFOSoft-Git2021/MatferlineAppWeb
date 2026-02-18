@@ -4,10 +4,11 @@ import { StateService } from '../../data/repository/state.service';
 import { SpinnerLoading } from "../shared/spinner-loading/spinner-loading";
 import { DeviceOrientation } from '../../data/model/deviceOrientationEnum';
 import { HorizontalScreen } from "../shared/horizontal-screen/horizontal-screen";
+import { ConnectionError } from "../shared/connection-error/connection-error";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SpinnerLoading, HorizontalScreen],
+  imports: [RouterOutlet, SpinnerLoading, HorizontalScreen, ConnectionError],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -18,6 +19,8 @@ export class App {
 
   loading = computed(() => this.stateService.loadingSpinner());
   deviceOrientation = computed(() => this.stateService.deviceOrientation());
+  offline = computed(() => this.stateService.offline());
+
 
   ngOnInit() {
     if (this.checkMobile()) {
@@ -38,6 +41,18 @@ export class App {
   @HostListener('window:resize')
   onResize() {
     this.setOrientation();
+  }
+
+  // detecta si se recupero la conexion
+  @HostListener('window:online')
+  onOnline() {
+    alert('online');
+  }
+
+  // detecta si se perdio la conexion
+  @HostListener('window:offline')
+  onOffline() {
+    alert('offline');
   }
 
   checkMobile(): boolean {

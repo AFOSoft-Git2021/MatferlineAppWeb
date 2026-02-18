@@ -20,13 +20,11 @@ export class Loader implements OnInit {
   }
 
   getAutoescuelas() {
-    // this.stateService.loadingSpinner.set(true);
     this.getAutoescuelasService.getAutoescuelas().subscribe(
       {
         next: (response) => {
-          // this.stateService.loadingSpinner.set(false);
           if (Array.isArray(response)) {
-            
+
             this.getAutoescuelasService.listaAutoescuelas = response;
             this.getAutoescuelasService.getProvincias();
             this.router.navigate(['intro']);
@@ -37,7 +35,6 @@ export class Loader implements OnInit {
         },
         error: (error) => {
           console.log('error: ', error.message);
-          // this.stateService.loadingSpinner.set(false);
         }
       }
     )
