@@ -45,16 +45,17 @@ export class StateService {
   /*      GESTION DEL STORAGE      */
   /*********************************/
 
-  set token(token: string) { sessionStorage.setItem('token', token) }
-  get token(): string | null { return sessionStorage.getItem('token') }
+  set token(token: string) { localStorage.setItem('token', token) }
+  get token(): string | null { return localStorage.getItem('token') }
 
   // reset en login
   resetData() {
-    this.clearStorage()
+    this.clearLocalStorageStorage()
     this.loadingSpinner.set(false)
   }
 
-  clearStorage() { sessionStorage.clear() }
+  clearLocalStorageStorage() { localStorage.clear() }
+  clearSessionStorageStorage() { sessionStorage.clear() }
 
 
 

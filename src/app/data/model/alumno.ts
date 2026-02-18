@@ -1,5 +1,8 @@
+import { Aleatorio } from "./aleatorio";
 import { Autoescuela } from "./autoescuela";
 import { Idioma } from "./idioma";
+import { Predefinido } from "./predefinido";
+import { Profeweb } from "./profeweb";
 
 export interface Alumno {
     cdialumno: string;
@@ -11,4 +14,7 @@ export interface Alumno {
     servicio_inicial: string;
     autoescuela: Autoescuela;
     idioma: Idioma;
+    aleatorios: Aleatorio[];
+    profeweb: Profeweb[];
+    predefinidos: Predefinido[];
 }
