@@ -1,0 +1,42 @@
+@import "../../../../styles.scss";
+
+#section_top_app_bar_logged {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    width: 100%;
+
+    > span {
+        color: white;
+        font-weight: 400;
+        text-transform: lowercase;
+
+        &::first-letter {
+            text-transform: uppercase;
+        }
+    }
+
+    > div {
+        img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover; /* Esto evita que la imagen se estire o se aplaste */
+            border: 2px solid #87bcff;
+            border-radius: 50%; /* Con width=height, esto ya hace el círculo */
+        }
+    }
+}
+
+.logo_ae {
+    height: 50px;
+    max-width: 100%;
+}
+
+.button_logout {
+    color: $ButtonMagenta !important;
+
+    mat-icon {
+        color: $ButtonMagenta !important;
+    }
+}

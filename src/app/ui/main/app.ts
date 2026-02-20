@@ -5,10 +5,12 @@ import { SpinnerLoading } from "../shared/spinner-loading/spinner-loading";
 import { DeviceOrientation } from '../../data/model/deviceOrientationEnum';
 import { HorizontalScreen } from "../shared/horizontal-screen/horizontal-screen";
 import { ConnectionError } from "../shared/connection-error/connection-error";
+import { ServerError } from "../shared/server-error/server-error";
+import { ConcurrenceError } from "../shared/concurrence-error/concurrence-error";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SpinnerLoading, HorizontalScreen, ConnectionError],
+  imports: [RouterOutlet, SpinnerLoading, HorizontalScreen, ConnectionError, ServerError, ConcurrenceError],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -21,17 +23,12 @@ export class App {
   deviceOrientation = computed(() => this.stateService.deviceOrientation());
   offline = computed(() => this.stateService.offline());
 
-
   ngOnInit() {
     if (this.checkMobile()) {
+
       this.setOrientation();
-
-      if (!this.checkInitialNavigationState()) {
-        this.router.navigate(['loader']);
-      } else {
-        // TODO: navegar a dashboard
-      }
-
+      this.router.navigate([this.checkInitialNavigationState() ? 'enter' : 'loader']);
+      
     } else {
       location.href = 'https://matferline.com';
     }

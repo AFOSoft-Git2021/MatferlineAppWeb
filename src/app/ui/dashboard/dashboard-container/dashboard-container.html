@@ -1,1 +1,9 @@
-<p>dashboard-container works!</p>
+<section id="dashboard_section">
+
+    <app-top-app-bar-logged [alumno]="alumno" />
+
+    <router-outlet />
+
+    <app-dashboard-bottom-navigation (optionBottomMenuEmitter)="navigateService($event)" />
+
+</section>

@@ -1,0 +1,26 @@
+@defer (when alumno()) {
+<section id="section_top_app_bar_logged">
+
+    <span [innerHTML]="alumno()?.autoescuela?.nombre"></span>
+
+    <div>
+        <img [matMenuTriggerFor]="menu" [src]="fotoAlumno()" alt="avatar">
+        <mat-menu #menu="matMenu">
+            <span mat-menu-item>
+                <img [src]="alumno()?.autoescuela?.logotipo" class="logo_ae" alt="logo">
+            </span>
+            <span mat-menu-item>
+                <span [innerHTML]="alumno()?.autoescuela?.nombre"></span>
+            </span>
+            <span mat-menu-item>
+                <span [innerHTML]="alumno()?.nombre"></span>
+            </span>
+            <button (click)="logout()" mat-menu-item type="button" class="button_logout">
+                <span>Cerrar sesi&oacute;n</span>
+                <mat-icon>logout</mat-icon>
+            </button>
+        </mat-menu>
+    </div>
+
+</section>
+}

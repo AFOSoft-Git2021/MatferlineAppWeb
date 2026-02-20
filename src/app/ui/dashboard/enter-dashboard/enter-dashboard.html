@@ -1,0 +1,18 @@
+@defer (when loadData()) {
+<section id="section_enter_dashboard" class="pantallasAcceso">
+
+    <span>&nbsp;</span>
+
+    <div>
+        <img src="./svg/logo_matferline.svg" alt="matferline">
+        <img src="./svg/image_intro.svg" alt="loading">
+        <p>
+            <span>Cargando datos …</span>
+            <mat-spinner></mat-spinner>
+        </p>
+    </div>
+
+    <p class="p_matfer">&copy; EDICIONES MATFER S.L. {{stateService.annoDomine}}</p>
+
+</section>
+}

@@ -10,6 +10,18 @@ export const routes: Routes = [
     { path: 'provincias', loadComponent: () => import('../ui/access/provincias-list/provincias-list').then(m => m.ProvinciasList) },
     { path: 'autoescuelas/:provincia', loadComponent: () => import('../ui/access/autoescuela-provincias-list/autoescuela-provincias-list').then(m => m.AutoescuelaProvinciasList) },
     { path: 'login', loadComponent: () => import('../ui/access/login/login').then(m => m.Login) },
-    { path: 'dashboard', loadComponent: () => import('../ui/dashboard/dashboard-container/dashboard-container').then(m => m.DashboardContainer), canActivate: [authGuard]},
+    { path: 'enter', loadComponent: () => import('../ui/dashboard/enter-dashboard/enter-dashboard').then(m => m.EnterDashboard), canActivate: [authGuard] },
+    {
+        path: 'dashboard', loadComponent: () => import('../ui/dashboard/dashboard-container/dashboard-container').then(m => m.DashboardContainer), canActivate: [authGuard],
+        children: [
+            { path: '', redirectTo: 'predefinidos', pathMatch: 'full' },
+            { path: 'predefinidos', loadComponent: () => import('../ui/dashboard/predefinidos/predefinidos-cursos/predefinidos-cursos').then(m => m.PredefinidosCursos) },
+            { path: 'aleatorios', loadComponent: () => import('../ui/dashboard/aleatorios/aleatorios-cursos/aleatorios-cursos').then(m => m.AleatoriosCursos) },
+            { path: 'profeweb', loadComponent: () => import('../ui/dashboard/profe/profeweb-cursos/profeweb-cursos').then(m => m.ProfewebCursos) },
+            { path: 'estadisticas', loadComponent: () => import('../ui/dashboard/estadisticas/estadisticas/estadisticas').then(m => m.Estadisticas) },
+        ]
+    },
+    { path: 'error', loadComponent: () => import('../ui/shared/server-error/server-error').then(m => m.ServerError) },
+    { path: 'concurrencia/:mensaje', loadComponent: () => import('../ui/shared/concurrence-error/concurrence-error').then(m => m.ConcurrenceError) },
     { path: '**', redirectTo: 'inicio' }
 ];

@@ -65,10 +65,10 @@ export class Login implements OnInit {
 
             if (response.body.cdialumno) {
 
-              // TODO: procesar response.body para crear el objeto alumno y navegar a dashboard
-              // this.stateService.token = response.body.token;
-              // this.stateService.alumnoLogeado.set(response.body);
-              // this.router.navigate(['dashboard']);
+              // procesar response.body para crear el objeto alumno y navegar a dashboard
+              this.stateService.token = response.body.token;
+              this.stateService.alumnoLogeado.set(response.body);
+              this.router.navigate(['enter']);
 
             } else {
               console.log('response', response.body.message);
@@ -84,6 +84,12 @@ export class Login implements OnInit {
         error: (error) => {
           this.isLogin.set(false);
           console.log('error: ', error.message);
+          this.popUpConfirm(
+            'Atención',
+            error.message ?? 'Login incorrecto. Inténtalo de nuevo.',
+            1,
+            0
+          )
         }
       }
     )

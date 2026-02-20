@@ -1,1 +1,27 @@
-<p>concurrence-error works!</p>
+<section id="concurrence_error" class="pantallasAcceso">
+
+    <span></span>
+
+    <div>
+        <img src="./svg/logo_matferline.svg" alt="matferline">
+        <img src="./svg/image_error_concurrencia.svg" alt="loading">
+    </div>
+
+    <div class="info">
+        <h2>¡ Se ha cerrado tu sesi&oacute;n !</h2>
+        <p>
+            <img src="./svg/image_ico_phone.svg" alt="info">
+            <span [innerHTML]="mensaje()"></span>
+        </p>
+        <p>
+            <button (click)="logout()" mat-flat-button type="button">
+                <mat-icon>key</mat-icon>
+                Ir a login
+            </button>
+        </p>
+    </div>
+
+    <p class="p_matfer">&copy; EDICIONES MATFER S.L. {{stateService.annoDomine}}</p>
+
+</section>
+

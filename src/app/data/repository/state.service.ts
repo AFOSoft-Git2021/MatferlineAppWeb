@@ -51,11 +51,12 @@ export class StateService {
   // reset en login
   resetData() {
     this.clearLocalStorageStorage()
+    this.alumnoLogeado.set(null)
     this.loadingSpinner.set(false)
+    this.offline.set(false)
   }
 
   clearLocalStorageStorage() { localStorage.clear() }
-  clearSessionStorageStorage() { sessionStorage.clear() }
 
 
 

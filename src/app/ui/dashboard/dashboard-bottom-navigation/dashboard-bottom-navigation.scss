@@ -1,0 +1,32 @@
+@import "../../../../styles.scss";
+
+#section_bottom_navigation {
+    width: 100%;
+
+    ul {
+        list-style: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        background-color: #F3F8FF;
+        padding: 1rem 0 !important;
+
+        li {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: $GrayText;
+
+            flex: 1 1 0; /* shorthand de: flex-grow: 1, flex-shrink: 1, flex-basis: 0 */
+            text-align: center;
+            // border: 1px solid #ccc;
+        }
+    }
+}

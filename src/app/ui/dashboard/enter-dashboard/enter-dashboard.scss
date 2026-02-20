@@ -1,0 +1,39 @@
+@import "../../../../styles.scss";
+
+#section_enter_dashboard {
+    > div {
+        width: 90%;
+        margin: 0 auto;
+        text-align: center;
+
+        > img {
+            width: 100%;
+            padding-bottom: 2rem;
+
+            &:first-child {
+                width: 94%;
+            }
+        }
+
+        > p {
+            margin: 0;
+            color: white;
+            font-weight: 500;
+            text-align: center;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+
+            mat-spinner {
+                width: 1.4rem !important;
+                height: 1.4rem !important;
+            }
+
+            ::ng-deep mat-spinner circle {
+                stroke: white !important;
+            }
+        }
+    }
+}

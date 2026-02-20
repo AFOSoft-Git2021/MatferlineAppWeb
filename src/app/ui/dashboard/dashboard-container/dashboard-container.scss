@@ -1,0 +1,27 @@
+@import "../../../../styles.scss";
+
+#dashboard_section {
+    animation: fade 0.5s ease;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1rem;
+
+    app-top-app-bar-logged {
+        width: 100%;
+    }
+
+    app-dashboard-bottom-navigation {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+
+        /* Añade espacio extra si el dispositivo lo requiere */
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
