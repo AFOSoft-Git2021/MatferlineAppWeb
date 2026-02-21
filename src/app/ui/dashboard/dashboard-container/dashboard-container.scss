@@ -6,20 +6,30 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
-    padding: 1rem;
 
     app-top-app-bar-logged {
         width: 100%;
+        padding: 1rem 1rem 0 1rem;
+    }
+
+    >div {
+        flex: 1;
+        width: 100%;
+        overflow-y: hidden;
+        justify-self: start;
+        padding: 0 1rem;
+        // border: 1px solid red;
     }
 
     app-dashboard-bottom-navigation {
         width: 100%;
-        position: fixed;
-        bottom: 0;
-        left: 0;
+        position: relative;
+        /* bottom: 0;
+        left: 0; */
         width: 100%;
+        z-index: 9;
 
         /* Añade espacio extra si el dispositivo lo requiere */
         padding-bottom: env(safe-area-inset-bottom);

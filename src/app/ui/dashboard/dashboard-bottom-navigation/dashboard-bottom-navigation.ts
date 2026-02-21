@@ -1,22 +1,43 @@
-import { Component, output } from '@angular/core';
+import { Component, input, OnInit, output, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Servicio } from '../../../data/model/servicioEnum';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard-bottom-navigation',
-  imports: [MatIconModule, MatButtonModule],
+  imports: [CommonModule, MatIconModule, MatButtonModule],
   templateUrl: './dashboard-bottom-navigation.html',
   styleUrl: './dashboard-bottom-navigation.scss',
 })
-export class DashboardBottomNavigation {
+export class DashboardBottomNavigation implements OnInit {
 
   public Servicio = Servicio;
+  servicioSeleccionado = signal(0);
+  serviciosDisponibles = input.required<Servicio[]>();
   optionBottomMenuEmitter = output<Servicio>();
+  listaIconos: string[] = [];
 
-  gotoServicio(servicio: Servicio) {
-    console.log(servicio);
-    
+  ngOnInit() {
+    this.serviciosDisponibles().map((_, index) => {
+      switch (index) {
+        case 0:
+          this.listaIconos.push('icon_predefinidos.svg');
+          break;
+
+        case 1:
+          this.listaIconos.push('icon_aleatorios.svg');
+          break;
+
+        case 2:
+          this.listaIconos.push('icon_profeweb.svg');
+          break;
+      }
+    })
+  }
+
+  gotoServicio(servicio: Servicio, index: number) {
+    this.servicioSeleccionado.set(index);
     this.optionBottomMenuEmitter.emit(servicio);
   }
 

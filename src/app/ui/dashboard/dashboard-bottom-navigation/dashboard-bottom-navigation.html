@@ -1,18 +1,12 @@
 <section id="section_bottom_navigation">
 
     <ul>
-        <li (click)="gotoServicio(Servicio.TestPredefinidos)">
-            <img src="svg/icon_predefinidos.svg" alt="Predefinidos">
-            Predefinidos
+        @for(servicio of serviciosDisponibles(); track $index) {
+        <li (click)="(servicioSeleccionado() !== $index) && gotoServicio(servicio, $index)" [ngClass]="(servicioSeleccionado() === $index) ? 'servicio_activo' : ''">
+            <img [src]="(servicioSeleccionado() === $index) ? ('svg/' + listaIconos[$index]) : ('svg/off_' + listaIconos[$index])" alt="icon">
+            <span [ngStyle]="{color: (servicioSeleccionado() === $index) ? '#a90094' : '#707070'}">{{servicio}}</span>
         </li>
-        <li (click)="gotoServicio(Servicio.TestAleatorios)">
-            <img src="svg/icon_aleatorios.svg" alt="Aleatorios">
-            Aleatorios
-        </li>
-        <li (click)="gotoServicio(Servicio.Profeweb)">
-            <img src="svg/icon_profeweb.svg" alt="Profeweb">
-            Profeweb
-        </li>
+        }
     </ul>
 
 </section>

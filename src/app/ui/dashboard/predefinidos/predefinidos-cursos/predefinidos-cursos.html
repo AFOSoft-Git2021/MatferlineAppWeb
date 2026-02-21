@@ -1,1 +1,19 @@
-<p>predefinidos-cursos works!</p>
+<section id="section_predefinidos_cursos">
+
+    <app-dashboard-app-bar [titulo]="'Test Predefinidos'" [nivel]=0 />
+
+    <div>
+        @for(predefinido of predefinidos; track predefinido.cdi) {
+        <div>
+
+            <h2 [innerHTML]="predefinido.nombre"></h2>
+            @for(permiso of predefinido.permisos; track permiso.cdi) {
+            <h3 [innerHTML]="permiso.nombre"></h3>
+            }
+
+        </div>
+        }
+
+    </div>
+
+</section>

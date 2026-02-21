@@ -1,9 +1,11 @@
+@defer (when alumno) {
 <section id="dashboard_section">
 
     <app-top-app-bar-logged [alumno]="alumno" />
 
-    <router-outlet />
+    <div><router-outlet /></div>
 
-    <app-dashboard-bottom-navigation (optionBottomMenuEmitter)="navigateService($event)" />
+    <app-dashboard-bottom-navigation [serviciosDisponibles]="listaServicios" (optionBottomMenuEmitter)="navigateService($event)" />
 
 </section>
+}

@@ -1,6 +1,6 @@
 export enum Servicio {
     Ninguno = 'ninguno',
-    TestPredefinidos = 'testPredefinidos',
-    TestAleatorios = 'testAleatorios',
-    Profeweb = 'profeweb'
+    TestPredefinidos = 'Predefinidos',
+    TestAleatorios = 'Aleatorios',
+    Profeweb = 'Profeweb'
 }

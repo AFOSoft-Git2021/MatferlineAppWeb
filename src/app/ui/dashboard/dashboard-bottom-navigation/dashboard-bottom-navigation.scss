@@ -6,13 +6,12 @@
     ul {
         list-style: none !important;
         margin: 0 !important;
-        padding: 0 !important;
+        padding: 1rem 0 !important;
         display: flex;
         justify-content: space-between;
         align-items: center;
         width: 100%;
-        background-color: #F3F8FF;
-        padding: 1rem 0 !important;
+        background-color: #f3f8ff;
 
         li {
             display: flex;
@@ -22,11 +21,16 @@
             gap: 0.6rem;
             font-size: 0.9rem;
             font-weight: 500;
-            color: $GrayText;
-
             flex: 1 1 0; /* shorthand de: flex-grow: 1, flex-shrink: 1, flex-basis: 0 */
             text-align: center;
+            transition: all 0.1s ease;
             // border: 1px solid #ccc;
+
+            &:not(.servicio_activo) {
+                &:active {
+                    opacity: 0.25;
+                }
+            }
         }
     }
 }

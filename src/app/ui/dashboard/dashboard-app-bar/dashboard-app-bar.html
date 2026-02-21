@@ -1,0 +1,10 @@
+<section id="section_app_bar">
+
+    @if (nivel() === 1) { <button (click)="goBack()" mat-icon-button type="button"><mat-icon>keyboard_backspace</mat-icon></button> }
+    @else { <span>&nbsp;</span> }
+
+    <h1 [innerHTML]="titulo()"></h1>
+
+    <span>&nbsp;</span>
+
+</section>

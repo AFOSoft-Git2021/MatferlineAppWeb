@@ -10,7 +10,7 @@ import { ConcurrenceError } from "../shared/concurrence-error/concurrence-error"
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SpinnerLoading, HorizontalScreen, ConnectionError, ServerError, ConcurrenceError],
+  imports: [RouterOutlet, SpinnerLoading, HorizontalScreen, ConcurrenceError, ServerError, ConnectionError],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
