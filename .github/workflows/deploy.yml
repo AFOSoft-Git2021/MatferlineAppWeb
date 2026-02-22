@@ -5,6 +5,9 @@ on:
     branches:
       - master
 
+permissions:
+  contents: write  # <--- ESTO ES LO QUE SOLUCIONA EL ERROR 128
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
