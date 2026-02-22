@@ -1,4 +1,3 @@
-YAML
 name: Deploy Angular PWA to GitHub Pages
 
 on:
