@@ -18,7 +18,7 @@ export class PredefinidosCursos implements OnInit {
 
   ngOnInit() {
     this.predefinidos = this.stateService.alumnoLogeado()?.predefinidos ?? [];
-    console.log(this.stateService.alumnoLogeado()?.predefinidos);
+    // console.log(this.stateService.alumnoLogeado()?.predefinidos);
   }
 
 }
