@@ -1,7 +1,11 @@
 {
   "name": "matferline",
   "short_name": "matferline",
+  "description": "Aplicación Matferline",
   "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#0e6cf3",
+  "background_color": "#0e6cf3",
   "scope": "./",
   "start_url": "./",
   "icons": [
