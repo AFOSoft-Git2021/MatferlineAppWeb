@@ -1,24 +1,40 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { Predefinido } from '../../../../data/model/predefinido';
 import { StateService } from '../../../../data/repository/state.service';
 import { CommonModule } from '@angular/common';
 import { DashboardAppBar } from "../../dashboard-app-bar/dashboard-app-bar";
+import { CabeceraCurso } from "../../cabecera-curso/cabecera-curso";
+import { ItemPermisoCurso } from "../../item-permiso-curso/item-permiso-curso";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-predefinidos-cursos',
-  imports: [CommonModule, DashboardAppBar],
+  imports: [CommonModule, DashboardAppBar, CabeceraCurso, ItemPermisoCurso],
   templateUrl: './predefinidos-cursos.html',
   styleUrl: './predefinidos-cursos.scss',
 })
 export class PredefinidosCursos implements OnInit {
 
+  private router = inject(Router);
   private stateService = inject(StateService);
   predefinidos: Predefinido[] = [];
-
+  showState = signal<boolean[]>([]);
 
   ngOnInit() {
     this.predefinidos = this.stateService.alumnoLogeado()?.predefinidos ?? [];
-    // console.log(this.stateService.alumnoLogeado()?.predefinidos);
+    this.showState.set(new Array(this.predefinidos.length).fill(false));
+    if (this.predefinidos.length === 1) { this.showState()[0] = true }
+  }
+
+  showPermisos(index: number) {
+    this.showState()[index] = !this.showState()[index];
+    console.log(this.showState()[index]);
+  }
+
+  gotoPermiso(cdiCurso: string, cdiPermiso: string) {
+    console.log(`${cdiCurso} / ${cdiPermiso}`);
+    
+    this.router.navigate(['/dashboard/predefinidos-categorias', cdiCurso, cdiPermiso]);
   }
 
 }

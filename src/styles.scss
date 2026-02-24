@@ -71,7 +71,7 @@ $BackgroundCurso5_2: #b900a1;
 $BackgroundCurso5_3: #ff6ee6;
 $BackgroundCurso5_4: #fc7de8;
 
-$font-size: 17px;
+$font-size: 16px;
 $font-size-button: 15px;
 
 // placeholders:> extend
@@ -196,4 +196,34 @@ body {
 .p_matfer {
   margin: 0;
   color: $BlueDark;
+}
+
+
+/********************************/
+/* LA MAGIA: LISTAS EXPANDIBLES */
+/********************************/
+
+/* 1. El contenedor que hace la magia del Grid */
+.panel-content-wrapper {
+  display: grid;
+  grid-template-rows: 0fr; /* Estado cerrado por defecto */
+  transition: grid-template-rows 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden; /* Evita que el contenido se vea antes de tiempo */
+}
+
+/* 2. Cuando el estado de la Signal es true, expandimos a 1fr */
+.panel-content-wrapper.is-open {
+  grid-template-rows: 1fr;
+}
+
+/* 3. El contenedor interno inmediato debe tener min-height: 0 */
+.panel-content {
+  min-height: 0;
+}
+
+/* 4. Opcional: Un wrapper para el padding interno */
+/* Nota: No pongas padding directamente en .panel-content porque 
+   puede causar saltos en la animación inicial */
+.inner-content {
+  padding: 0 .4rem .4rem .4rem; /* Ajusta según tu diseño */
 }

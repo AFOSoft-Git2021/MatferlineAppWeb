@@ -1,0 +1,32 @@
+@import "../../../../styles.scss";
+
+#section_cabecera_curso {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 0.8rem;
+    padding: 1rem 0.6rem;
+    border-radius: 0.8rem;
+    transition: opacity 0.2s ease;
+    // background-color: lightgoldenrodyellow;
+
+    &:active {
+        opacity: 0.8;
+    }
+
+    > img {
+        width: 40px;
+    }
+
+    h1 {
+        flex: 1;
+        font-size: 1.1rem;
+        font-weight: 500;
+        margin: 0;
+    }
+
+    button {
+        color: white;
+    }
+}

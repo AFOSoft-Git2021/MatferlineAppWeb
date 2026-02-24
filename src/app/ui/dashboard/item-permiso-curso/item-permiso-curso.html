@@ -1,0 +1,12 @@
+<section (click)="clickPermiso()" id="section_item_permiso_curso">
+
+    <img [src]="icono()" #iconoPermiso (load)="iconoPermiso.style.opacity = '1'" alt="icono permiso">
+
+    <div>
+        <p [innerHTML]="nombre()"></p>
+        <p>{{ numeroCategorias() }} categor&iacute;as</p>
+    </div>
+
+    <mat-icon>keyboard_arrow_right</mat-icon>
+
+</section>

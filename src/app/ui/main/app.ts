@@ -53,6 +53,7 @@ export class App {
   }
 
   checkMobile(): boolean {
+    // TODO: mejorar esta función para eliminar los tablets
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   }
 

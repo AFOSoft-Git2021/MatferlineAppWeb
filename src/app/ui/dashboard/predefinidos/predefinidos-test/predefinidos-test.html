@@ -1,1 +1,16 @@
-<p>predefinidos-test works!</p>
+@defer (when permiso) {
+    <section id="section_predefinidos_test">
+
+        <app-dashboard-app-bar [titulo]="'Test Predefinidos'" [nivel]=1 (goBackEmitter)="navigateBack()" />
+
+        <h1 [innerHTML]="permiso?.nombre"></h1>
+        <h2 [innerHTML]="nombreCurso"></h2>
+
+        @for (categoria of listaCategorias; track categoria.cdicategoria) {
+            <div class="categoria">
+                <h2 [innerHTML]="categoria.nombre"></h2>
+            </div>
+        }
+
+    </section>
+}

@@ -4,16 +4,25 @@
 
     <div>
         @for(predefinido of predefinidos; track predefinido.cdi) {
-        <div>
+            <app-cabecera-curso [index]="$index" [curso]="predefinido.nombre" [show]="showState()[$index]" (showPermisosEmitter)="showPermisos($index)" />
 
-            <h2 [innerHTML]="predefinido.nombre"></h2>
-            @for(permiso of predefinido.permisos; track permiso.cdi) {
-            <h3 [innerHTML]="permiso.nombre"></h3>
-            }
-
-        </div>
+            <div class="panel-content-wrapper" [class.is-open]="showState()[$index]">
+                <div class="panel-content">
+                    <div class="inner-content">
+                        @for(permiso of predefinido.permisos; track permiso.cdi) {
+                            <div class="item_permiso_curso">
+                               <app-item-permiso-curso
+                                [cdi]="permiso.cdi.toString()"
+                                [nombre]="permiso.nombre"
+                                [icono]="permiso.icono"
+                                [numeroCategorias]="permiso.categorias.length"
+                                (clickPermisoEmitter)="gotoPermiso(predefinido.cdi.toString(), $event)" />                             
+                            </div>
+                        }    
+                    </div>
+                </div>
+            </div>
         }
-
     </div>
 
 </section>

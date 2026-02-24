@@ -1,0 +1,11 @@
+<section (click)="showPermisos()" id="section_cabecera_curso" [ngStyle]="{background: stateService.colorList[index()][3]}">
+
+    <img src="svg/icon_libros.svg" alt="icono">
+
+    <h1 [innerHTML]="curso()" [ngStyle]="{color: stateService.colorList[index()][0]}"></h1>
+
+    <button (click)="showPermisos()" [ngStyle]="{background: stateService.colorList[index()][2]}" mat-icon-button type="button">
+        <mat-icon>{{show() ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+
+</section>

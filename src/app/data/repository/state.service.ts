@@ -124,4 +124,12 @@ export class StateService {
   BackgroundCurso5_3 = '#ff6ee6';
   BackgroundCurso5_4 = '#fc7de8';
 
+  colorList = [
+    [this.BackgroundCurso1_1, this.BackgroundCurso1_2, this.BackgroundCurso1_3, this.BackgroundCurso1_4],
+    [this.BackgroundCurso2_1, this.BackgroundCurso2_2, this.BackgroundCurso2_3, this.BackgroundCurso2_4],
+    [this.BackgroundCurso3_1, this.BackgroundCurso3_2, this.BackgroundCurso3_3, this.BackgroundCurso3_4],
+    [this.BackgroundCurso4_1, this.BackgroundCurso4_2, this.BackgroundCurso4_3, this.BackgroundCurso4_4],
+    [this.BackgroundCurso5_1, this.BackgroundCurso5_2, this.BackgroundCurso5_3, this.BackgroundCurso5_4]
+  ]
+
 }

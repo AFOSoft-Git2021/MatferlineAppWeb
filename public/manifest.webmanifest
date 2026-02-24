@@ -4,8 +4,8 @@
   "description": "Aplicación Matferline",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#0e6cf3",
-  "background_color": "#0e6cf3",
+  "theme_color": "#0E6CF3",
+  "background_color": "#0E6CF3",
   "scope": "./",
   "start_url": "./",
   "icons": [

@@ -11,10 +11,18 @@
     align-items: center;
     // border: 1px solid blue;
 
+    app-dashboard-app-bar {
+        width: 100%;
+    }
+
     >div {
         width: 100%;
         flex: 1;
         overflow-y: auto;
         // border: 1px solid blue;
+    }
+
+    .item_permiso_curso{
+        margin-top: 6px;
     }
 }
