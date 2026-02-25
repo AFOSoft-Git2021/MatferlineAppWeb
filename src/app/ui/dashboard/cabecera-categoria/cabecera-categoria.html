@@ -1,0 +1,21 @@
+<section (click)="showTest()" id="section_cabecera_categoria">
+
+    <div>
+        <p [innerHTML]="nombreCategoria()"></p>
+        <p>
+            <span>
+                <img src="svg/icon_numero_test.svg" alt="test">
+                {{ numeroTest() }} test
+            </span>
+            @if (propia() === 1) {
+            <span class="no_traduccion">
+                <img src="svg/icon_no_traduccion.svg" alt="traduccion">
+                Sin traducci&oacute;n
+            </span>
+            }
+        </p>
+    </div>
+
+    <mat-icon>{{show() ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
+
+</section>

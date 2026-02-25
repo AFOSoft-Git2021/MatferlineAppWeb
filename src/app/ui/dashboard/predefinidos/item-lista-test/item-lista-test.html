@@ -1,0 +1,6 @@
+<section (click)="clickTest()" id="section_item_lista_test">
+
+    <p [innerHTML]="test().nombre" [ngStyle]="{ color: (test().realizado === 0) ? '#394B94' : (test().realizado === 1) ? '#FF0000' : '#00B50C' }"></p>
+    <button (click)="showAlertInfoTest($event)" mat-icon-button type="button"><mat-icon>info</mat-icon></button>
+
+</section>

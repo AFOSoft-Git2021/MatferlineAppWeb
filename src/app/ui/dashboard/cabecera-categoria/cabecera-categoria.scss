@@ -1,0 +1,59 @@
+#section_cabecera_categoria {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 0.5rem;
+    border: 3px solid #bcd7ff;
+    border-radius: 0.8rem;
+    background-color: white;
+    padding: .6rem;
+    transition: opacity 0.2s ease;
+
+    &:active {
+        opacity: 0.8;
+    }
+
+    > div {
+        flex: 1;
+
+        p {
+            font-weight: 500;
+            text-align: left;
+            margin: 0;
+            color: black;
+
+            &:first-child {
+                max-width: 320px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+
+            &:last-child {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 1rem;
+                color: #394b94;
+                font-size: 0.86rem;
+                padding-top: .3rem;
+
+                span {
+                    img {
+                        height: 26px;
+                        vertical-align: middle;
+                    }
+                }
+
+                .no_traduccion {
+                    color: #D80000;
+                }
+            }
+        }
+    }
+    > mat-icon {
+        color: #70aaff;
+    }
+}

@@ -1,16 +1,43 @@
 @defer (when permiso) {
-    <section id="section_predefinidos_test">
+<section id="section_predefinidos_test">
 
-        <app-dashboard-app-bar [titulo]="'Test Predefinidos'" [nivel]=1 (goBackEmitter)="navigateBack()" />
+    <app-dashboard-app-bar [titulo]="'Test Predefinidos'" [nivel]=1 (goBackEmitter)="navigateBack()" />
 
-        <h1 [innerHTML]="permiso?.nombre"></h1>
-        <h2 [innerHTML]="nombreCurso"></h2>
+    <div class="cabecera_permiso">
+        <app-cabecera-permiso
+            [cdicurso]="cdicurso()"
+            [nombrecurso]="nombreCurso"
+            [cdipermiso]="cdipermiso()"
+            [nombrepermiso]="permiso?.nombre ?? ''"
+            [icono]="permiso?.icono ?? ''"
+            [idioma]="stateService.alumnoLogeado()?.idioma ?? null"
+             />
+    </div>
 
+    <div class="lista_categorias">
         @for (categoria of listaCategorias; track categoria.cdicategoria) {
-            <div class="categoria">
-                <h2 [innerHTML]="categoria.nombre"></h2>
-            </div>
-        }
+        <div class="categoria">
+            <app-cabecera-categoria
+                [nombreCategoria]="categoria.nombre"
+                [numeroTest]="categoria.test.length"
+                [propia]="categoria.propia"
+                [show]="showState()[$index]"
+                (showTestEmitter)="showTestCategoria($index)" />
 
-    </section>
+            <div class="panel-content-wrapper" [class.is-open]="showState()[$index]">
+                <div class="panel-content">
+                    <div class="inner-content contenedor_lista_test">
+                        @for(test of categoria.test; track test.cdi) {
+                        <div class="item_test">
+                            <app-item-lista-test [test]="test" (clickTestEmitter)="getTestPredefinido($event)" />
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+
+</section>
 }

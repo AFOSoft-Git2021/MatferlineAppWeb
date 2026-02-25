@@ -1,0 +1,35 @@
+#section_item_lista_test {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    background-color: white;
+    border: 1px solid #79acff;
+    border-radius: 50px;
+    padding: 5px 5px 5px 16px;
+    transition: opacity 0.2s ease;
+
+    &:active {
+        opacity: 0.8;
+    }
+
+    p {
+        color: #394b94;
+        margin: 0;
+        text-align: left;
+        flex: 1;
+        max-width: 270px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    button {
+        background-color: #d0e4fe;
+
+        mat-icon {
+            color: #0e6cf3;
+        }
+    }
+}

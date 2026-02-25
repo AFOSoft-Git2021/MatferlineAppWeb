@@ -1,0 +1,15 @@
+<section id="section_cabecera_permiso">
+
+    <div class="cabecera_permiso" [ngStyle]="{background: colorSet()[2]}">
+        <img [src]="icono()" #iconoPermiso (load)="iconoPermiso.style.opacity = '1'" alt="permiso">
+        <div>
+            <p [innerHTML]="nombrepermiso()" [ngStyle]="{color: colorSet()[0]}"></p>
+            <p [innerHTML]="nombrecurso()"></p>
+        </div>
+    </div>
+
+    @if(idiomaExists()) {
+    <div class="cabecera_permiso_idioma">idioma</div>
+    }
+
+</section>

@@ -1,0 +1,41 @@
+#section_cabecera_permiso {
+    position: relative;
+    width: 100%;
+
+    .cabecera_permiso {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: .6rem;
+        padding: .6rem .6rem 2rem .6rem;
+        border-radius: .8rem;
+
+        img {
+            vertical-align: middle;
+            width: 70px;
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity .3s ease;
+        }
+
+        p {
+            margin: 0;
+
+            &:first-child {
+                font-weight: 500;
+                padding-bottom: .3rem;
+            }
+
+            &:last-child {
+                color: black;
+                text-transform: lowercase;
+                font-size: .9rem;
+
+                &:first-letter {
+                    text-transform: uppercase;
+                }
+            }
+        }
+    }
+}
