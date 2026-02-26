@@ -200,7 +200,7 @@ body {
 
 
 /********************************/
-/* LA MAGIA: LISTAS EXPANDIBLES */
+/*      LISTAS EXPANDIBLES      */
 /********************************/
 
 /* 1. El contenedor que hace la magia del Grid */
@@ -229,10 +229,28 @@ body {
 }
 
 
-// Customize the entire app. Change :root to your selector if you want to scope the styles.
+/*******************************************/
+/* Customize Sanack Bar for the entire app */
+/*******************************************/
 :root {
   @include mat.snack-bar-overrides((
     button-color: white,
     container-color: $ButtonMagenta,
   ))
+}
+
+
+/*****************/
+/* CONFIG DIALOG */
+/*****************/
+.full-screen-dialog {
+  .mat-mdc-dialog-container {
+    --mdc-dialog-container-shape: 0px; // Quita bordes redondeados
+  }
+  
+  .mdc-dialog__surface {
+    border-radius: 0 !important;
+    height: 100vh !important;
+    width: 100vw !important;
+  }
 }
