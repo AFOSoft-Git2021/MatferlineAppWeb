@@ -1,1 +1,0 @@
-import{Bb as a,Cb as i,Xb as c,ab as e}from"./chunk-WV635FC4.js";var n=class s{static \u0275fac=function(t){return new(t||s)};static \u0275cmp=e({type:s,selectors:[["app-estadisticas"]],decls:2,vars:0,template:function(t,d){t&1&&(a(0,"p"),c(1,"estadisticas works!"),i())},encapsulation:2})};export{n as Estadisticas};
