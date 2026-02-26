@@ -1,0 +1,19 @@
+#section_boton_sin_ayuda {
+    width: 36px;
+    height: 36px;
+    border-radius: .6rem;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+    transition: opacity 0.2s ease;
+
+    &:active {
+        opacity: 0.6;
+    }
+
+    img {
+        width: 100%;
+    }
+}

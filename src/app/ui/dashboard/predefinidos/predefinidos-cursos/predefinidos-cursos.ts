@@ -22,8 +22,7 @@ export class PredefinidosCursos implements OnInit {
 
   ngOnInit() {
     this.predefinidos = this.stateService.alumnoLogeado()?.predefinidos ?? [];
-    this.showState.set(new Array(this.predefinidos.length).fill(false));
-    if (this.predefinidos.length === 1) { this.showState()[0] = true }
+    this.showState.set(new Array(this.predefinidos.length).fill(true));
   }
 
   showPermisos(index: number) {

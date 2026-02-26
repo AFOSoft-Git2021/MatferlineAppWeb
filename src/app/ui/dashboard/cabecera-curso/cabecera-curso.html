@@ -4,7 +4,7 @@
 
     <h1 [innerHTML]="curso()" [ngStyle]="{color: stateService.colorList[index()][0]}"></h1>
 
-    <button (click)="showPermisos()" [ngStyle]="{background: stateService.colorList[index()][2]}" mat-icon-button type="button">
+    <button [ngStyle]="{background: stateService.colorList[index()][2]}" mat-icon-button type="button">
         <mat-icon>{{show() ? 'visibility_off' : 'visibility'}}</mat-icon>
     </button>
 

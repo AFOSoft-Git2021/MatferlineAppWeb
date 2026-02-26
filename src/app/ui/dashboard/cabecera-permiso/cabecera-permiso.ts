@@ -1,15 +1,16 @@
-import { Component, computed, inject, input, OnInit, output, signal } from '@angular/core';
+import { Component, computed, inject, input, output, signal } from '@angular/core';
 import { Idioma } from '../../../data/model/idioma';
 import { CommonModule } from '@angular/common';
 import { StateService } from '../../../data/repository/state.service';
+import { BotonIdioma } from "../boton-idioma/boton-idioma";
 
 @Component({
   selector: 'app-cabecera-permiso',
-  imports: [CommonModule],
+  imports: [CommonModule, BotonIdioma],
   templateUrl: './cabecera-permiso.html',
   styleUrl: './cabecera-permiso.scss',
 })
-export class CabeceraPermiso implements OnInit {
+export class CabeceraPermiso {
 
   private stateService = inject(StateService);
 
@@ -27,7 +28,7 @@ export class CabeceraPermiso implements OnInit {
   idiomaExists = computed(() => {
     const nombre = this.idioma()?.nombre;
     return nombre ? nombre.length > 0 : false;
-  })
+  });
 
   indexColor = computed(() => {
     if (parseInt(this.cdicurso()) > this.stateService.colorList.length) {
@@ -35,11 +36,22 @@ export class CabeceraPermiso implements OnInit {
     } else {
       return parseInt(this.cdicurso()) - 1;
     }
-  })
+  });
   colorSet = computed(() => {
     return this.stateService.colorList[this.indexColor()];
-  })
+  });
 
-  ngOnInit() { }
+  clickIdioma(index: number) {
+    console.log('clickIdioma:', index);
+    
+    this.idiomaSelected.set(index);
+    this.clickIdiomaEmitter.emit(index);
+  }
+
+  clickEstadisticas() {
+    this.clickEstadisticasEmitter.emit();
+  }
+
+
 
 }

@@ -11,31 +11,43 @@
             [nombrepermiso]="permiso?.nombre ?? ''"
             [icono]="permiso?.icono ?? ''"
             [idioma]="stateService.alumnoLogeado()?.idioma ?? null"
-             />
+            (clickIdiomaEmitter)="setIiomaSelected($event)"
+            (clickEstadisticasEmitter)="navigateEstadisticas()" />
     </div>
 
     <div class="lista_categorias">
         @for (categoria of listaCategorias; track categoria.cdicategoria) {
-        <div class="categoria">
-            <app-cabecera-categoria
-                [nombreCategoria]="categoria.nombre"
-                [numeroTest]="categoria.test.length"
-                [propia]="categoria.propia"
-                [show]="showState()[$index]"
-                (showTestEmitter)="showTestCategoria($index)" />
+            <div class="categoria">
+                <app-cabecera-categoria
+                    [nombreCategoria]="categoria.nombre"
+                    [numeroTest]="categoria.test.length"
+                    [propia]="categoria.propia"
+                    [show]="showState()[$index]"
+                    (showTestEmitter)="showTestCategoria($index)" />
 
-            <div class="panel-content-wrapper" [class.is-open]="showState()[$index]">
-                <div class="panel-content">
-                    <div class="inner-content contenedor_lista_test">
-                        @for(test of categoria.test; track test.cdi) {
-                        <div class="item_test">
-                            <app-item-lista-test [test]="test" (clickTestEmitter)="getTestPredefinido($event)" />
+                <div class="panel-content-wrapper" [class.is-open]="showState()[$index]">
+                    <div class="panel-content">
+                        <div class="inner-content contenedor_lista_test">
+                            <ul>
+                                <li>
+                                    @if(categoria.ayuda === 0) {
+                                        <app-boton-sin-ayuda (onClickEmitter)="showInfoAyudaCategoria()" />
+                                    }
+                                </li>
+                                <li>
+                                    <app-boton-examen-estudio [buttonEnabled]="true" (onClickEmitter)="setAutocorreccionCategoria($index, $event)" />
+                                </li>
+                            </ul>
+
+                            @for(test of categoria.test; track test.cdi) {
+                                <div class="item_test">
+                                    <app-item-lista-test [test]="test" (clickTestEmitter)="getTestPredefinido($event)" />
+                                </div>
+                            }
                         </div>
-                        }
                     </div>
                 </div>
             </div>
-        </div>
         }
     </div>
 

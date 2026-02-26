@@ -21,6 +21,10 @@ export const routes: Routes = [
                 loadComponent: () => import('../ui/dashboard/predefinidos/predefinidos-test/predefinidos-test').then(m => m.PredefinidosTest)
             },
             { path: 'aleatorios', loadComponent: () => import('../ui/dashboard/aleatorios/aleatorios-cursos/aleatorios-cursos').then(m => m.AleatoriosCursos) },
+            {
+                path: 'aleatorios-test/:cdicurso/:cdipermiso',
+                loadComponent: () => import('../ui/dashboard/aleatorios/aleatorios-test/aleatorios-test').then(m => m.AleatoriosTest)
+            },
             { path: 'profeweb', loadComponent: () => import('../ui/dashboard/profe/profeweb-cursos/profeweb-cursos').then(m => m.ProfewebCursos) },
             { path: 'estadisticas', loadComponent: () => import('../ui/dashboard/estadisticas/estadisticas/estadisticas').then(m => m.Estadisticas) },
         ]

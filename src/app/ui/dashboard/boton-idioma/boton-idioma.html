@@ -1,0 +1,16 @@
+<section id="section_boton_idioma">
+
+    <div class="idioma_selected" [ngStyle]="{background: (idiomaSelected() === 0) ? '#70BF53' : '#CCC'}">
+        @if (idiomaSelected() === 0) {&#x2714;}
+    </div>
+
+    <div class="idioma_botones">
+        <img (click)="setIdiomaSelected(0)" #bandera1 (load)="bandera1.style.opacity = '1'" src="https://matferline.com/profesor/imagenes/bandera_espanol.png" alt="bandera">
+        <img (click)="setIdiomaSelected(1)" #bandera2 (load)="bandera2.style.opacity = '1'" [src]="bandera()" alt="bandera">
+    </div>
+
+    <div class="idioma_selected" [ngStyle]="{background: (idiomaSelected() === 1) ? '#70BF53' : '#CCC'}">
+        @if (idiomaSelected() === 1) {&#x2714;}
+    </div>
+
+</section>

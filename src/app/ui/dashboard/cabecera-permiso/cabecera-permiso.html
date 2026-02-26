@@ -8,8 +8,21 @@
         </div>
     </div>
 
-    @if(idiomaExists()) {
-    <div class="cabecera_permiso_idioma">idioma</div>
-    }
+    <div class="cabecera_permiso_idioma_estadistica">
+        <ul>
+            <li>&nbsp;</li>
+            <li>
+                @if(idiomaExists()) {
+                <app-boton-idioma
+                    [bandera]="idioma()?.bandera ?? ''"
+                    [defecto]="idioma()?.defecto ?? 0"
+                    (setIdiomaSelectedEmitter)="clickIdioma($event)" />
+                }
+            </li>
+            <li>
+                <img (click)="clickEstadisticas()" src="svg/icon_estadistica.svg" alt="estadistica">
+            </li>
+        </ul>
+    </div>
 
 </section>

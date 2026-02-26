@@ -1,1 +1,55 @@
-<p>aleatorios-test works!</p>
+@defer (when permiso) {
+<section id="section_aleatorios_test">
+
+    <app-dashboard-app-bar [titulo]="'Test Aleatorios'" [nivel]=1 (goBackEmitter)="navigateBack()" />
+
+    <div class="cabecera_permiso">
+        <app-cabecera-permiso
+            [cdicurso]="cdicurso()"
+            [nombrecurso]="nombreCurso"
+            [cdipermiso]="cdipermiso()"
+            [nombrepermiso]="permiso?.nombre ?? ''"
+            [icono]="permiso?.icono ?? ''"
+            [idioma]="stateService.alumnoLogeado()?.idioma ?? null"
+            (clickIdiomaEmitter)="setIiomaSelected($event)"
+            (clickEstadisticasEmitter)="navigateEstadisticas()" />
+    </div>
+
+    @if ((permiso?.test_tematicos?.categorias?.length ?? 0) > 0) {
+        <div class="lista_categorias">
+            <div class="categoria">
+                <app-cabecera-categoria
+                    [nombreCategoria]="'TEST TEMÁTICOS'"
+                    [numeroTest]="permiso?.test_tematicos?.categorias?.length ?? 0"
+                    [propia]="0"
+                    [show]="showState()"
+                    (showTestEmitter)="showTestCategoria()" />
+
+                <div class="panel-content-wrapper" [class.is-open]="showState()">
+                    <div class="panel-content">
+                        <div class="inner-content contenedor_lista_test">
+                            <ul>
+                                <li>
+                                    @if(permiso?.test_tematicos?.ayuda === 0) {
+                                        <app-boton-sin-ayuda (onClickEmitter)="showInfoAyudaCategoria()" />
+                                    }
+                                </li>
+                                <li>
+                                    <app-boton-examen-estudio [buttonEnabled]="true" (onClickEmitter)="setAutocorreccionCategoria($event)" />
+                                </li>
+                            </ul>
+
+                            @for(categoria of permiso?.test_tematicos?.categorias ?? []; track categoria.cdi) {
+                                <div class="item_test">
+                                    <app-item-lista-test-aleatorio [categoria]="categoria" (clickTestEmitter)="getTestAleatorio($event)" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</section>
+}

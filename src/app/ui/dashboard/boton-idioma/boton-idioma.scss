@@ -1,0 +1,39 @@
+#section_boton_idioma {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .idioma_selected {
+        width: 20px;
+        height: 20px;
+        border: 2px solid white;
+        border-radius: 50%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 0.9rem;
+    }
+
+    .idioma_botones {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        background-color: rgba(255, 255, 255, 0.85);
+        border-radius: 50px;
+        padding: 3px;
+
+        img {
+            width: 40px;
+            height: 40px;
+            opacity: 0;
+            transition: all 0.3s ease;
+
+            &:active {
+                filter: opacity(0.5);
+            }
+        }
+    }
+}

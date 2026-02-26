@@ -227,3 +227,12 @@ body {
 .inner-content {
   padding: 0 .4rem .4rem .4rem; /* Ajusta según tu diseño */
 }
+
+
+// Customize the entire app. Change :root to your selector if you want to scope the styles.
+:root {
+  @include mat.snack-bar-overrides((
+    button-color: white,
+    container-color: $ButtonMagenta,
+  ))
+}

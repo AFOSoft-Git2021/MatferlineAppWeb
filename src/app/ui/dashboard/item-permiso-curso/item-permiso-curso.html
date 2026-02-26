@@ -4,7 +4,7 @@
 
     <div>
         <p [innerHTML]="nombre()"></p>
-        <p>{{ numeroCategorias() }} categor&iacute;as</p>
+        @if(numeroCategorias() > 0) {<span>{{ numeroCategorias() }} categor&iacute;as</span>}
     </div>
 
     <mat-icon>keyboard_arrow_right</mat-icon>
