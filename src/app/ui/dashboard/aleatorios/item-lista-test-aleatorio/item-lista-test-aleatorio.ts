@@ -35,8 +35,9 @@ export class ItemListaTestAleatorio {
   popUpInfoTest(titulo: string, mensaje: string, modo: number, tipo: number) {
 
     const dialogRef = this.dialog.open(PopupConfirmComponent, {
-      disableClose: true, width: '50%',
-      panelClass: 'full-screen-dialog',
+      disableClose: true, 
+      width: '80%',
+      maxHeight: '80vh',
       data: {
         titulo,
         mensaje,
