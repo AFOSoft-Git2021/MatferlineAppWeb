@@ -246,6 +246,7 @@ body {
 .full-screen-dialog {
   // Esto elimina cualquier restricción de posición del Overlay
   max-width: 100vw !important;
+  max-height: 100vh !important;
   
   .mat-mdc-dialog-container {
     padding: 0; // Quita paddings internos que vienen por defecto
