@@ -2,7 +2,7 @@
   "name": "matferline",
   "short_name": "matferline",
   "description": "Aplicación Matferline",
-  "display": "standalone",
+  "display": "fullscreen",
   "orientation": "portrait",
   "theme_color": "#0E6CF3",
   "background_color": "#0E6CF3",
