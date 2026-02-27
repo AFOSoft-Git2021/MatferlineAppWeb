@@ -11,9 +11,11 @@ export class BotonExamenEstudio {
 
   buttonEnabled = input.required<boolean>();
   onClickEmitter = output<number>();
-  selection = signal(0);
+  selection = signal(0); // 0 = examen, 1 = estudio
 
   onClick(value: number) {
+    console.log(value);
+    
     this.selection.set(value);
     this.onClickEmitter.emit(value);
   }

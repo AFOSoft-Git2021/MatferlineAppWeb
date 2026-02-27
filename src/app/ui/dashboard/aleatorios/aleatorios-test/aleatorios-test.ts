@@ -15,6 +15,7 @@ import { PredefinidoPermisoCategoria } from '../../../../data/model/predefinidoP
 import { AleatorioPermisoTestTematicoCategoria } from '../../../../data/model/aleatorioPermisoTestTematicoCategoria';
 import { AleatorioPermiso } from '../../../../data/model/aleatorioPermiso';
 import { ItemListaTestAleatorio } from "../item-lista-test-aleatorio/item-lista-test-aleatorio";
+import { BotonTestAleatorio } from "../boton-test-aleatorio/boton-test-aleatorio";
 
 @Component({
   selector: 'app-aleatorios-test',
@@ -28,8 +29,9 @@ import { ItemListaTestAleatorio } from "../item-lista-test-aleatorio/item-lista-
     CabeceraPermiso,
     BotonExamenEstudio,
     BotonSinAyuda,
-    ItemListaTestAleatorio
-  ],
+    ItemListaTestAleatorio,
+    BotonTestAleatorio
+],
   templateUrl: './aleatorios-test.html',
   styleUrl: './aleatorios-test.scss',
 })
@@ -92,7 +94,7 @@ export class AleatoriosTest implements OnInit {
     this.idiomaSelected.set(index);
   }
 
-  getTestAleatorio(event: any) {
-    console.log(event);
+  getTestAleatorio(event: any , tipo: number) {
+    console.log(event + '/' + tipo);
   }
 }

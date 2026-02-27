@@ -1,0 +1,23 @@
+<section id="section_boton_test_aleatorio" (click)="onClick()" [ngClass]="(tipo() === 0) ? 'button_test' : 'button_falladas'">
+
+    <div>
+        <img [src]="(tipo() === 0) ? 'svg/image_aleatorio_examen.svg' : 'svg/image_aleatorio_falladas.svg'" alt="avatar">
+        <p [innerHTML]="buttonTitle[tipo()]"></p>
+    </div>
+
+    <div>
+        <app-boton-examen-estudio
+            [buttonEnabled]="ayuda()"
+            (click)="$event.stopPropagation()"
+            (onClickEmitter)="onClickEstudio($event)" />
+    </div>
+
+    <div>
+        @if (!ayuda()) {
+        <app-boton-sin-ayuda
+            (click)="$event.stopPropagation()"
+            (onClickEmitter)="onClickAyuda()" />
+        }
+    </div>
+
+</section>

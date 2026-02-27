@@ -1,4 +1,4 @@
-<section id="section_boton_examen_estudio">
+<section id="section_boton_examen_estudio" [ngStyle]="{visibility: buttonEnabled() ? 'visible' : 'hidden'}">
 
     <div (click)="buttonEnabled() && onClick(0)" [ngClass]="selection() === 0 ? 'selected' : 'unselected'">examen</div>
     <div (click)="buttonEnabled() && onClick(1)" [ngClass]="selection() === 1 ? 'selected' : 'unselected'">estudio</div>

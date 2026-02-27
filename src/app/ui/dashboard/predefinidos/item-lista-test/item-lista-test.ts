@@ -50,7 +50,9 @@ export class ItemListaTest {
     }
 
     const dialogRef = this.dialog.open(PopupConfirmComponent, {
-      disableClose: true, width: '50%',
+      disableClose: true, 
+      width: '80%',
+      maxHeight: '80vh',
       data: {
         titulo,
         mensaje: mensajeCompleto,

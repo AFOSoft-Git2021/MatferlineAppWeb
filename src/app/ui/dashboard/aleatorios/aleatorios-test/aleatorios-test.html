@@ -15,41 +15,60 @@
             (clickEstadisticasEmitter)="navigateEstadisticas()" />
     </div>
 
-    @if ((permiso?.test_tematicos?.categorias?.length ?? 0) > 0) {
-        <div class="lista_categorias">
-            <div class="categoria">
-                <app-cabecera-categoria
-                    [nombreCategoria]="'TEST TEMÁTICOS'"
-                    [numeroTest]="permiso?.test_tematicos?.categorias?.length ?? 0"
-                    [propia]="0"
-                    [show]="showState()"
-                    (showTestEmitter)="showTestCategoria()" />
+    <div class="lista_test">
 
-                <div class="panel-content-wrapper" [class.is-open]="showState()">
-                    <div class="panel-content">
-                        <div class="inner-content contenedor_lista_test">
-                            <ul>
-                                <li>
-                                    @if(permiso?.test_tematicos?.ayuda === 0) {
-                                        <app-boton-sin-ayuda (onClickEmitter)="showInfoAyudaCategoria()" />
-                                    }
-                                </li>
-                                <li>
-                                    <app-boton-examen-estudio [buttonEnabled]="true" (onClickEmitter)="setAutocorreccionCategoria($event)" />
-                                </li>
-                            </ul>
+        <div class="botones_test">
+            <!-- boton examen -->
+            <app-boton-test-aleatorio
+                [tipo]="0"
+                [ayuda]="(permiso?.test_examen?.ayuda === 1) ? true : false"
+                [estudio]="(permiso?.test_examen?.autocorreccion === 1) ? true : false"
+                (clickAyudaEmitter)="showInfoAyudaCategoria()"
+                (onClickEmitter)="getTestAleatorio($event, 0)" />
 
-                            @for(categoria of permiso?.test_tematicos?.categorias ?? []; track categoria.cdi) {
-                                <div class="item_test">
-                                    <app-item-lista-test-aleatorio [categoria]="categoria" (clickTestEmitter)="getTestAleatorio($event)" />
-                                </div>
-                            }
+            <!-- boton falladas -->
+            <app-boton-test-aleatorio
+                [tipo]="1"
+                [ayuda]="false"
+                [estudio]="true"
+                (clickAyudaEmitter)="showInfoAyudaCategoria()"
+                (onClickEmitter)="getTestAleatorio($event, 1)" />
+        </div>
+
+        @if ((permiso?.test_tematicos?.categorias?.length ?? 0) > 0) {
+        <div class="categoria">
+            <app-cabecera-categoria
+                [nombreCategoria]="'TEST TEMÁTICOS'"
+                [numeroTest]="permiso?.test_tematicos?.categorias?.length ?? 0"
+                [propia]="0"
+                [show]="showState()"
+                (showTestEmitter)="showTestCategoria()" />
+
+            <div class="panel-content-wrapper" [class.is-open]="showState()">
+                <div class="panel-content">
+                    <div class="inner-content contenedor_lista_test">
+                        <ul>
+                            <li>
+                                @if(permiso?.test_tematicos?.ayuda === 0) {
+                                <app-boton-sin-ayuda (onClickEmitter)="showInfoAyudaCategoria()" />
+                                }
+                            </li>
+                            <li>
+                                <app-boton-examen-estudio [buttonEnabled]="true" (onClickEmitter)="setAutocorreccionCategoria($event)" />
+                            </li>
+                        </ul>
+
+                        @for(categoria of permiso?.test_tematicos?.categorias ?? []; track categoria.cdi) {
+                        <div class="item_test">
+                            <app-item-lista-test-aleatorio [categoria]="categoria" (clickTestEmitter)="getTestAleatorio($event, -1)" />
                         </div>
+                        }
                     </div>
                 </div>
             </div>
         </div>
-    }
+        }
+    </div>
 
 </section>
 }
