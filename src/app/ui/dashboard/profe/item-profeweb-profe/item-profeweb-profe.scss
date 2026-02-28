@@ -1,4 +1,4 @@
-#section_item_permiso_curso {
+#section_item_profeweb_profe {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -16,25 +16,24 @@
     }
 
     > img {
-        width: 44px;
-        opacity: 0;
-        transition: opacity 0.3s ease;
+        width: 40px;
+        // opacity: 0;
+        // transition: opacity 0.3s ease;
     }
 
-    > div {
+    p {
         flex: 1;
+        max-width: 280px;
+        text-align: left;
+        margin: 0;
+        color: black;
+        font-weight: 500;
 
-        p {
-            text-align: left;
-            margin: 0;
-            color: black;
-        }
-
-        span {
-            color: gray;
-            font-size: 0.86rem;
-        }
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
+
     > mat-icon {
         color: #70aaff;
     }

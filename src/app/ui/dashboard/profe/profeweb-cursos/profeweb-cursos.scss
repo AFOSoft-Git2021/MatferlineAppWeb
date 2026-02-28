@@ -1,0 +1,32 @@
+#section_profeweb_cursos {
+    animation: fade 0.5s ease;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    // border: 1px solid blue;
+
+    app-dashboard-app-bar {
+        width: 100%;
+    }
+
+    > div {
+        width: 100%;
+        flex: 1;
+        overflow-y: auto;
+        // border: 1px solid blue;
+
+        > div {
+            &:not(:first-child) {
+                margin-top: 1rem;
+            }
+        }
+    }
+
+    .item_profeweb_profe {
+        margin-top: 6px;
+    }
+}

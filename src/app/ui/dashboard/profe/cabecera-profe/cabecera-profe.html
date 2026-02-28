@@ -1,0 +1,21 @@
+<section id="section_cabecera_profe">
+
+    <div class="cabecera_profe" [ngStyle]="{background: colorSet()[3]}">
+        <img [src]="iconoCabecera()" alt="icono">
+        <div>
+            <h1 [innerHTML]="nombreProfe()" [ngStyle]="{color: colorSet()[0]}"></h1>
+            <p [innerHTML]="nombreProfeweb()" [ngStyle]="{color: colorSet()[1]}"></p>
+        </div>
+    </div>
+
+    @if (idioma()) {
+    <div class="cabecera_idioma">
+        <span>Idioma test</span>
+        <app-boton-idioma
+            [bandera]="idioma()?.bandera ?? ''"
+            [defecto]="idioma()?.defecto ?? 0"
+            (setIdiomaSelectedEmitter)="clickIdioma($event)" />
+    </div>
+    }
+
+</section>

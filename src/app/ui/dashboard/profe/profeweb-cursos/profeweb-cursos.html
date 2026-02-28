@@ -1,1 +1,32 @@
-<p>profeweb-cursos works!</p>
+<section id="section_profeweb_cursos">
+
+    <app-dashboard-app-bar [titulo]="'Profeweb'" [nivel]=0 />
+
+    <div>
+        @for(profeweb of profewebList; track profeweb.cdi) {
+            <div>
+                <app-cabecera-curso
+                    [index]="$index"
+                    [curso]="profeweb.nombre"
+                    [show]="showState()[$index]"
+                    (showPermisosEmitter)="showPermisos($index)" />
+
+                <div class="panel-content-wrapper" [class.is-open]="showState()[$index]">
+                    <div class="panel-content">
+                        <div class="inner-content">
+                            @for(profe of profeweb.profes; track profe.cdi){
+                                <div class="item_profeweb_profe">
+                                    <app-item-profeweb-profe
+                                        [index]="$index"
+                                        [nombreProfe]="profe.nombre"
+                                        (clickProfeEmitter)="gotoProfeweb($index, profeweb.cdi, profeweb.id, profe.cdi)" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</section>

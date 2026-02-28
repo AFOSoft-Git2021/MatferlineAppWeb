@@ -1,0 +1,52 @@
+#section_cabecera_profe {
+    width: 100%;
+
+    div.cabecera_profe {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        gap: 0.8rem;
+        padding: 1rem 0.8rem;
+        border-radius: 0.8rem;
+
+        > img {
+            width: 40px;
+        }
+
+        > div {
+            flex: 1;
+
+            h1 {
+                font-size: 1rem;
+                font-weight: 500;
+                margin: 0;
+                line-height: 1.2rem;
+            }
+
+            p {
+                margin: 0;
+                font-size: .9rem;
+                padding-top: 2px;
+            }
+        }
+    }
+
+    div.cabecera_idioma {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 86%;
+        margin: 2px auto 0 auto;
+        background-color: rgba($color: white, $alpha: .5);
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+        padding: .2rem 0;
+
+        span {
+            color: black;
+            font-weight: 500;
+            font-size: .9rem;
+        }
+    }
+}

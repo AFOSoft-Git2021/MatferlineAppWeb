@@ -1,1 +1,23 @@
-<p>profeweb-categorias works!</p>
+<section id="section_profeweb_categorias">
+
+    <app-dashboard-app-bar [titulo]="'Profeweb'" [nivel]=1 (goBackEmitter)="navigateBack()" />
+
+    <app-cabecera-profe
+    [index]="index()"
+    [profewebcdi]="profewebcdi()"
+    [profecdi]="profecdi()" />
+
+    <div>
+        @for(categoria of profeweb?.categorias; track categoria.cdi) {
+            <div>
+                <h4 [innerHTML]="categoria.nombre"></h4>
+                <ul>
+                    @for(tema of categoria.temas; track tema.cdi) {
+                        <li [innerHTML]="tema.titulo"></li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+
+</section>
