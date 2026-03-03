@@ -11,7 +11,7 @@
             [nombrepermiso]="permiso?.nombre ?? ''"
             [icono]="permiso?.icono ?? ''"
             [idioma]="stateService.alumnoLogeado()?.idioma ?? null"
-            (clickIdiomaEmitter)="setIiomaSelected($event)"
+            (clickIdiomaEmitter)="setIidiomaSelected($event)"
             (clickEstadisticasEmitter)="navigateEstadisticas()" />
     </div>
 
@@ -41,7 +41,7 @@
 
                             @for(test of categoria.test; track test.cdi) {
                                 <div class="item_test">
-                                    <app-item-lista-test [test]="test" (clickTestEmitter)="getTestPredefinido($event)" />
+                                    <app-item-lista-test [test]="test" (clickTestEmitter)="getTestPredefinido($index)" />
                                 </div>
                             }
                         </div>

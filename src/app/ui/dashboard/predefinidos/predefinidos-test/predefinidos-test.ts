@@ -91,7 +91,7 @@ export class PredefinidosTest implements OnInit {
     })
   }
 
-  setIiomaSelected(index: number) {
+  setIidiomaSelected(index: number) {
     this.idiomaSelected.set(index);
   }
 

@@ -1,1 +1,17 @@
-<p>profeweb-lista-reproducciones works!</p>
+@defer (when listaReproducciones.length > 0) {
+<section id="section_profeweb_reproducciones">
+
+    <app-dashboard-app-bar [titulo]="'Profeweb'" [nivel]=1 (goBackEmitter)="navigateBack()" />
+
+    <ul>
+        @for (reproduccion of listaReproducciones; track $index) {
+            <li>
+                <p>{{ reproduccion.titulo }}</p>
+                <p>{{ reproduccion.fecha }}</p>
+                <p>{{ reproduccion.hora }}</p>
+            </li>
+        }
+    </ul>
+
+</section>
+}

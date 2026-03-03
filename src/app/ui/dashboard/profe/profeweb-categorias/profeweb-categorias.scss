@@ -19,10 +19,53 @@
         width: 100%;
     }
 
-    >div {
+    > div {
         width: 100%;
         flex: 1;
         overflow-y: auto;
-        border: 1px solid blue;
+        margin-top: 1rem;
+        // border: 1px solid blue;
+
+        div.contenedor_lista_test {
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 2px 8px 12px 8px;
+            border-bottom-left-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+            width: 96%;
+            margin: 2px auto 0 auto;
+
+            > ul {
+                list-style: none !important;
+                margin: 0 !important;
+                padding: 0.5rem 0 0.2rem 0 !important;
+
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                > li {
+                    width: 50%;
+
+                    img {
+                        vertical-align: middle;
+                        transition: opacity 0.2s ease;
+
+                        &:active {
+                            opacity: 0.5;
+                        }
+                    }
+                }
+            }
+        }
+
+        .item_categoria {
+            padding-bottom: 1rem;
+            // border: 1px solid red;
+        }
+
+        .item_test {
+            margin-top: 6px;
+        }
     }
 }

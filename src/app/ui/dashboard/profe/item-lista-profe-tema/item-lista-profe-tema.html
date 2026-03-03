@@ -1,0 +1,6 @@
+<section (click)="clickTema()" id="section_item_lista_profe_tema">
+
+    <p [innerHTML]="tema().titulo" [ngStyle]="{ color: (tema().reproducido === 0) ? '#394B94' : '#0075FF' }"></p>
+    <button (click)="showAlertTema($event)" mat-icon-button type="button"><mat-icon>info</mat-icon></button>
+
+</section>

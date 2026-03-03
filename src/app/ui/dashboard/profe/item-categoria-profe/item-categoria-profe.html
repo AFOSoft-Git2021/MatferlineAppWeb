@@ -1,0 +1,11 @@
+<section (click)="showTest()" id="section_item_categoria_profe">
+
+    <img [src]="icono()" #iconoPermiso (load)="iconoPermiso.style.opacity = '1'" alt="icono permiso">
+
+    <div>
+        <p [innerHTML]="nombre()"></p>
+        @if(numeroTemas() > 0) {<span>{{ numeroTemas() }} temas</span>}
+    </div>
+
+    <mat-icon>{{show() ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
+</section>

@@ -64,8 +64,6 @@ export class CabeceraProfe implements OnInit {
   }
 
   clickIdioma(index: number) {
-    console.log('clickIdioma', index);
-    
     this.idiomaSelected.set(index);
     this.clickIdiomaEmitter.emit(index);
   }
