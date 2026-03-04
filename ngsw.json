@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1772590266876,
+  "timestamp": 1772635604438,
   "index": "/MatferlineAppWeb/index.html",
   "assetGroups": [
     {
@@ -228,7 +228,7 @@
     "/MatferlineAppWeb/icons/icon-512x512.png": "1de182f76f7329dfa8f9fcdd1fdcdd695bea6a99",
     "/MatferlineAppWeb/icons/icon-72x72.png": "aa88a6096bd973be7f6d7a5489bfa6bc2463f8c4",
     "/MatferlineAppWeb/icons/icon-96x96.png": "7fb8f59c30ce2ff12c700321a0b39e14b3dc8f95",
-    "/MatferlineAppWeb/index.html": "2a0700b7ec1a26141c1f735e387bc3ca343f712e",
+    "/MatferlineAppWeb/index.html": "046c8931618cd3fc8f50c58274b6bec07eaff089",
     "/MatferlineAppWeb/main-ZSIMA6WS.js": "bea527a5f075c3ab5a66ec4229739b430bf6dcb1",
     "/MatferlineAppWeb/manifest.webmanifest": "a9aebec14b4c90d98d10d00bbc300b76c9c56874",
     "/MatferlineAppWeb/media/fondo_oscuro-VEPHGCFD.svg": "f5a102c786ceb6055ca49784c9f0bfe919013099",
