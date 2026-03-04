@@ -1,14 +1,18 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { DashboardAppBar } from "../../dashboard-app-bar/dashboard-app-bar";
 import { Router } from '@angular/router';
 import { StateService } from '../../../../data/repository/state.service';
 import { GetReproduccionesTemaProfeService } from '../../../../data/repository/getReproduccionesTemaProfe.service';
 import { DataGetProfeReproduccion } from '../../../../data/model/dataGetProfeReproduccion';
 import { DataProfeReproduccion } from '../../../../data/model/dataProfeReproduccion';
+import { ProfewebReproCabecera } from "../profeweb-repro-cabecera/profeweb-repro-cabecera";
+import { ProfewebReproTitulo } from "../profeweb-repro-titulo/profeweb-repro-titulo";
+import { ProfewebReproLista } from "../profeweb-repro-lista/profeweb-repro-lista";
+import { ProfewebReproCabeceraLista } from "../profeweb-repro-cabecera-lista/profeweb-repro-cabecera-lista";
 
 @Component({
   selector: 'app-profeweb-lista-reproducciones',
-  imports: [DashboardAppBar],
+  imports: [DashboardAppBar, ProfewebReproCabecera, ProfewebReproTitulo, ProfewebReproLista, ProfewebReproCabeceraLista],
   templateUrl: './profeweb-lista-reproducciones.html',
   styleUrl: './profeweb-lista-reproducciones.scss',
 })
@@ -22,6 +26,7 @@ export class ProfewebListaReproducciones implements OnInit {
   nombreProfe = '';
   nombreProfeweb = '';
   nombreCategoria = '';
+  indexCurso = 0;
   index = 0
   icono = '';
   cdicurso = 0;
@@ -29,6 +34,7 @@ export class ProfewebListaReproducciones implements OnInit {
   cdicategoria = 0;
 
   listaReproducciones: DataProfeReproduccion[] = [];
+  showListaReproducciones = signal(true);
 
   ngOnInit() {
     console.log(this.data());
@@ -36,11 +42,12 @@ export class ProfewebListaReproducciones implements OnInit {
     this.nombreProfe = DATA[0];
     this.nombreProfeweb = DATA[1];
     this.nombreCategoria = DATA[2];
-    this.index = parseInt(DATA[3]);
-    this.icono = DATA[4];
-    this.cdicurso = parseInt(DATA[5]);
-    this.cdiprofe = parseInt(DATA[6]);
-    this.cdicategoria = parseInt(DATA[7]);
+    this.indexCurso = parseInt(DATA[3]);
+    this.index = parseInt(DATA[4]);
+    this.icono = DATA[5];
+    this.cdicurso = parseInt(DATA[6]);
+    this.cdiprofe = parseInt(DATA[7]);
+    this.cdicategoria = parseInt(DATA[8]);
 
     this.getReproduccionesTemaProfe();
   }
@@ -89,6 +96,10 @@ export class ProfewebListaReproducciones implements OnInit {
         }
       }
     )
+  }
+
+  setShowListaReproducciones(show: boolean) {
+    this.showListaReproducciones.set(show);
   }
 
   navigateBack() {

@@ -3,7 +3,7 @@
     <app-dashboard-app-bar [titulo]="'Test Aleatorios'" [nivel]=0 />
 
     <div>
-        @for(aleatorio of aleatorios; track aleatorio.cdi) {
+        @for(aleatorio of aleatorios; track aleatorio.cdi; let indexCurso = $index) {
             <div>
                 <app-cabecera-curso [index]="$index" [curso]="aleatorio.nombre" [show]="showState()[$index]" (showPermisosEmitter)="showPermisos($index)" />
 
@@ -17,7 +17,7 @@
                                         [nombre]="permiso.nombre"
                                         [icono]="permiso.icono"
                                         [numeroCategorias]="0"
-                                        (clickPermisoEmitter)="gotoPermiso(aleatorio.cdi.toString(), $event)" />
+                                        (clickPermisoEmitter)="gotoPermiso(indexCurso, aleatorio.cdi.toString(), $event)" />
                                 </div>
                             }
                         </div>

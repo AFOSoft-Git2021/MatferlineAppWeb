@@ -3,7 +3,7 @@
     <app-dashboard-app-bar [titulo]="'Test Predefinidos'" [nivel]=0 />
 
     <div>
-        @for(predefinido of predefinidos; track predefinido.cdi) {
+        @for(predefinido of predefinidos; track predefinido.cdi; let indexCurso = $index) {
             <div>
                 <app-cabecera-curso [index]="$index" [curso]="predefinido.nombre" [show]="showState()[$index]" (showPermisosEmitter)="showPermisos($index)" />
 
@@ -17,7 +17,7 @@
                                         [nombre]="permiso.nombre"
                                         [icono]="permiso.icono"
                                         [numeroCategorias]="permiso.categorias.length"
-                                        (clickPermisoEmitter)="gotoPermiso(predefinido.cdi.toString(), $event)" />
+                                        (clickPermisoEmitter)="gotoPermiso(indexCurso, predefinido.cdi.toString(), $event)" />
                                 </div>
                             }
                         </div>

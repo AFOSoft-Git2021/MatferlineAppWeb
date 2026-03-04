@@ -1,0 +1,18 @@
+<section id="section_profeweb_repro_lista">
+
+    <div class="panel-content-wrapper" [class.is-open]="show()">
+        <div class="panel-content">
+            <div class="bloque_lista">
+                @for(repro of listaReproducciones(); track $index) {
+                <div>
+                    <app-profeweb-repro-lista-item
+                        [titulo]="repro.titulo"
+                        [fecha]="repro.fecha"
+                        [hora]="repro.hora" />
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</section>

@@ -3,15 +3,25 @@
 
     <app-dashboard-app-bar [titulo]="'Profeweb'" [nivel]=1 (goBackEmitter)="navigateBack()" />
 
-    <ul>
-        @for (reproduccion of listaReproducciones; track $index) {
-            <li>
-                <p>{{ reproduccion.titulo }}</p>
-                <p>{{ reproduccion.fecha }}</p>
-                <p>{{ reproduccion.hora }}</p>
-            </li>
-        }
-    </ul>
+    <app-profeweb-repro-cabecera
+        [nombreProfe]="nombreProfe"
+        [nombreProfeweb]="nombreProfeweb"
+        [indexCurso]="indexCurso"
+        [index]="index" />
+
+    <app-profeweb-repro-titulo />
+
+    <app-profeweb-repro-cabecera-lista
+        [iconoCategoria]="icono"
+        [nombreCategoria]="nombreCategoria"
+        [numeroReproducciones]="listaReproducciones.length"
+        (showListaEmitter)="setShowListaReproducciones($event)" />
+
+    <div>
+        <app-profeweb-repro-lista
+            [listaReproducciones]="listaReproducciones"
+            [show]="showListaReproducciones()" />
+    </div>
 
 </section>
 }

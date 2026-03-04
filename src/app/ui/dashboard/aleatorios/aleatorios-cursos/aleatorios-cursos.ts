@@ -27,12 +27,11 @@ export class AleatoriosCursos implements OnInit {
 
   showPermisos(index: number) {
     this.showState()[index] = !this.showState()[index];
-    console.log(this.showState()[index]);
   }
 
-  gotoPermiso(cdiCurso: string, cdiPermiso: string) {
-    console.log(`${cdiCurso} / ${cdiPermiso}`);
-    this.router.navigate(['/dashboard/aleatorios-test', cdiCurso, cdiPermiso]);
+  gotoPermiso(indexCurso: number, cdiCurso: string, cdiPermiso: string) {
+    console.log(`${indexCurso} / ${cdiCurso} / ${cdiPermiso}`);
+    this.router.navigate(['/dashboard/aleatorios-test', indexCurso, cdiCurso, cdiPermiso]);
   }
 
 }

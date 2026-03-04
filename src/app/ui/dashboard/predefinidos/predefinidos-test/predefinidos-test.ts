@@ -35,6 +35,7 @@ export class PredefinidosTest implements OnInit {
   public stateService = inject(StateService);
   private matSnackbar = inject(MatSnackBar);
 
+  indexColor = input.required<number>();
   cdicurso = input.required<string>();
   cdipermiso = input.required<string>();
   listaCategorias: PredefinidoPermisoCategoria[] = [];

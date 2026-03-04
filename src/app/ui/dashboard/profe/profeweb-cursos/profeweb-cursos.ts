@@ -30,10 +30,8 @@ export class ProfewebCursos implements OnInit {
     console.log(this.showState()[index]);
   }
 
-  gotoProfeweb(index: number, profewebcdi: number, profewebid: string, profecdi: number) {
-    console.log('gotoProfeweb');
-    
-    this.router.navigate(['/dashboard/profeweb-categorias', index, profewebcdi, profewebid, profecdi]);
+  gotoProfeweb(indexCurso: number, index: number, profewebcdi: number, profewebid: string, profecdi: number) {
+    this.router.navigate(['/dashboard/profeweb-categorias', indexCurso, index, profewebcdi, profewebid, profecdi]);
   }
 
 }

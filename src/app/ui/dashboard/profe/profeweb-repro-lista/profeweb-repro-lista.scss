@@ -1,0 +1,16 @@
+#section_profeweb_repro_lista {
+   width: 100%;
+
+    div.bloque_lista {
+        background-color: rgba($color: #fff, $alpha: .5);
+        width: 94%;
+        margin: 2px auto 1rem auto;
+        padding: 6px;
+        border-bottom-left-radius: .6rem;
+        border-bottom-right-radius: .6rem;
+
+        >div:not(:last-child) {
+            margin-bottom: 6px;
+        }
+    }
+}

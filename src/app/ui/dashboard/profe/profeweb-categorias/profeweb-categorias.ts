@@ -19,6 +19,7 @@ export class ProfewebCategorias implements OnInit {
   private router = inject(Router);
   public stateService = inject(StateService);
 
+  indexCurso = input.required({ transform: numberAttribute });
   index = input.required({ transform: numberAttribute });
   profewebcdi = input.required({ transform: numberAttribute });
   profewebid = input.required<string>();
@@ -71,7 +72,7 @@ export class ProfewebCategorias implements OnInit {
 
   navigateEstadisticas(cdicategoria: number, nombrecategoria: string, iconocategoria: string) {
     const ICONO = (iconocategoria.length > 0) ? iconocategoria : (this.profeweb?.logotipo ?? '')
-    const DATA = `${this.nombreProfe()}***${this.profeweb?.nombre}***${nombrecategoria}***${this.index()}***${ICONO}***${this.profewebcdi()}***${this.profeweb?.cdi}***${cdicategoria}`;
+    const DATA = `${this.nombreProfe()}***${this.profeweb?.nombre}***${nombrecategoria}***${this.indexCurso()}***${this.index()}}***${ICONO}***${this.profewebcdi()}***${this.profeweb?.cdi}***${cdicategoria}`;
     this.router.navigate(['/dashboard/profeweb-lista-reproducciones', DATA]);
   }
 

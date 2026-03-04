@@ -41,6 +41,7 @@ export class AleatoriosTest implements OnInit {
   public stateService = inject(StateService);
   private matSnackbar = inject(MatSnackBar);
 
+  indexColor = input.required<number>();
   cdicurso = input.required<string>();
   cdipermiso = input.required<string>();
   showState = signal(true);

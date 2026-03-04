@@ -17,18 +17,18 @@ export const routes: Routes = [
             { path: '', redirectTo: 'predefinidos', pathMatch: 'full' },
             { path: 'predefinidos', loadComponent: () => import('../ui/dashboard/predefinidos/predefinidos-cursos/predefinidos-cursos').then(m => m.PredefinidosCursos) },
             {
-                path: 'predefinidos-categorias/:cdicurso/:cdipermiso',
+                path: 'predefinidos-categorias/:indexColor/:cdicurso/:cdipermiso',
                 loadComponent: () => import('../ui/dashboard/predefinidos/predefinidos-test/predefinidos-test').then(m => m.PredefinidosTest)
             },
             { path: 'aleatorios', loadComponent: () => import('../ui/dashboard/aleatorios/aleatorios-cursos/aleatorios-cursos').then(m => m.AleatoriosCursos) },
             {
-                path: 'aleatorios-test/:cdicurso/:cdipermiso',
+                path: 'aleatorios-test/:indexColor/:cdicurso/:cdipermiso',
                 loadComponent: () => import('../ui/dashboard/aleatorios/aleatorios-test/aleatorios-test').then(m => m.AleatoriosTest)
             },
             { path: 'estadisticas', loadComponent: () => import('../ui/dashboard/estadisticas/estadisticas/estadisticas').then(m => m.Estadisticas) },
             { path: 'profeweb', loadComponent: () => import('../ui/dashboard/profe/profeweb-cursos/profeweb-cursos').then(m => m.ProfewebCursos) },
             {
-                path: 'profeweb-categorias/:index/:profewebcdi/:profewebid/:profecdi',
+                path: 'profeweb-categorias/:indexCurso/:index/:profewebcdi/:profewebid/:profecdi',
                 loadComponent: () => import('../ui/dashboard/profe/profeweb-categorias/profeweb-categorias').then(m => m.ProfewebCategorias)
             },
             { path: 'profeweb-lista-reproducciones/:data', loadComponent: () => import('../ui/dashboard/profe/profeweb-lista-reproducciones/profeweb-lista-reproducciones').then(m => m.ProfewebListaReproducciones) },

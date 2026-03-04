@@ -3,7 +3,7 @@
     <app-dashboard-app-bar [titulo]="'Profeweb'" [nivel]=0 />
 
     <div>
-        @for(profeweb of profewebList; track profeweb.cdi) {
+        @for(profeweb of profewebList; track profeweb.cdi; let indexCurso = $index) {
             <div>
                 <app-cabecera-curso
                     [index]="$index"
@@ -19,7 +19,7 @@
                                     <app-item-profeweb-profe
                                         [index]="$index"
                                         [nombreProfe]="profe.nombre"
-                                        (clickProfeEmitter)="gotoProfeweb($index, profeweb.cdi, profeweb.id, profe.cdi)" />
+                                        (clickProfeEmitter)="gotoProfeweb(indexCurso, $index, profeweb.cdi, profeweb.id, profe.cdi)" />
                                 </div>
                             }
                         </div>

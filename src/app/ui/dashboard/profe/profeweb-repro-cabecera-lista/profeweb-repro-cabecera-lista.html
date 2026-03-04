@@ -1,0 +1,8 @@
+<section (click)="showListaReproducciones()" id="bloque_cabecera_lista">
+    <img [src]="iconoCategoria()" alt="icono">
+    <div>
+        <p [innerHTML]="nombreCategoria()"></p>
+        <p>{{numeroReproducciones()}} reproducciones</p>
+    </div>
+    <mat-icon>{{show() ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
+</section>

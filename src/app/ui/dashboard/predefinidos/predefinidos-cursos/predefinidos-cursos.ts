@@ -30,9 +30,9 @@ export class PredefinidosCursos implements OnInit {
     console.log(this.showState()[index]);
   }
 
-  gotoPermiso(cdiCurso: string, cdiPermiso: string) {
-    // console.log(`${cdiCurso} / ${cdiPermiso}`);    
-    this.router.navigate(['/dashboard/predefinidos-categorias', cdiCurso, cdiPermiso]);
+  gotoPermiso(indexCurso: number, cdiCurso: string, cdiPermiso: string) {
+    console.log(`${indexCurso} / ${cdiCurso} / ${cdiPermiso}`);    
+    this.router.navigate(['/dashboard/predefinidos-categorias', indexCurso, cdiCurso, cdiPermiso]);
   }
 
 }

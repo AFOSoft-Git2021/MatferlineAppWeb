@@ -1,0 +1,22 @@
+#section_profeweb_repro_cabecera {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: .6rem;
+    border-radius: .8rem;
+    padding: 10px 14px 12px 6px;
+
+    img {
+        width: 44px;
+    }
+
+    p {
+        margin: 0;
+
+        &:last-child {
+            font-size: .9rem;
+            color: black;
+        }
+    }
+}

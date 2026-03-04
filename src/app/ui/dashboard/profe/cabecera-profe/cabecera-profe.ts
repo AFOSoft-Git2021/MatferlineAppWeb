@@ -13,6 +13,7 @@ export class CabeceraProfe implements OnInit {
 
   private stateService = inject(StateService);
 
+  indexCurso = input.required({ transform: numberAttribute });
   index = input.required({ transform: numberAttribute });
   profewebcdi = input.required({ transform: numberAttribute });
   profecdi = input.required({ transform: numberAttribute });
@@ -31,10 +32,10 @@ export class CabeceraProfe implements OnInit {
   });
 
   indexColor = computed(() => {
-    if (this.index() > this.stateService.colorList.length) {
+    if (this.indexCurso() > this.stateService.colorList.length) {
       return Math.floor(Math.random() * this.stateService.colorList.length);
     } else {
-      return this.index();
+      return this.indexCurso();
     }
   });
   colorSet = computed(() => {

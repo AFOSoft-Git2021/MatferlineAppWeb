@@ -3,6 +3,7 @@
     <app-dashboard-app-bar [titulo]="'Profeweb'" [nivel]=1 (goBackEmitter)="navigateBack()" />
 
     <app-cabecera-profe
+        [indexCurso]="indexCurso()"
         [index]="index()"
         [profewebcdi]="profewebcdi()"
         [profecdi]="profecdi()"

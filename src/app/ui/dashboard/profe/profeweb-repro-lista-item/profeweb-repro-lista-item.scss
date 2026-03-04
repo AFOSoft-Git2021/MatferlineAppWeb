@@ -1,0 +1,31 @@
+#section_profeweb_repro_lista_item {
+
+    background-color: white;
+    border-radius: 8px;
+    padding: 6px;
+
+    >p {
+        margin: 0;
+        font-size: .9rem;
+
+        &:first-child {
+            color: black;
+            max-width: 360px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        &:last-child {
+            color: #a90094;
+            font-weight: 500;
+
+            img {
+                vertical-align: middle;
+                width: 22px;
+                margin-right: 4px;
+            }
+        }
+    }
+
+}

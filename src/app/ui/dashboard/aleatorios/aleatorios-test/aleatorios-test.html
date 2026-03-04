@@ -11,6 +11,7 @@
             [nombrepermiso]="permiso?.nombre ?? ''"
             [icono]="permiso?.icono ?? ''"
             [idioma]="stateService.alumnoLogeado()?.idioma ?? null"
+            [index]="indexColor()"
             (clickIdiomaEmitter)="setIiomaSelected($event)"
             (clickEstadisticasEmitter)="navigateEstadisticas()" />
     </div>

@@ -4,14 +4,24 @@
     animation: fade 0.5s ease;
     width: 100%;
     height: 100%;
-    overflow-y: auto;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    border: 1px solid blue;
+    // border: 1px solid blue;
 
-    app-dashboard-app-bar {
+    app-dashboard-app-bar,
+    app-profeweb-repro-cabecera,
+    app-profeweb-repro-titulo,
+    app-profeweb-repro-lista,
+    app-profeweb-repro-cabecera-lista {
         width: 100%;
+    }
+
+    > div {
+        width: 100%;
+        flex: 1;
+        overflow-y: auto;
+        // border: 1px solid blue;
     }
 }

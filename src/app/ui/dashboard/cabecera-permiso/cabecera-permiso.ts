@@ -20,6 +20,7 @@ export class CabeceraPermiso {
   nombrepermiso = input.required<string>();
   icono = input.required<string>();
   idioma = input.required<Idioma | null>();
+  index = input.required<number>();
 
   clickIdiomaEmitter = output<number>();
   clickEstadisticasEmitter = output();
@@ -31,10 +32,10 @@ export class CabeceraPermiso {
   });
 
   indexColor = computed(() => {
-    if (parseInt(this.cdicurso()) > this.stateService.colorList.length) {
+    if (this.index() > this.stateService.colorList.length) {
       return Math.floor(Math.random() * this.stateService.colorList.length);
     } else {
-      return parseInt(this.cdicurso()) - 1;
+      return this.index();
     }
   });
   colorSet = computed(() => {
