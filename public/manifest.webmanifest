@@ -1,7 +1,7 @@
 {
   "name": "matferline",
   "short_name": "matferline",
-  "description": "Aplicación Matferline",
+  "description": "Aplicación Matferline para alumnos",
   "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#0E6CF3",
