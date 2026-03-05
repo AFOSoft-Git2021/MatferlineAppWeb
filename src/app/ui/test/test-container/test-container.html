@@ -1,0 +1,23 @@
+@defer (when testLoaded()) {
+<section id="test_container_section">
+
+    <main>
+        <app-top-app-bar-logged [alumno]="alumno" />
+
+        <app-test-menu-header
+            [curso]="test.nombre_curso"
+            [permiso]="test.nombre_permiso"
+            [categoria]="test.nombre_categoria"
+            [test]="test.nombre_test"
+            [descripcion]="test.descripcion_test"
+            [chronoTimeOutState]="false"
+            (navigateBackEmitter)="navigateBack()" />
+
+        <!-- TODO: zona del test -->
+
+    </main>
+
+    <app-test-bottom-menu (clickOptionEmitter)="clickOptionBottomMenu($event)" />
+
+</section>
+}

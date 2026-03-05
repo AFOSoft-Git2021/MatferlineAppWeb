@@ -70,29 +70,19 @@ export class ProfewebListaReproducciones implements OnInit {
 
             if (response.body.reproducciones) {
 
-              // procesar response.body para crear la lista de reproducciones
+              // procesa response.body para crear la lista de reproducciones
               this.listaReproducciones = response.body.reproducciones;
 
             } else {
               console.log('response', response.body.message);
-              /* this.popUpConfirm(
-                'Atención',
-                response.body.message ?? 'Login incorrecto. Inténtalo de nuevo.',
-                1,
-                0
-              ) */
+              this.router.navigate(['concurrencia', response.body.message]);
             }
           }
         },
         error: (error) => {
           this.stateService.loadingSpinner.set(false);
           console.log('error: ', error.message);
-          /* this.popUpConfirm(
-            'Atención',
-            error.message ?? 'Login incorrecto. Inténtalo de nuevo.',
-            1,
-            0
-          ) */
+          this.router.navigate(['error']);
         }
       }
     )

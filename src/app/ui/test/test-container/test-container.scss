@@ -1,0 +1,32 @@
+@import "../../../../styles.scss";
+
+#test_container_section {
+    animation: fade 0.5s ease;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    app-top-app-bar-logged,
+    app-test-menu-header {
+        width: 100%;
+    }
+
+    main {
+        width: 100%;
+        padding: 1rem 1rem 0 1rem;
+    }
+
+    app-test-bottom-menu {
+        width: 100%;
+        position: relative;
+        width: 100%;
+        z-index: 9;
+        // border: 1px solid red;
+
+        /* Añade espacio extra si el dispositivo lo requiere */
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}

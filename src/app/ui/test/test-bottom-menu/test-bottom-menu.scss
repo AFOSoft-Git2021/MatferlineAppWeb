@@ -1,0 +1,23 @@
+#section_test_bottom_menu {
+    width: 100%;
+
+    ul {
+        list-style: none !important;
+        margin: 0 !important;
+        padding: 1rem 0 !important;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        background-color: #f3f8ff;
+
+        > li {
+            width: 20%;
+            text-align: center;
+
+            button {
+                color: #a90094;
+            }
+        }
+    }
+}

@@ -17,7 +17,7 @@
     </div>
 
     <div class="lista_categorias">
-        @for (categoria of listaCategorias; track categoria.cdicategoria) {
+        @for (categoria of listaCategorias; track categoria.cdicategoria; let indexCategoria = $index) {
             <div class="categoria">
                 <app-cabecera-categoria
                     [nombreCategoria]="categoria.nombre"
@@ -42,7 +42,7 @@
 
                             @for(test of categoria.test; track test.cdi) {
                                 <div class="item_test">
-                                    <app-item-lista-test [test]="test" (clickTestEmitter)="getTestPredefinido($index)" />
+                                    <app-item-lista-test [test]="test" (clickTestEmitter)="getTestPredefinido(indexCategoria, $index)" />
                                 </div>
                             }
                         </div>

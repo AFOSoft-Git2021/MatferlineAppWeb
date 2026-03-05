@@ -2,6 +2,7 @@ import { Injectable, signal } from '@angular/core'
 import { DeviceOrientation } from '../model/deviceOrientationEnum'
 import { Autoescuela } from '../model/autoescuela'
 import { Alumno } from '../model/alumno'
+import { DataTestPredefinido } from '../model/dataTestPredefinidos'
 
 @Injectable({
   providedIn: 'root',
@@ -38,6 +39,10 @@ export class StateService {
 
   // alumno logeado
   alumnoLogeado = signal<Alumno | null>(null)
+
+  // test predefinido seleccionado
+  testPredefinidoSelected = signal<DataTestPredefinido | null>(null)
+
 
 
 

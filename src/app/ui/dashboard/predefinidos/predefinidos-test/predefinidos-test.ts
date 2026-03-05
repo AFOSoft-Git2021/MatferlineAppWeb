@@ -12,6 +12,8 @@ import { CabeceraPermiso } from "../../cabecera-permiso/cabecera-permiso";
 import { BotonExamenEstudio } from "../../boton-examen-estudio/boton-examen-estudio";
 import { BotonSinAyuda } from "../../boton-sin-ayuda/boton-sin-ayuda";
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { DataTestPredefinido } from '../../../../data/model/dataTestPredefinidos';
+import { TipoTest } from '../../../../data/model/tipoTestEnum';
 
 @Component({
   selector: 'app-predefinidos-test',
@@ -44,6 +46,7 @@ export class PredefinidosTest implements OnInit {
   idiomaSelected = signal(0);
 
   nombreCurso = '';
+  idCurso = '';
   permiso: PredefinidoPermiso | null = null;
 
   ngOnInit() {
@@ -52,6 +55,7 @@ export class PredefinidosTest implements OnInit {
       for (const predefinido of PREDEFINIDOS) {
         if (predefinido.cdi.toString() === this.cdicurso()) {
           this.nombreCurso = predefinido.nombre;
+          this.idCurso = predefinido.id;
           for (const permiso of predefinido.permisos) {
             if (permiso.cdi.toString() === this.cdipermiso()) {
               this.permiso = permiso;
@@ -96,8 +100,30 @@ export class PredefinidosTest implements OnInit {
     this.idiomaSelected.set(index);
   }
 
-  getTestPredefinido(event: any) {
-    console.log(event);
+  getTestPredefinido(indexCategoria: number, indexTest: number) {
+    const CATEGORIA = this.listaCategorias[indexCategoria];
+    const TEST = CATEGORIA.test[indexTest];
+
+    const DATA: DataTestPredefinido = {
+      cdicurso: parseInt(this.cdicurso()),
+      nombre_curso: this.nombreCurso,
+      cdipermiso: parseInt(this.cdipermiso()),
+      nombre_permiso: this.permiso?.nombre ?? '',
+      cdicategoria: CATEGORIA.cdicategoria,
+      nombre_categoria: CATEGORIA.nombre,
+      cditest: TEST.cdi,
+      nombre_test: TEST.nombre,
+      descripcion_test: TEST.descripcion,
+      ayuda: CATEGORIA.ayuda,
+      autocorreccion: CATEGORIA.autocorreccion,
+      propia: CATEGORIA.propia,
+      id_curso: this.idCurso,
+      traducir: this.idiomaSelected() === 1 ? 1 : 0,
+      idioma: this.idiomaSelected() === 1 ? this.stateService.alumnoLogeado()?.idioma.code ?? '' : ''
+    }
+
+    this.stateService.testPredefinidoSelected.set(DATA);
+    this.router.navigate(['test', TipoTest.TestPredefinido]);
   }
 
 }
