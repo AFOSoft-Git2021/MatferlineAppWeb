@@ -1,0 +1,1 @@
+var a=(e=>(e.Ninguno="Ninguno",e.TestPredefinido="TestPredefinido",e.TestAleatorioExamen="TestAleatorioExamen",e.TestAleatorioPreguntasFalladas="TestAleatorioPreguntasFalladas",e.TestAleatorioTematico="TestAleatorioTematico",e))(a||{});export{a};
