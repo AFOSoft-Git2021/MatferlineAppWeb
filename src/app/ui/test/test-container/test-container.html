@@ -5,15 +5,53 @@
         <app-top-app-bar-logged [alumno]="alumno" />
 
         <app-test-menu-header
-            [curso]="test.nombre_curso"
+            [curso]="(tipo()=== TipoTest.TestPredefinido) ? test.nombre_curso : ''"
             [permiso]="test.nombre_permiso"
             [categoria]="test.nombre_categoria"
             [test]="test.nombre_test"
             [descripcion]="test.descripcion_test"
             [chronoTimeOutState]="false"
-            (navigateBackEmitter)="navigateBack()" />
+            (navigateBackEmitter)="checkNavigateBack()" />
 
-        <!-- TODO: zona del test -->
+        <div class="test_container_pregunta">
+            @if(modoCorreccion()) {<app-test-info-result />}
+            @else {<app-test-chrono
+                [numeroPregunta]="numeroPregunta()"
+                [chronoDisplayState]="'17:45'"
+                [isRunning]="chronoIsRunning()" />}
+
+            <div class="test_container_pregunta_contenido">
+                <div>
+                    <img
+                        #fotoPregunta (load)="fotoPregunta.style.opacity = '1'"
+                        [src]="(test.preguntas[numeroPregunta()].foto.length > 0) ? (BASE_STORAGE_PREGUNTAS + test.preguntas[numeroPregunta()].foto) : alumno?.autoescuela?.logotipo"
+                        alt="foto">
+                </div>
+
+                <h4 [innerHTML]="test.preguntas[numeroPregunta()].enunciado"></h4>
+
+                <ul>
+                    @for(respuesta of test.preguntas[numeroPregunta()].respuestas; track $index) {
+                    <li>
+                        <app-test-item-respuesta
+                            [index]="$index"
+                            [seleccion]="test.preguntas[numeroPregunta()].seleccion"
+                            [correcta]="respuesta.correcta"
+                            [respuesta]="respuesta.respuesta"
+                            [numeroRespuestas]="test.preguntas[numeroPregunta()].respuestas.length - 1"
+                            [autocorreccion]="dataTest.autocorreccion"
+                            [estadoAutoCorreccion]="(this.listCorregidasAutocorreccion.length > 0) ? (this.listCorregidasAutocorreccion[numeroPregunta()]) : false"
+                            [modoCorreccion]="dataTest.autocorreccion"
+                            (clickSeleccionEmitter)="setAnswerSelected($index)" />
+                    </li>
+                    }
+                </ul>
+
+                <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, ea! Non, voluptatibus dignissimos eligendi ullam eveniet ducimus repellendus mollitia ab similique laudantium ipsam? Recusandae et quaerat, nemo vitae aperiam molestias.</p> -->
+                <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, ea! Non, voluptatibus dignissimos eligendi ullam eveniet ducimus repellendus mollitia ab similique laudantium ipsam? Recusandae et quaerat, nemo vitae aperiam molestias.</p> -->
+                <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, ea! Non, voluptatibus dignissimos eligendi ullam eveniet ducimus repellendus mollitia ab similique laudantium ipsam? Recusandae et quaerat, nemo vitae aperiam molestias.</p> -->
+            </div>
+        </div>
 
     </main>
 

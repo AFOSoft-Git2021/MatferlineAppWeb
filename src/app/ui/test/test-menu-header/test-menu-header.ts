@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, input, output, signal } from '@angular/core';
+import { Component, effect, inject, input, linkedSignal, output, signal, untracked } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -22,8 +22,12 @@ export class TestMenuHeader {
   descripcion = input.required<string>();
   chronoTimeOutState = input<boolean>();
   navigateBackEmitter = output();
-
+  
   infoTestState = signal(false);
+
+  constructor() {
+    effect(() => { if (this.chronoTimeOutState()) { untracked(() => { this.dialog.closeAll() }) } })
+  }
 
   setInfoTestState(event: Event) {
     event.stopPropagation();
@@ -32,7 +36,6 @@ export class TestMenuHeader {
   }
 
   popUpInfoTest() {
-
     let mensajeCompleto = `
     Curso:${this.curso()}<br>
     Permiso: ${this.permiso()}<br>
@@ -60,8 +63,6 @@ export class TestMenuHeader {
       }
     );
   }
-
-
 
   navigateBack() {
     this.navigateBackEmitter.emit();

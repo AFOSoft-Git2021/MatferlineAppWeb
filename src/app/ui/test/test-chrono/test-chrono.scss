@@ -1,0 +1,39 @@
+#section_test_chrono {
+    width: 100%;
+    padding-bottom: .3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    span {
+        color: #CC0000;
+        font-weight: 600;
+        font-size: 1.3rem;
+        line-height: 1rem;
+        text-align: left;
+    }
+
+    div {
+        width: 40%;
+        background-color: #0053CC;
+        text-align: center;
+        color: white;
+        font-family: 'DateStamp', sans-serif;
+        font-size: 1.2rem;;
+        border-radius: 50px;
+        padding: 2px 0;
+    }
+
+    button {
+        color: #a90094;
+        background-color: #E8CAEF;
+    }
+}
+
+@font-face {
+  font-family: 'DateStamp';
+  src: url('../../../../../public/font/date_stamp_bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap; /* Ayuda a que el texto sea legible mientras carga */
+}

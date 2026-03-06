@@ -8,6 +8,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    // border: 1px solid blue;
 
     app-top-app-bar-logged,
     app-test-menu-header {
@@ -16,7 +17,71 @@
 
     main {
         width: 100%;
+        flex: 1;
         padding: 1rem 1rem 0 1rem;
+        overflow: hidden;
+        // border: 1px solid red;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        div.test_container_pregunta {
+            width: 100%;
+            flex: 1;
+            padding: 0.65rem;
+            margin: 0.5rem 0;
+            overflow-y: hidden;
+            background-color: white;
+            border: 2px solid #bcd7ff;
+            border-radius: 0.8rem;
+            color: gray;
+            // border: 1px solid blueviolet;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            div.test_container_pregunta_contenido {
+                flex: 1;
+                overflow-y: auto;
+
+                > div {
+                    width: 100%;
+
+                    &:first-child {
+                        text-align: center;
+                        transition: opacity 0.2s ease-in-out;
+
+                        &:active {
+                            opacity: 0.6;
+                        }
+
+                        img {
+                            height: 160px;
+                            max-width: 100%;
+                            border-radius: 0.5rem;
+                            opacity: 0;
+                            transition: opacity 0.3s ease-in-out;
+                        }
+                    }
+                }
+
+                > h4 {
+                    margin: 0;
+                    font-weight: 500;
+                    color: black;
+                    padding: 0.6rem 0;
+                    text-align: left;
+                }
+
+                > ul {
+                    list-style: none !important;
+                    padding: 0 !important;
+                    margin: 0 !important;
+                }
+            }
+        }
     }
 
     app-test-bottom-menu {

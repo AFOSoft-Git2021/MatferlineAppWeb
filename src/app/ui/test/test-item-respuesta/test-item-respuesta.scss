@@ -1,0 +1,35 @@
+#section_test_item_respuesta {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #d5e7ff;
+    transition: all 0.2s ease-in-out;
+
+    &:active {
+        opacity: .5;
+    }
+
+    span {
+        display: block;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        text-transform: uppercase;
+        background-color: #e2dbb1;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    p {
+        flex: 1;
+        color: #79889c;
+        margin: 0;
+    }
+}
