@@ -230,12 +230,18 @@ body {
 }
 
 
-/*******************************************/
-/* Customize Sanack Bar for the entire app */
-/*******************************************/
+/************************************************************/
+/* Customize Sanack Bar and Bottom Sheet for the entire app */
+/************************************************************/
 :root {
   @include mat.snack-bar-overrides((
     button-color: white,
     container-color: $ButtonMagenta,
   ))
+}
+
+// Customize the entire app. Change :root to your selector if you want to scope the styles.
+::ng-deep .mat-bottom-sheet-container {
+  border-top-left-radius: 32px;
+  border-top-right-radius: 32px;
 }

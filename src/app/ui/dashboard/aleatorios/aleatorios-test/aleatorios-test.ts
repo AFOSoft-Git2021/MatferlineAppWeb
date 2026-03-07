@@ -95,7 +95,7 @@ export class AleatoriosTest implements OnInit {
     this.idiomaSelected.set(index);
   }
 
-  getTestAleatorio(event: any , tipo: number) {
-    console.log(event + '/' + tipo);
+  getTestAleatorio(autocorreccion: any , tipo: number) {
+    console.log(tipo !== 2 ? autocorreccion : this.autocorreccionState() + '/' + tipo);
   }
 }

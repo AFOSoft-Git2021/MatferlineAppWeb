@@ -1,0 +1,27 @@
+#section_test_bottomsheet_ayuda {
+    padding: 1.6rem;
+    text-align: center;
+
+    img {
+        vertical-align: middle;
+        width: 100px;
+        padding-bottom: 1rem;
+    }
+
+    h4 {
+        color: black;
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin: 0;
+        padding-bottom: 1rem;
+
+        span {
+            color: #CC0000;
+        }
+    }
+
+    div {
+        text-align: left;
+        line-height: 1.2rem;
+    }
+}

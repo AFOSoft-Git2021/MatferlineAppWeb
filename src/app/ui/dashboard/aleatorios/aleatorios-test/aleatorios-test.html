@@ -61,7 +61,7 @@
 
                         @for(categoria of permiso?.test_tematicos?.categorias ?? []; track categoria.cdi) {
                         <div class="item_test">
-                            <app-item-lista-test-aleatorio [categoria]="categoria" (clickTestEmitter)="getTestAleatorio($event, -1)" />
+                            <app-item-lista-test-aleatorio [categoria]="categoria" (clickTestEmitter)="getTestAleatorio($event, 2)" />
                         </div>
                         }
                     </div>

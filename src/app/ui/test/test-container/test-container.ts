@@ -11,15 +11,25 @@ import { TestBottomMenu } from "../test-bottom-menu/test-bottom-menu";
 import { TestMenuHeader } from "../test-menu-header/test-menu-header";
 import { MatDialog } from '@angular/material/dialog';
 import { PopupConfirmComponent } from '../../shared/popup-confirm/popup-confirm.component';
-import { TestPregunta } from '../../../data/model/testPregunta';
 import { environment } from '../../../../environments/environment';
 import { TestItemRespuesta } from "../test-item-respuesta/test-item-respuesta";
 import { TestChrono } from "../test-chrono/test-chrono";
 import { TestInfoResult } from "../test-info-result/test-info-result";
+import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { TestBottomsheetAyuda } from '../../test-bottomsheet-ayuda/test-bottomsheet-ayuda';
+import { TestBottomsheetBuscar } from '../../test-bottomsheet-buscar/test-bottomsheet-buscar';
+import { TestPregunta } from '../../../data/model/testPregunta';
 
 @Component({
   selector: 'app-test-container',
-  imports: [TopAppBarLogged, TestBottomMenu, TestMenuHeader, TestItemRespuesta, TestChrono, TestInfoResult],
+  imports: [
+    TopAppBarLogged,
+    TestBottomMenu,
+    MatBottomSheetModule,
+    TestMenuHeader,
+    TestItemRespuesta,
+    TestChrono,
+    TestInfoResult],
   templateUrl: './test-container.html',
   styleUrl: './test-container.scss',
 })
@@ -29,6 +39,7 @@ export class TestContainer implements OnInit {
   private getTestPredefinidoService = inject(GetTestPredefinidoService);
   private router = inject(Router);
   private dialog = inject(MatDialog);
+  private bottomSheet = inject(MatBottomSheet);
   public TipoTest = TipoTest;
 
   tipo = input.required<TipoTest>();
@@ -120,10 +131,10 @@ export class TestContainer implements OnInit {
   clickOptionBottomMenu(option: number) {
     switch (option) {
       case 1:
-        // TODO: mostrar ayuda
+        this.openBottomSheetAyuda()
         break;
       case 2:
-        // mostrar menu preguntas
+        this.openBottomSheetBuscar()
         break;
       case 3:
         if (this.numeroPregunta() > 0) { this.numeroPregunta.set(this.numeroPregunta() - 1) }
@@ -135,6 +146,32 @@ export class TestContainer implements OnInit {
         // TODO: corregir
         break;
     }
+  }
+
+
+
+  /****************/
+  /* BOTTOM SHEET */
+  /****************/
+  openBottomSheetAyuda() {
+    this.bottomSheet.open(TestBottomsheetAyuda, {
+      data: {
+        numeroPregunta: this.numeroPregunta() + 1,
+        txtAyuda: this.test.preguntas[this.numeroPregunta()].ayuda
+      }
+    })
+  }
+
+  openBottomSheetBuscar() {
+    const SHEET = this.bottomSheet.open(TestBottomsheetBuscar, {
+      data: {
+        preguntasTest: this.test.preguntas as TestPregunta[]
+      }
+    })
+
+    SHEET.afterDismissed().subscribe(
+      (respuesta) => { if (respuesta) { this.numeroPregunta.set(respuesta.pregunta) } }
+    )
   }
 
 

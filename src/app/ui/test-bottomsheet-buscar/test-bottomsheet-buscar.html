@@ -1,0 +1,11 @@
+<section id="section_test_bottomsheet_buscar">
+
+    <h4>Elige una pregunta</h4>
+
+    <div>
+        @for (preguntas of data.preguntasTest; track $index) {
+            <span (click)="cerrar($index)">{{$index + 1}}</span>
+        }
+    </div>
+
+</section>

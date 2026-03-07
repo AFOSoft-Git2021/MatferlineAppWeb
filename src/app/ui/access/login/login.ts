@@ -65,8 +65,11 @@ export class Login implements OnInit {
 
             if (response.body.cdialumno) {
 
-              // procesar response.body para crear el objeto alumno y navegar a dashboard
+              // inicializar las dos variables de localstorage
               this.stateService.token = response.body.token;
+              this.stateService.showInfoModoTest = '1';
+
+              // procesar response.body para crear el objeto alumno y navegar a dashboard
               this.stateService.alumnoLogeado.set(response.body);
               this.router.navigate(['enter']);
 

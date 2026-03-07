@@ -53,6 +53,9 @@ export class StateService {
   set token(token: string) { localStorage.setItem('token', token) }
   get token(): string | null { return localStorage.getItem('token') }
 
+  set showInfoModoTest(state: string) { localStorage.setItem('showInfoModoTest', state) }
+  get showInfoModoTest(): string | null { return localStorage.getItem('showInfoModoTest') }
+
   // reset en login
   resetData() {
     this.clearLocalStorageStorage()
