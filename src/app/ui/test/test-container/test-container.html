@@ -7,9 +7,9 @@
         <app-test-menu-header
             [curso]="(tipo()=== TipoTest.TestPredefinido) ? test.nombre_curso : ''"
             [permiso]="test.nombre_permiso"
-            [categoria]="test.nombre_categoria"
+            [categoria]="(tipo()=== TipoTest.TestPredefinido) ? test.nombre_categoria : tipo()"
             [test]="test.nombre_test"
-            [descripcion]="test.descripcion_test"
+            [descripcion]="(tipo()=== TipoTest.TestPredefinido) ? test.descripcion_test : test.descripcion_categoria"
             [chronoTimeOutState]="false"
             (navigateBackEmitter)="checkNavigateBack()" />
 
@@ -55,7 +55,15 @@
 
     </main>
 
-    <app-test-bottom-menu (clickOptionEmitter)="clickOptionBottomMenu($event)" />
+    <app-test-bottom-menu
+        [ayuda]="test.ayuda"
+        [autocorreccion]="test.autocorreccion"
+        [modoCorreccion]="modoCorreccion()"
+        (clickOptionEmitter)="clickOptionBottomMenu($event)" />
 
 </section>
+
+<!-- @if (showInfoModoTest() && showInfoModoTest()?.toString() === '1') { -->
+<app-test-info-modo-test [autocorreccion]="test.autocorreccion" (abandonarEmitter)="navigateBack()" />
+<!-- } -->
 }

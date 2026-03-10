@@ -1,4 +1,4 @@
-import { Component, input, OnInit, output, signal } from '@angular/core';
+import { Component, computed, input, OnInit, output, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Servicio } from '../../../data/model/servicioEnum';
@@ -13,9 +13,28 @@ import { CommonModule } from '@angular/common';
 export class DashboardBottomNavigation implements OnInit {
 
   public Servicio = Servicio;
-  servicioSeleccionado = signal(0);
+  servicioSeleccionado = input.required<Servicio>();
   serviciosDisponibles = input.required<Servicio[]>();
   optionBottomMenuEmitter = output<Servicio>();
+
+  servicioActual = computed(() => {
+    let indexServicio = 0;
+    switch (this.servicioSeleccionado()) {
+      case Servicio.TestPredefinidos:
+        indexServicio = 0;
+        break;
+
+      case Servicio.TestAleatorios:
+        indexServicio = 1;
+        break;
+
+      case Servicio.Profeweb:
+        indexServicio = 2;
+        break;
+    }
+    return indexServicio;
+  })
+
   listaIconos: string[] = [];
 
   ngOnInit() {
@@ -36,8 +55,7 @@ export class DashboardBottomNavigation implements OnInit {
     })
   }
 
-  gotoServicio(servicio: Servicio, index: number) {
-    this.servicioSeleccionado.set(index);
+  gotoServicio(servicio: Servicio) {
     this.optionBottomMenuEmitter.emit(servicio);
   }
 

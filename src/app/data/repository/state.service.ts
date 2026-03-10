@@ -3,6 +3,8 @@ import { DeviceOrientation } from '../model/deviceOrientationEnum'
 import { Autoescuela } from '../model/autoescuela'
 import { Alumno } from '../model/alumno'
 import { DataTestPredefinido } from '../model/dataTestPredefinidos'
+import { DataTestAleatorio } from '../model/dataTestAleatorio'
+import { Servicio } from '../model/servicioEnum'
 
 @Injectable({
   providedIn: 'root',
@@ -40,8 +42,14 @@ export class StateService {
   // alumno logeado
   alumnoLogeado = signal<Alumno | null>(null)
 
+  // servicio seleccionado
+  serviceSelected = signal<Servicio>(Servicio.TestPredefinidos)
+
   // test predefinido seleccionado
   testPredefinidoSelected = signal<DataTestPredefinido | null>(null)
+
+  // test aleatorio seleccionado
+  testAleatorioSelected = signal<DataTestAleatorio | null>(null)
 
 
 

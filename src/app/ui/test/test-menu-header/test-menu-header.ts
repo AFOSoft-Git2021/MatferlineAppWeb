@@ -36,11 +36,12 @@ export class TestMenuHeader {
   }
 
   popUpInfoTest() {
+    const descripcion = this.descripcion() ? `Descripción: ${this.descripcion()}` : ''; 
     let mensajeCompleto = `
     Curso:${this.curso()}<br>
     Permiso: ${this.permiso()}<br>
     Categoría: ${this.categoria()}<br>
-    Descripción: ${this.descripcion()}`;
+    ${descripcion}`;
 
     const dialogRef = this.dialog.open(PopupConfirmComponent, {
       disableClose: true,

@@ -25,7 +25,7 @@
                 [ayuda]="(permiso?.test_examen?.ayuda === 1) ? true : false"
                 [estudio]="(permiso?.test_examen?.autocorreccion === 1) ? true : false"
                 (clickAyudaEmitter)="showInfoAyudaCategoria()"
-                (onClickEmitter)="getTestAleatorio($event, 0)" />
+                (onClickEmitter)="getTestAleatorio($event, 0, null)" />
 
             <!-- boton falladas -->
             <app-boton-test-aleatorio
@@ -33,7 +33,7 @@
                 [ayuda]="true"
                 [estudio]="true"
                 (clickAyudaEmitter)="showInfoAyudaCategoria()"
-                (onClickEmitter)="getTestAleatorio($event, 1)" />
+                (onClickEmitter)="getTestAleatorio($event, 1, null)" />
         </div>
 
         @if ((permiso?.test_tematicos?.categorias?.length ?? 0) > 0) {
@@ -61,7 +61,7 @@
 
                         @for(categoria of permiso?.test_tematicos?.categorias ?? []; track categoria.cdi) {
                         <div class="item_test">
-                            <app-item-lista-test-aleatorio [categoria]="categoria" (clickTestEmitter)="getTestAleatorio($event, 2)" />
+                            <app-item-lista-test-aleatorio [categoria]="categoria" (clickTestEmitter)="getTestAleatorio($event, 2, categoria)" />
                         </div>
                         }
                     </div>

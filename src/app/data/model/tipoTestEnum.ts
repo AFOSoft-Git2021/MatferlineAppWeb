@@ -1,7 +1,7 @@
 export enum TipoTest {
     Ninguno = 'Ninguno',
-    TestPredefinido = 'TestPredefinido',
-    TestAleatorioExamen = 'TestAleatorioExamen',
-    TestAleatorioPreguntasFalladas = 'TestAleatorioPreguntasFalladas',
-    TestAleatorioTematico = 'TestAleatorioTematico',
+    TestPredefinido = 'Test Predefinido',
+    TestAleatorioExamen = 'Test Aleatorio de Examen',
+    TestAleatorioPreguntasFalladas = 'Test Aleatorio de Preguntas Falladas',
+    TestAleatorioTematico = 'Test Aleatorio Temático',
 }

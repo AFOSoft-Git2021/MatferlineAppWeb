@@ -5,7 +5,7 @@
 
     <div><router-outlet /></div>
 
-    <app-dashboard-bottom-navigation [serviciosDisponibles]="listaServicios" (optionBottomMenuEmitter)="navigateService($event)" />
+    <app-dashboard-bottom-navigation [servicioSeleccionado]="stateService.serviceSelected()" [serviciosDisponibles]="listaServicios" (optionBottomMenuEmitter)="navigateService($event)" />
 
 </section>
 }

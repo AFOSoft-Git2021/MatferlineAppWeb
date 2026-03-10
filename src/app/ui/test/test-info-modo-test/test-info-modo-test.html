@@ -1,0 +1,31 @@
+<section id="section_test_info_modo_test">
+
+    <span></span>
+
+    <div>
+        <div>
+            <img [src]="autocorreccion() ? 'svg/image_test_estudio.svg' : 'svg/image_test_examen.svg'" alt="logo">
+            <p>¡ Test de {{autocorreccion() ? 'estudio' : 'examen'}} !</p>
+            <p>
+                {{autocorreccion() ? 'En esta modalidad, la corrección se\nhace por cada pregunta.' : 'En esta modalidad, la corrección se\nhace sobre el test completo.'}}
+            </p>
+            <p>
+                {{autocorreccion() ? 'Selecciona tu respuesta y pulsa\nel botón de corrección.' : 'Contesta todas las preguntas y\npulsa el botón de corrección.'}}
+            </p>
+        </div>
+
+        <div>
+            <button class="button_orange" mat-flat-button type="button">
+                Comenzar
+                <mat-icon>flag</mat-icon>
+            </button>
+            <button (click)="abandonar()" class="button_orange_reverse" mat-flat-button type="button">
+                Abandonar
+                <mat-icon>open_in_new</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <p><mat-slide-toggle class="custom-slide-toggle" labelPosition="before">No volver a mostrar este aviso</mat-slide-toggle></p>
+    
+</section>

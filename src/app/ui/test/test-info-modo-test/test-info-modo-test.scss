@@ -1,0 +1,71 @@
+@import "../../../../styles.scss";
+
+#section_test_info_modo_test {
+    animation: fade 0.5s ease;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    left: 0;
+    top: 0;
+    background-color: rgba($color: #ecefd5, $alpha: 0.95);
+    z-index: 10;
+
+    > div {
+        width: 100%;
+        text-align: center;
+
+        img {
+            vertical-align: middle;
+            width: 82%;
+        }
+
+        p {
+            margin: 0 auto;
+            font-weight: 500;
+            width: 70%;
+
+            &:nth-child(2) {
+                font-size: 1.4rem;
+                color: $ButtonMagenta;
+                padding-top: 1.6rem;
+            }
+
+            &:nth-child(3) {
+                color: black;
+                padding: 1.2rem 0;
+            }
+
+            &:last-child {
+                color: red;
+            }
+        }
+
+        >div:last-child {
+            padding-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+
+            button {
+                width: 50%;
+            }
+        }
+    }
+
+    > p {
+        width: 100%;
+        text-align: center;
+        display: block;
+        margin: 0;
+        background-color: #e4ddff;
+        color: #7A57CA !important;
+        padding: 1rem 0;
+        font-size: 2rem !important;
+    }
+}

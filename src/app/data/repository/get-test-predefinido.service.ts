@@ -12,6 +12,7 @@ export class GetTestPredefinidoService {
   private url = environment.BASE_URL;
 
   getTestPredefinido(data: DataTestPredefinido): Observable<HttpResponse<any>> {
+    console.log('getTestPredefinido', data);
 
     const formData = new FormData();
     formData.append('json', JSON.stringify(data));

@@ -14,7 +14,7 @@ import { Alumno } from '../../../data/model/alumno';
 })
 export class DashboardContainer implements OnInit {
 
-  private stateService = inject(StateService);
+  public stateService = inject(StateService);
   private router = inject(Router);
   alumno: (Alumno | null) = null;
   listaServicios: Servicio[] = [];
@@ -26,10 +26,10 @@ export class DashboardContainer implements OnInit {
       if (this.alumno.predefinidos && this.alumno.predefinidos.length > 0) {
         this.listaServicios.push(Servicio.TestPredefinidos);
       }
-       if (this.alumno.aleatorios && this.alumno.aleatorios.length > 0) {
+      if (this.alumno.aleatorios && this.alumno.aleatorios.length > 0) {
         this.listaServicios.push(Servicio.TestAleatorios);
       }
-       if (this.alumno.profeweb && this.alumno.profeweb.length > 0) {
+      if (this.alumno.profeweb && this.alumno.profeweb.length > 0) {
         this.listaServicios.push(Servicio.Profeweb);
       }
     }
@@ -37,17 +37,22 @@ export class DashboardContainer implements OnInit {
   }
 
   navigateService(servicio: Servicio) {
+    this.stateService.serviceSelected.set(servicio);
+    let route = '';
+
     switch (servicio) {
       case Servicio.TestAleatorios:
-        this.router.navigate(['dashboard/aleatorios']);
+        route = 'aleatorios'
         break;
       case Servicio.TestPredefinidos:
-        this.router.navigate(['dashboard/predefinidos']);
+        route = 'predefinidos'
         break;
       case Servicio.Profeweb:
-        this.router.navigate(['dashboard/profeweb']);
+        route = 'profeweb'
         break;
     }
+
+    this.router.navigate([`dashboard/${route}`]);
   }
 
 }

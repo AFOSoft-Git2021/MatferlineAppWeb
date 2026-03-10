@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, OnInit, signal, untracked } from '@angular/core';
+import { Component, computed, effect, inject, input, OnInit, signal, untracked } from '@angular/core';
 import { Router } from '@angular/router';
 import { StateService } from '../../../data/repository/state.service';
 import { GetTestPredefinidoService } from '../../../data/repository/get-test-predefinido.service';
@@ -16,9 +16,13 @@ import { TestItemRespuesta } from "../test-item-respuesta/test-item-respuesta";
 import { TestChrono } from "../test-chrono/test-chrono";
 import { TestInfoResult } from "../test-info-result/test-info-result";
 import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
-import { TestBottomsheetAyuda } from '../../test-bottomsheet-ayuda/test-bottomsheet-ayuda';
-import { TestBottomsheetBuscar } from '../../test-bottomsheet-buscar/test-bottomsheet-buscar';
+import { TestBottomsheetBuscar } from '../test-bottomsheet-buscar/test-bottomsheet-buscar';
 import { TestPregunta } from '../../../data/model/testPregunta';
+import { GetTestAleatorioService } from '../../../data/repository/get-test-aleatorio.service';
+import { DataTestAleatorio } from '../../../data/model/dataTestAleatorio';
+import { TestAleatorio } from '../../../data/model/testAleatorio';
+import { TestBottomsheetAyuda } from '../test-bottomsheet-ayuda/test-bottomsheet-ayuda';
+import { TestInfoModoTest } from "../test-info-modo-test/test-info-modo-test";
 
 @Component({
   selector: 'app-test-container',
@@ -29,7 +33,9 @@ import { TestPregunta } from '../../../data/model/testPregunta';
     TestMenuHeader,
     TestItemRespuesta,
     TestChrono,
-    TestInfoResult],
+    TestInfoResult,
+    TestInfoModoTest
+  ],
   templateUrl: './test-container.html',
   styleUrl: './test-container.scss',
 })
@@ -37,6 +43,7 @@ export class TestContainer implements OnInit {
 
   private stateService = inject(StateService);
   private getTestPredefinidoService = inject(GetTestPredefinidoService);
+  private getTestAleatorioService = inject(GetTestAleatorioService);
   private router = inject(Router);
   private dialog = inject(MatDialog);
   private bottomSheet = inject(MatBottomSheet);
@@ -48,6 +55,10 @@ export class TestContainer implements OnInit {
   chronoIsRunning = signal(false);
   numeroPregunta = signal(0);
   modoCorreccion = signal(false);
+  showInfoModoTest = computed(() => {
+    console.log(this.stateService.showInfoModoTest);
+    return this.stateService.showInfoModoTest
+  })
 
   alumno: (Alumno | null) = null;
   test: any;
@@ -68,6 +79,10 @@ export class TestContainer implements OnInit {
   }
 
   ngOnInit() {
+    this.startTest()
+  }
+
+  startTest() {
     console.log(this.tipo());
 
     this.alumno = this.stateService.alumnoLogeado();
@@ -78,6 +93,13 @@ export class TestContainer implements OnInit {
         this.getTestPredefinido(this.dataTest);
       } else {
         this.router.navigate(['/dashboard/predefinidos']);
+      }
+    } else {
+      this.dataTest = this.stateService.testAleatorioSelected() as DataTestAleatorio;
+      if (this.dataTest) {
+        this.getTestAleatorio(this.dataTest);
+      } else {
+        this.router.navigate(['/dashboard/aleatorios']);
       }
     }
   }
@@ -97,6 +119,38 @@ export class TestContainer implements OnInit {
 
               this.test = response.body as TestPredefinido;
               this.stateService.testPredefinidoSelected.set(null);
+              this.testLoaded.set(true);
+
+            } else {
+              console.log('response', response.body.message);
+              this.router.navigate(['concurrencia', response.body.message]);
+            }
+          }
+        },
+        error: (error) => {
+          this.stateService.loadingSpinner.set(false);
+          console.log('error: ', error.message);
+          this.router.navigate(['error']);
+        }
+      }
+    )
+  }
+
+  // descarga un test aleatorio
+  getTestAleatorio(dataTestAleatorio: DataTestAleatorio) {
+    this.stateService.loadingSpinner.set(true);
+    this.getTestAleatorioService.getTestAleatorio(dataTestAleatorio).subscribe(
+      {
+        next: (response) => {
+          this.stateService.loadingSpinner.set(false);
+
+          if (response.status === 200) {
+            console.log(response.body);
+
+            if (response.body.tipo_test) {
+
+              this.test = response.body as TestAleatorio;
+              this.stateService.testAleatorioSelected.set(null);
               this.testLoaded.set(true);
 
             } else {
@@ -175,11 +229,12 @@ export class TestContainer implements OnInit {
   }
 
 
+
   /*************************/
   /*   GESTION DE POPUPS   */
   /*************************/
 
-  // 1. Alert avandonar el test
+  // 1. Alert abandonar el test
   checkNavigateBack() {
     if (!this.modoCorreccion()) {
       this.popUpNavigateBack();
