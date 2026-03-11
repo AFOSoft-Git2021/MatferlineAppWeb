@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, input, OnInit, signal, untracked } from '@angular/core';
+import { Component, computed, effect, inject, input, linkedSignal, OnDestroy, OnInit, signal, untracked } from '@angular/core';
 import { Router } from '@angular/router';
 import { StateService } from '../../../data/repository/state.service';
 import { GetTestPredefinidoService } from '../../../data/repository/get-test-predefinido.service';
@@ -23,6 +23,8 @@ import { DataTestAleatorio } from '../../../data/model/dataTestAleatorio';
 import { TestAleatorio } from '../../../data/model/testAleatorio';
 import { TestBottomsheetAyuda } from '../test-bottomsheet-ayuda/test-bottomsheet-ayuda';
 import { TestInfoModoTest } from "../test-info-modo-test/test-info-modo-test";
+import { TestBloqueoChrono } from "../test-bloqueo-chrono/test-bloqueo-chrono";
+import { TestPhotoZoom } from "../test-photo-zoom/test-photo-zoom";
 
 @Component({
   selector: 'app-test-container',
@@ -34,12 +36,14 @@ import { TestInfoModoTest } from "../test-info-modo-test/test-info-modo-test";
     TestItemRespuesta,
     TestChrono,
     TestInfoResult,
-    TestInfoModoTest
-  ],
+    TestInfoModoTest,
+    TestBloqueoChrono,
+    TestPhotoZoom
+],
   templateUrl: './test-container.html',
   styleUrl: './test-container.scss',
 })
-export class TestContainer implements OnInit {
+export class TestContainer implements OnInit, OnDestroy {
 
   private stateService = inject(StateService);
   private getTestPredefinidoService = inject(GetTestPredefinidoService);
@@ -52,19 +56,21 @@ export class TestContainer implements OnInit {
   tipo = input.required<TipoTest>();
 
   testLoaded = signal(false);
-  chronoIsRunning = signal(false);
   numeroPregunta = signal(0);
   modoCorreccion = signal(false);
-  showInfoModoTest = computed(() => {
-    console.log(this.stateService.showInfoModoTest);
-    return this.stateService.showInfoModoTest
-  })
-
+  showInfoModoTest = linkedSignal(() => { return this.stateService.showInfoModoTest });
+  showPhotoZoom = signal(false);
+  
   alumno: (Alumno | null) = null;
   test: any;
   dataTest: any;
   BASE_STORAGE_PREGUNTAS = environment.BASE_STORAGE_PREGUNTAS
   listCorregidasAutocorreccion: boolean[] = [];
+
+  chrono: any;
+  chronoIsRunning = signal(true);
+  chronoCounter = signal(0);
+  chronoDisplayState = signal('00:00');
 
 
   constructor() {
@@ -79,10 +85,15 @@ export class TestContainer implements OnInit {
   }
 
   ngOnInit() {
-    this.startTest()
+    if (!this.stateService.showInfoModoTest) { this.stateService.showInfoModoTest = '1' }
+    this.loadTest()
   }
 
-  startTest() {
+  ngOnDestroy() {
+    clearInterval(this.chrono);
+  }
+
+  loadTest() {
     console.log(this.tipo());
 
     this.alumno = this.stateService.alumnoLogeado();
@@ -121,6 +132,8 @@ export class TestContainer implements OnInit {
               this.stateService.testPredefinidoSelected.set(null);
               this.testLoaded.set(true);
 
+              if (!this.showInfoModoTest()) { this.startTest() }
+
             } else {
               console.log('response', response.body.message);
               this.router.navigate(['concurrencia', response.body.message]);
@@ -153,6 +166,8 @@ export class TestContainer implements OnInit {
               this.stateService.testAleatorioSelected.set(null);
               this.testLoaded.set(true);
 
+              if (!this.showInfoModoTest()) { this.startTest() }
+
             } else {
               console.log('response', response.body.message);
               this.router.navigate(['concurrencia', response.body.message]);
@@ -166,6 +181,44 @@ export class TestContainer implements OnInit {
         }
       }
     )
+  }
+
+
+
+  /****************************/
+  /* GESTION DEL CRONO Y TEST */
+  /****************************/
+  startTest() {
+    this.showInfoModoTest.set('0');
+    this.startChrono();
+    this.chronoIsRunning.set(true);
+  }
+
+  startChrono() {
+    this.chrono = setInterval(() => {
+      this.chronoCounter.update(value => value + 1);
+      // calcular minutos y segundos
+      const minutes = Math.floor(this.chronoCounter() / 60);
+      const seconds = this.chronoCounter() % 60;
+
+      // formatear con dos digitos
+      const display =
+        String(minutes).padStart(2, '0') + ':' +
+        String(seconds).padStart(2, '0');
+
+      // actualizar estado de display
+      this.chronoDisplayState.set(display);
+    }, 1000);
+  }
+
+  manageChrono() {
+    this.chronoIsRunning.update(value => !value);
+
+    if (!this.chronoIsRunning()) {
+      clearInterval(this.chrono);
+    } else {
+      this.startChrono();
+    }
   }
 
 

@@ -256,35 +256,3 @@ body {
   border-top-left-radius: 32px;
   border-top-right-radius: 32px;
 }
-
-
-
-::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-  background-color: #BFA5FF; // checkedTrackColor
-}
-
-::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-  background-color: #54369A; // checkedThumbColor
-}
-
-::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb .mat-slide-toggle-ripple {
-  color: #FFFFFF; // checkedIconColor (si usas ícono dentro del thumb)
-}
-
-::ng-deep .mat-slide-toggle:not(.mat-checked) .mat-slide-toggle-bar {
-  background-color: lightgray; // uncheckedTrackColor
-  border: 1px solid #BBBBBB;   // uncheckedBorderColor
-}
-
-::ng-deep .mat-slide-toggle:not(.mat-checked) .mat-slide-toggle-thumb {
-  background-color: gray; // uncheckedThumbColor
-}
-
-
-// Customize the entire app. Change :root to your selector if you want to scope the styles.
-:root {
-  @include mat.slide-toggle-overrides((
-    disabled-label-text-color: orange,
-    disabled-selected-handle-color: red,
-  ));
-}

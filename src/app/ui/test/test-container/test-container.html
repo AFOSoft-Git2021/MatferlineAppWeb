@@ -1,69 +1,81 @@
 @defer (when testLoaded()) {
-<section id="test_container_section">
+    <section id="test_container_section">
 
-    <main>
-        <app-top-app-bar-logged [alumno]="alumno" />
+        <main>
+            <app-top-app-bar-logged [alumno]="alumno" />
 
-        <app-test-menu-header
-            [curso]="(tipo()=== TipoTest.TestPredefinido) ? test.nombre_curso : ''"
-            [permiso]="test.nombre_permiso"
-            [categoria]="(tipo()=== TipoTest.TestPredefinido) ? test.nombre_categoria : tipo()"
-            [test]="test.nombre_test"
-            [descripcion]="(tipo()=== TipoTest.TestPredefinido) ? test.descripcion_test : test.descripcion_categoria"
-            [chronoTimeOutState]="false"
-            (navigateBackEmitter)="checkNavigateBack()" />
+            <app-test-menu-header
+                [curso]="(tipo()=== TipoTest.TestPredefinido) ? test.nombre_curso : ''"
+                [permiso]="test.nombre_permiso"
+                [categoria]="(tipo()=== TipoTest.TestPredefinido) ? test.nombre_categoria : tipo()"
+                [test]="test.nombre_test"
+                [descripcion]="(tipo()=== TipoTest.TestPredefinido) ? test.descripcion_test : test.descripcion_categoria"
+                [chronoTimeOutState]="false"
+                (navigateBackEmitter)="checkNavigateBack()" />
 
-        <div class="test_container_pregunta">
-            @if(modoCorreccion()) {<app-test-info-result />}
-            @else {<app-test-chrono
-                [numeroPregunta]="numeroPregunta()"
-                [chronoDisplayState]="'17:45'"
-                [isRunning]="chronoIsRunning()" />}
+            <div class="test_container_pregunta">
+                @if(modoCorreccion()) {<app-test-info-result />}
+                @else {<app-test-chrono
+                    [numeroPregunta]="numeroPregunta()"
+                    [chronoDisplayState]="chronoDisplayState()"
+                    [isRunning]="chronoIsRunning()"
+                    (manageChronoEmitter)="manageChrono()" />}
 
-            <div class="test_container_pregunta_contenido">
-                <div>
-                    <img
-                        #fotoPregunta (load)="fotoPregunta.style.opacity = '1'"
-                        [src]="(test.preguntas[numeroPregunta()].foto.length > 0) ? (BASE_STORAGE_PREGUNTAS + test.preguntas[numeroPregunta()].foto) : alumno?.autoescuela?.logotipo"
-                        alt="foto">
+                <div class="test_container_pregunta_contenido">
+                    <div>
+                        <img
+                            (click)="test.preguntas[numeroPregunta()].foto.length > 0 && showPhotoZoom.set(true)"
+                            #fotoPregunta (load)="fotoPregunta.style.opacity = '1'"
+                            [src]="(test.preguntas[numeroPregunta()].foto.length > 0) ? (BASE_STORAGE_PREGUNTAS + test.preguntas[numeroPregunta()].foto) : alumno?.autoescuela?.logotipo"
+                            alt="foto">
+                    </div>
+
+                    <h4 [innerHTML]="test.preguntas[numeroPregunta()].enunciado"></h4>
+
+                    <ul>
+                        @for(respuesta of test.preguntas[numeroPregunta()].respuestas; track $index) {
+                            <li>
+                                <app-test-item-respuesta
+                                    [index]="$index"
+                                    [seleccion]="test.preguntas[numeroPregunta()].seleccion"
+                                    [correcta]="respuesta.correcta"
+                                    [respuesta]="respuesta.respuesta"
+                                    [numeroRespuestas]="test.preguntas[numeroPregunta()].respuestas.length - 1"
+                                    [autocorreccion]="dataTest.autocorreccion"
+                                    [estadoAutoCorreccion]="(this.listCorregidasAutocorreccion.length > 0) ? (this.listCorregidasAutocorreccion[numeroPregunta()]) : false"
+                                    [modoCorreccion]="dataTest.autocorreccion"
+                                    (clickSeleccionEmitter)="setAnswerSelected($index)" />
+                            </li>
+                        }
+                    </ul>
                 </div>
-
-                <h4 [innerHTML]="test.preguntas[numeroPregunta()].enunciado"></h4>
-
-                <ul>
-                    @for(respuesta of test.preguntas[numeroPregunta()].respuestas; track $index) {
-                    <li>
-                        <app-test-item-respuesta
-                            [index]="$index"
-                            [seleccion]="test.preguntas[numeroPregunta()].seleccion"
-                            [correcta]="respuesta.correcta"
-                            [respuesta]="respuesta.respuesta"
-                            [numeroRespuestas]="test.preguntas[numeroPregunta()].respuestas.length - 1"
-                            [autocorreccion]="dataTest.autocorreccion"
-                            [estadoAutoCorreccion]="(this.listCorregidasAutocorreccion.length > 0) ? (this.listCorregidasAutocorreccion[numeroPregunta()]) : false"
-                            [modoCorreccion]="dataTest.autocorreccion"
-                            (clickSeleccionEmitter)="setAnswerSelected($index)" />
-                    </li>
-                    }
-                </ul>
-
-                <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, ea! Non, voluptatibus dignissimos eligendi ullam eveniet ducimus repellendus mollitia ab similique laudantium ipsam? Recusandae et quaerat, nemo vitae aperiam molestias.</p> -->
-                <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, ea! Non, voluptatibus dignissimos eligendi ullam eveniet ducimus repellendus mollitia ab similique laudantium ipsam? Recusandae et quaerat, nemo vitae aperiam molestias.</p> -->
-                <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, ea! Non, voluptatibus dignissimos eligendi ullam eveniet ducimus repellendus mollitia ab similique laudantium ipsam? Recusandae et quaerat, nemo vitae aperiam molestias.</p> -->
             </div>
-        </div>
 
-    </main>
+        </main>
 
-    <app-test-bottom-menu
-        [ayuda]="test.ayuda"
-        [autocorreccion]="test.autocorreccion"
-        [modoCorreccion]="modoCorreccion()"
-        (clickOptionEmitter)="clickOptionBottomMenu($event)" />
+        <app-test-bottom-menu
+            [ayuda]="test.ayuda"
+            [autocorreccion]="test.autocorreccion"
+            [modoCorreccion]="modoCorreccion()"
+            (clickOptionEmitter)="clickOptionBottomMenu($event)" />
 
-</section>
+    </section>
 
-<!-- @if (showInfoModoTest() && showInfoModoTest()?.toString() === '1') { -->
-<app-test-info-modo-test [autocorreccion]="test.autocorreccion" (abandonarEmitter)="navigateBack()" />
-<!-- } -->
+    @if (showInfoModoTest() && showInfoModoTest()?.toString() === '1') {
+        <app-test-info-modo-test
+            [autocorreccion]="test.autocorreccion"
+            (abandonarEmitter)="navigateBack()"
+            (comenzarEmitter)="startTest()" />
+        }
+
+    @if (!chronoIsRunning()) {
+        <app-test-bloqueo-chrono (clickBloqueoEmitter)="manageChrono()" />
+    }
+
+    @if (showPhotoZoom()) {
+        <app-test-photo-zoom 
+        [pregunta]="numeroPregunta()" 
+        [urlPhoto]="BASE_STORAGE_PREGUNTAS + test.preguntas[numeroPregunta()].foto"
+        (closePhotoZoomEmitter)="showPhotoZoom.set(false)" />
+    }
 }

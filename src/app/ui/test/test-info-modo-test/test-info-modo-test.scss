@@ -65,7 +65,11 @@
         margin: 0;
         background-color: #e4ddff;
         color: #7A57CA !important;
+        font-weight: 500;
         padding: 1rem 0;
-        font-size: 2rem !important;
+
+        span {
+            padding-right: 1rem;
+        }
     }
 }

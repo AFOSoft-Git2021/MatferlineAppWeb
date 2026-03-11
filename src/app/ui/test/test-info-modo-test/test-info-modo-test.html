@@ -15,7 +15,7 @@
         </div>
 
         <div>
-            <button class="button_orange" mat-flat-button type="button">
+            <button (click)="comenzar()" class="button_orange" mat-flat-button type="button">
                 Comenzar
                 <mat-icon>flag</mat-icon>
             </button>
@@ -26,6 +26,9 @@
         </div>
     </div>
 
-    <p><mat-slide-toggle class="custom-slide-toggle" labelPosition="before">No volver a mostrar este aviso</mat-slide-toggle></p>
+    <p>
+        <span>No volver a mostrar este aviso</span>
+        <mat-slide-toggle [(ngModel)]="checked" name="aviso"></mat-slide-toggle>
+    </p>
     
 </section>

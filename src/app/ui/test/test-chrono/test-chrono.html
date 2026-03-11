@@ -1,5 +1,7 @@
 <section id="section_test_chrono">
     <span>{{numeroPregunta() + 1}}.</span>
     <div>{{chronoDisplayState()}}</div>
-    <button mat-icon-button type="button"><mat-icon>pause</mat-icon></button>
+    <button (click)="clickManageChrono()" mat-icon-button type="button">
+        <mat-icon>{{isRunning() ? 'pause' : 'play_arrow'}}pause</mat-icon>
+    </button>
 </section>

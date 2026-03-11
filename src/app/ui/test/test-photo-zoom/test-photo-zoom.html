@@ -1,0 +1,7 @@
+<section (click)="closePhotoZoom()" id="section_test_photo_zoom">
+
+    <p>Pregunta nº <span>{{pregunta() + 1}}</span></p>
+    <img #photo (load)="photo.style.opacity = '1'" [src]="urlPhoto()" alt="logo">
+    <button (click)="closePhotoZoom()" mat-icon-button type="button"><mat-icon>visibility_off</mat-icon></button>
+
+</section>
