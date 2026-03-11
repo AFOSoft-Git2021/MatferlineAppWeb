@@ -1,1 +1,0 @@
-import{Bb as n,Cb as o,Xb as i,ab as s}from"./chunk-5E3UHWFX.js";var l=class e{static \u0275fac=function(t){return new(t||e)};static \u0275cmp=s({type:e,selectors:[["app-test-info-result"]],decls:2,vars:0,template:function(t,f){t&1&&(n(0,"p"),i(1,"test-info-result works!"),o())},encapsulation:2})};export{l as TestInfoResult};
