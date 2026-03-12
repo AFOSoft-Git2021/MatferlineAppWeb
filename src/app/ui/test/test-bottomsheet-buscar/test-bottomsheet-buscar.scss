@@ -27,6 +27,21 @@
             &:active {
                 opacity: .5;
             }
+
+            &.contestada {
+                background-color: #5B9DF8 !important;
+                color: yellow !important;
+            }
+
+            &.corregida_ok {
+                background-color: #00C000 !important;
+                color: yellow !important;
+            }
+
+            &.corregida_error {
+                background-color: red !important;
+                color: yellow !important;
+            }
         }
     }
 }

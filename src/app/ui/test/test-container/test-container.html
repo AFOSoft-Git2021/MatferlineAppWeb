@@ -40,10 +40,9 @@
                                     [seleccion]="test.preguntas[numeroPregunta()].seleccion"
                                     [correcta]="respuesta.correcta"
                                     [respuesta]="respuesta.respuesta"
-                                    [numeroRespuestas]="test.preguntas[numeroPregunta()].respuestas.length - 1"
                                     [autocorreccion]="dataTest.autocorreccion"
                                     [estadoAutoCorreccion]="(this.listCorregidasAutocorreccion.length > 0) ? (this.listCorregidasAutocorreccion[numeroPregunta()]) : false"
-                                    [modoCorreccion]="dataTest.autocorreccion"
+                                    [modoCorreccion]="modoCorreccion()"
                                     (clickSeleccionEmitter)="setAnswerSelected($index)" />
                             </li>
                         }
@@ -68,7 +67,7 @@
             (comenzarEmitter)="startTest()" />
         }
 
-    @if (!chronoIsRunning()) {
+    @if (!chronoIsRunning() && !chronoTimeOut()) {
         <app-test-bloqueo-chrono (clickBloqueoEmitter)="manageChrono()" />
     }
 
@@ -77,5 +76,9 @@
         [pregunta]="numeroPregunta()" 
         [urlPhoto]="BASE_STORAGE_PREGUNTAS + test.preguntas[numeroPregunta()].foto"
         (closePhotoZoomEmitter)="showPhotoZoom.set(false)" />
+    }
+
+    @if (chronoTimeOut()) {
+        <app-test-time-out (corregirTestEmitter)="checkTestCompleto(true)" />
     }
 }

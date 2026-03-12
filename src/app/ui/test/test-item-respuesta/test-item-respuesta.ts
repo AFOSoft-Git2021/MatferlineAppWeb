@@ -1,8 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-test-item-respuesta',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './test-item-respuesta.html',
   styleUrl: './test-item-respuesta.scss',
 })
@@ -12,7 +13,6 @@ export class TestItemRespuesta {
   seleccion = input.required<number>();
   correcta = input.required<number>();
   respuesta = input.required<string>();
-  numeroRespuestas = input.required<number>();
   autocorreccion = input.required<number>();
   estadoAutoCorreccion = input.required<boolean>();
   modoCorreccion = input.required<boolean>();
@@ -21,6 +21,8 @@ export class TestItemRespuesta {
   answerChar = ['A', 'B', 'C', 'D', 'E'];
 
   clickSeleccion() {
+    console.log(`autocorreccion: ${this.autocorreccion()} / modoCorreccion: ${this.modoCorreccion()} / correcta: ${this.correcta()} / seleccion: ${this.seleccion()} / estadoAutoCorreccion: ${this.estadoAutoCorreccion()}`);
+    
     this.clickSeleccionEmitter.emit();
   }
 

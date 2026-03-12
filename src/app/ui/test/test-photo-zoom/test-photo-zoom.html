@@ -2,6 +2,6 @@
 
     <p>Pregunta nº <span>{{pregunta() + 1}}</span></p>
     <img #photo (load)="photo.style.opacity = '1'" [src]="urlPhoto()" alt="logo">
-    <button (click)="closePhotoZoom()" mat-icon-button type="button"><mat-icon>visibility_off</mat-icon></button>
+    <button (click)="closePhotoZoom()" mat-fab type="button"><mat-icon>visibility_off</mat-icon></button>
 
 </section>

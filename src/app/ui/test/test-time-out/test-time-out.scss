@@ -1,0 +1,58 @@
+@import "../../../../styles.scss";
+
+#section_test_time_out {
+    animation: fade 0.5s ease;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    background-color: rgba($color: #ecefd5, $alpha: 0.95);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    // gap: 2rem;
+
+    > div:first-child {
+        text-align: center;
+        font-weight: 500;
+        width: 76%;
+
+        img {
+            vertical-align: middle;
+            width: 100%;
+        }
+
+        h1 {
+            margin: 0;
+            padding: 3rem 0;
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: $ButtonMagenta;
+        }
+
+        p {
+            margin: 0;
+
+            &:not(:last-child) {
+                color: black;
+            }
+
+            &:last-child {
+                color: red;
+            }
+        }
+    }
+
+    >div:last-child {
+        text-align: center;
+        width: 100%;
+
+        button {
+            width: 50%;
+            background-color: $OrangeDark;
+        }
+    }
+}

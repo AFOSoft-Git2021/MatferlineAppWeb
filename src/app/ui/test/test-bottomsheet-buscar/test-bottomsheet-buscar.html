@@ -3,8 +3,22 @@
     <h4>Elige una pregunta</h4>
 
     <div>
-        @for (preguntas of data.preguntasTest; track $index) {
-            <span (click)="cerrar($index)">{{$index + 1}}</span>
+        @for (pregunta of preguntasTest; track $index) {
+
+            @if(modoCorreccion || autocorreccion === 1) {
+
+                @if (listaResultados[$index] === 0) {
+                   <span (click)="cerrar($index)" [ngClass]="(pregunta.seleccion !== 0) ? 'contestada' : ''">{{$index + 1}}</span> 
+                }
+                @else {
+                    <span (click)="cerrar($index)" [ngClass]="listaResultados[$index] === 1 ? 'corregida_ok' : 'corregida_error'">{{$index + 1}}</span>
+                }
+
+            }
+            @else {
+                <span (click)="cerrar($index)" [ngClass]="(pregunta.seleccion !== 0) ? 'contestada' : ''">{{$index + 1}}</span>
+            }
+
         }
     </div>
 

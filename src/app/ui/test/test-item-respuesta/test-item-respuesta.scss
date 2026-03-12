@@ -10,7 +10,7 @@
     transition: all 0.2s ease-in-out;
 
     &:active {
-        opacity: .5;
+        opacity: 0.5;
     }
 
     span {
@@ -23,13 +23,35 @@
         border-radius: 50%;
         text-transform: uppercase;
         background-color: #e2dbb1;
+        color: #b7aa5f;
         font-size: 1.2rem;
         font-weight: 600;
+        transition: all 0.2s ease-in-out;
+
+        &.seleccionada {
+            background-color: #f5851fff !important;
+            color: white !important;
+        }
+
+        &.corregida_ok {
+            background-color: #00c000 !important;
+            color: white !important;
+        }
+
+        &.corregida_error {
+            background-color: #ff0000 !important;
+            color: white !important;
+        }
     }
 
     p {
         flex: 1;
         color: #79889c;
         margin: 0;
+        transition: all 0.2s ease-in-out;
+
+        &.seleccionada {
+            color: #62a2f9 !important;
+        }
     }
 }

@@ -1,4 +1,57 @@
-<section id="section_test_item_respuesta">
-    <span>{{answerChar[index()]}}</span>
-    <p [innerHTML]="respuesta()"></p>
+<section (click)="!modoCorreccion() && clickSeleccion()" id="section_test_item_respuesta">
+
+    @if (!modoCorreccion()) {
+        @if (autocorreccion()) {
+
+            @if(estadoAutoCorreccion()){
+
+                @if((index() + 1) === seleccion()){
+                    <span [ngClass]="correcta() === 1 ? 'corregida_ok' : 'corregida_error'">
+                        {{answerChar[index()]}}
+                    </span>
+                }
+                @else if (correcta() === 1) {
+                    <span class="corregida_ok">
+                        {{answerChar[index()]}}
+                    </span>
+                }
+                @else {
+                    <span>
+                        {{answerChar[index()]}}
+                    </span>
+                }
+                
+            }
+            @else {
+                <span [ngClass]="(index() + 1) === seleccion() ? 'seleccionada' : ''">
+                    {{answerChar[index()]}}
+                </span>
+            }
+
+        }
+        @else {
+            <span [ngClass]="(index() + 1) === seleccion() ? 'seleccionada' : ''">
+                {{answerChar[index()]}}
+            </span>
+        }
+    }
+    @else {
+        @if((index() + 1) === seleccion()){
+            <span [ngClass]="correcta() === 1 ? 'corregida_ok' : 'corregida_error'">
+                {{answerChar[index()]}}
+            </span>
+        }
+        @else if (correcta() === 1) {
+            <span class="corregida_ok">
+                {{answerChar[index()]}}
+            </span>
+        }
+        @else {
+            <span>
+                {{answerChar[index()]}}
+            </span>
+        }
+    }
+
+    <p [innerHTML]="respuesta()" [ngClass]="(!modoCorreccion() && (index() + 1 === seleccion())) ? 'seleccionada' : ''"></p>
 </section>
