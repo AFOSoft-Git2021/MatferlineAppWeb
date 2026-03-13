@@ -40,9 +40,9 @@
                                 </li>
                             </ul>
 
-                            @for(test of categoria.test; track test.cdi) {
+                            @for(test of categoria.test; track test.cdi; let indexTest = $index) {
                                 <div class="item_test">
-                                    <app-item-lista-test [test]="test" (clickTestEmitter)="getTestPredefinido(indexCategoria, $index)" />
+                                    <app-item-lista-test [test]="test" (clickTestEmitter)="getTestPredefinido(indexCategoria, indexTest)" />
                                 </div>
                             }
                         </div>

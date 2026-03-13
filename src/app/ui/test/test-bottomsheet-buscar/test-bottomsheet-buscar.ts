@@ -19,31 +19,28 @@ export class TestBottomsheetBuscar implements OnInit {
   autocorreccion: number = 0;
   listCorregidasAutocorreccion: boolean[] = [];
   preguntasTest: TestPregunta[] = [];
-  listaResultados: number[] = []; // 0->sin contestar; 1->acierto; 2->fallo
+  listaRespuestasCorrectas: number[] = [];
 
 
   constructor() {
-    this.modoCorreccion = this.data.modoCorreccion();
-    this.autocorreccion = this.data.autocorreccion();
-    this.listCorregidasAutocorreccion = this.data.listCorregidasAutocorreccion();
+    this.modoCorreccion = this.data.modoCorreccion;
+    this.autocorreccion = this.data.autocorreccion;
+    this.listCorregidasAutocorreccion = this.data.listCorregidasAutocorreccion;
     this.preguntasTest = this.data.preguntasTest;
   }
 
-
   ngOnInit() {
-    this.preguntasTest.map(pregunta => {
-      if (pregunta.seleccion === 0) {
-        this.listaResultados.push(0);
-      } else {
+    if (this.modoCorreccion || this.autocorreccion === 1) {
+      this.preguntasTest.map(pregunta => {
         for (const [index, respuesta] of pregunta.respuestas.entries()) {
-          if (respuesta.correcta === 1 && pregunta.seleccion === index + 1) {
-            this.listaResultados.push(1);
-          } else {
-            this.listaResultados.push(2);
+          if (respuesta.correcta === 1) {
+            this.listaRespuestasCorrectas.push(index);
+            break;
           }
         }
-      }
-    })
+      })
+      console.log(this.listaRespuestasCorrectas);
+    }
   }
 
   // cierra al seleccionar una pregunta

@@ -1,5 +1,5 @@
 import { Component, effect, inject, input, linkedSignal, OnDestroy, OnInit, signal, untracked } from '@angular/core';
-import { Router } from '@angular/router';
+import { Data, Router } from '@angular/router';
 import { StateService } from '../../../data/repository/state.service';
 import { GetTestPredefinidoService } from '../../../data/repository/get-test-predefinido.service';
 import { DataTestPredefinido } from '../../../data/model/dataTestPredefinidos';
@@ -27,6 +27,8 @@ import { TestBloqueoChrono } from "../test-bloqueo-chrono/test-bloqueo-chrono";
 import { TestPhotoZoom } from "../test-photo-zoom/test-photo-zoom";
 import { TestTimeOut } from "../test-time-out/test-time-out";
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TestResultado } from "../test-resultado/test-resultado";
+import { DataResponseCorregirTest } from '../../../data/model/dataResponseCorregirTest';
 
 @Component({
   selector: 'app-test-container',
@@ -41,7 +43,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     TestInfoModoTest,
     TestBloqueoChrono,
     TestPhotoZoom,
-    TestTimeOut
+    TestTimeOut,
+    TestResultado
   ],
   templateUrl: './test-container.html',
   styleUrl: './test-container.scss',
@@ -64,6 +67,7 @@ export class TestContainer implements OnInit, OnDestroy {
   modoCorreccion = signal(false);
   showInfoModoTest = linkedSignal(() => { return this.stateService.showInfoModoTest });
   showPhotoZoom = signal(false);
+  showResultadoTest = signal(false);
 
   alumno: (Alumno | null) = null;
   test: any;
@@ -77,6 +81,8 @@ export class TestContainer implements OnInit, OnDestroy {
   chronoTime = signal(0);
   chronoCounter = signal(0);
   chronoDisplayState = signal('--:--');
+
+  dataTestCorregido: DataResponseCorregirTest | null = null;
 
 
   constructor() {
@@ -269,6 +275,17 @@ export class TestContainer implements OnInit, OnDestroy {
     return checkResult;
   }
 
+  checkTestAutocorreccionCompleto(): boolean {
+    let checkResult = true;
+    for (const PREGUNTA_CORREGIDA of this.listCorregidasAutocorreccion) {
+      if (!PREGUNTA_CORREGIDA) {
+        checkResult = false;
+        break;
+      }
+    }
+    return checkResult;
+  }
+
 
 
   /*****************************/
@@ -312,14 +329,15 @@ export class TestContainer implements OnInit, OnDestroy {
             } else if (this.test.preguntas[this.numeroPregunta()].seleccion === 0) {
               this.showInfoSnackbar('Selecciona una respuesta');
             } else {
-              console.log('hola');
               this.listCorregidasAutocorreccion[this.numeroPregunta()] = true;
-              // TODO: comprobar si listCorregidasAutocorreccion ya tiene todas a true (corregidas) y llamar a corregir el test predefinido o aleatorio
+              if (this.checkTestAutocorreccionCompleto()) {
+                this.popUpAutocorreccionCompleta();
+              }
             }
 
           } else {
             if (this.checkTestCompleto()) {
-              // TODO: llamar a corregir el test predefinido o aleatorio
+              this.popUpCorregirTest();
             } else {
               this.showInfoSnackbar('Tienes que completar el test antes de enviarlo a corrección');
             }
@@ -349,7 +367,7 @@ export class TestContainer implements OnInit, OnDestroy {
   openBottomSheetBuscar() {
     const SHEET = this.bottomSheet.open(TestBottomsheetBuscar, {
       data: {
-        modoCorreccion: this.modoCorreccion,
+        modoCorreccion: this.modoCorreccion(),
         autocorreccion: this.test.autocorreccion,
         listCorregidasAutocorreccion: this.listCorregidasAutocorreccion,
         preguntasTest: this.test.preguntas as TestPregunta[]
@@ -441,7 +459,7 @@ export class TestContainer implements OnInit, OnDestroy {
       data: {
         titulo: 'Corrección del test',
         mensaje: 'Vamos a corregir tu test. ¿Deseas continuar?',
-        modo: 1,
+        modo: 0,
         tipo: 1
       }
     });

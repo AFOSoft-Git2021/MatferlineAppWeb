@@ -101,6 +101,8 @@ export class PredefinidosTest implements OnInit {
   }
 
   getTestPredefinido(indexCategoria: number, indexTest: number) {
+    console.log(`indexTest: ${indexTest}`);
+    
     const CATEGORIA = this.listaCategorias[indexCategoria];
     const TEST = CATEGORIA.test[indexTest];
 
@@ -115,7 +117,7 @@ export class PredefinidosTest implements OnInit {
       nombre_test: TEST.nombre,
       descripcion_test: TEST.descripcion,
       ayuda: CATEGORIA.ayuda,
-      autocorreccion: CATEGORIA.autocorreccion,
+      autocorreccion: this.autocorreccionState()[indexCategoria],
       propia: CATEGORIA.propia,
       id_curso: this.idCurso,
       traducir: this.idiomaSelected() === 1 ? 1 : 0,

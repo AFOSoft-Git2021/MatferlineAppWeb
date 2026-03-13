@@ -4,21 +4,21 @@
 
     <div>
         @for (pregunta of preguntasTest; track $index) {
-
-            @if(modoCorreccion || autocorreccion === 1) {
-
-                @if (listaResultados[$index] === 0) {
-                   <span (click)="cerrar($index)" [ngClass]="(pregunta.seleccion !== 0) ? 'contestada' : ''">{{$index + 1}}</span> 
-                }
-                @else {
-                    <span (click)="cerrar($index)" [ngClass]="listaResultados[$index] === 1 ? 'corregida_ok' : 'corregida_error'">{{$index + 1}}</span>
-                }
-
-            }
-            @else {
+            @if(autocorreccion === 0 && !modoCorreccion) {
                 <span (click)="cerrar($index)" [ngClass]="(pregunta.seleccion !== 0) ? 'contestada' : ''">{{$index + 1}}</span>
             }
-
+            @else {
+                @if ((autocorreccion === 1 && listCorregidasAutocorreccion[$index]) || modoCorreccion) {
+                    <span
+                        (click)="cerrar($index)"
+                        [ngClass]="((pregunta.seleccion - 1) === listaRespuestasCorrectas[$index]) ? 'corregida_ok' : 'corregida_error'">
+                        {{$index + 1}}
+                    </span>
+                }
+                @else {
+                    <span (click)="cerrar($index)" [ngClass]="(pregunta.seleccion !== 0) ? 'contestada' : ''">{{$index + 1}}</span>
+                }
+            }
         }
     </div>
 

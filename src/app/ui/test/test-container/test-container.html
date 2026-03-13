@@ -81,4 +81,11 @@
     @if (chronoTimeOut()) {
         <app-test-time-out (corregirTestEmitter)="checkTestCompleto(true)" />
     }
+
+    <!-- @if (showResultadoTest()) { -->
+        <app-test-resultado
+        [tipoTestSeleccionado]="tipo()"
+        [numeroPreguntas]="test.preguntas.length"
+        [resultado]="dataTestCorregido" />
+    <!-- } -->
 }

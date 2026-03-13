@@ -21,7 +21,7 @@ export class TestItemRespuesta {
   answerChar = ['A', 'B', 'C', 'D', 'E'];
 
   clickSeleccion() {
-    console.log(`autocorreccion: ${this.autocorreccion()} / modoCorreccion: ${this.modoCorreccion()} / correcta: ${this.correcta()} / seleccion: ${this.seleccion()} / estadoAutoCorreccion: ${this.estadoAutoCorreccion()}`);
+    console.log(`correcta: ${this.correcta()} / seleccion: ${this.seleccion()}`);
     
     this.clickSeleccionEmitter.emit();
   }

@@ -1,0 +1,53 @@
+<section id="section_test_resultado">
+
+    <img [src]="(tipoTestSeleccionado() === TipoTest.TestAleatorioPreguntasFalladas) ? 'svg/image_aleatorio_falladas.svg' : (resultado()?.datos_correcion?.test_apto === 1) ? 'svg/image_test_ok.svg' : 'svg/image_test_no_apto_bis.svg'" alt="logo">
+
+    <div class="section_test_resultado_textos">
+        <h1 [innerHTML]="(tipoTestSeleccionado() === TipoTest.TestAleatorioPreguntasFalladas) ? 'Resultado del test\nde preguntas falladas' : resultado()?.datos_correcion?.test_apto  === 1 ? '¡ Enhorabuena !' : '¡ Oops ... lo siento !'"></h1>
+        <p [innerHTML]="resultado()?.datos_correcion?.test_apto  === 1 ? 'TEST APTO.' : 'TEST NO APTO.'"></p>
+        <p 
+            [innerHTML]="resultado()?.datos_correcion?.test_apto  === 1 ? 'Buen trabajo' : 'Tendrás que esforzarte más'" 
+            [ngStyle]="{color: (resultado()?.datos_correcion?.test_apto  === 1) ? '#669F1F' : '#FF0000'}">
+        </p>
+    </div>
+
+    <div class="section_test_resultado_puntuacion">
+
+        <div [ngStyle]="{background: (resultado()?.datos_correcion?.test_apto  === 1) ? '#669F1F' : '#FF0000'}">
+            <mat-icon>
+                {{(tipoTestSeleccionado() === TipoTest.TestAleatorioPreguntasFalladas) ? 'info' : (resultado()?.datos_correcion?.test_apto === 1) ? 'thumb_up' : 'thumb_down'}}
+            </mat-icon>
+        </div>
+        <div>
+            <p>Preguntas: {{numeroPreguntas()}}</p>
+            <p>
+                @if (resultado()?.datos_correcion?.id === 'CAP') {
+                    <span>Puntos: {{resultado()?.datos_correcion?.puntuacion}}</span>
+                    @if (tipoTestSeleccionado() !== TipoTest.TestAleatorioPreguntasFalladas) {
+                        {{' - Mínimo: ' + resultado()?.datos_correcion?.umbral}}
+                    }
+                }
+                @else {
+                    <span>Fallos: {{resultado()?.datos_correcion?.puntuacion}}</span>
+                    @if (tipoTestSeleccionado() !== TipoTest.TestAleatorioPreguntasFalladas) {
+                        {{' - Permitidos: ' + resultado()?.datos_correcion?.umbral}}
+                    }
+                }
+            </p>
+        </div>
+
+    </div>
+
+    <div class="section_test_resultado_botones">
+        <button (click)="clickRevisar()" mat-flat-button class="button_orange" type="button">
+            Revisar el test
+            <mat-icon>rule</mat-icon>
+        </button>
+
+        <button (click)="clickTerminar()" mat-flat-button class="button_orange_reverse" type="button">
+            Terminar y salir
+            <mat-icon>exit_to_app</mat-icon>
+        </button>
+    </div>
+
+</section>
