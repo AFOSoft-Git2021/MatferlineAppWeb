@@ -1,5 +1,5 @@
 import { Component, effect, inject, input, linkedSignal, OnDestroy, OnInit, signal, untracked } from '@angular/core';
-import { Data, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { StateService } from '../../../data/repository/state.service';
 import { GetTestPredefinidoService } from '../../../data/repository/get-test-predefinido.service';
 import { DataTestPredefinido } from '../../../data/model/dataTestPredefinidos';
@@ -29,6 +29,10 @@ import { TestTimeOut } from "../test-time-out/test-time-out";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TestResultado } from "../test-resultado/test-resultado";
 import { DataResponseCorregirTest } from '../../../data/model/dataResponseCorregirTest';
+import { CorrectTestPredefinidoService } from '../../../data/repository/correct-test-predefinido.service';
+import { DataCorreccionTestPredefinido } from '../../../data/model/dataCorreccionTestPredefinido';
+import { CorrectTestAleatorioService } from '../../../data/repository/correct-test-aleatorio.service';
+import { DataCorreccionTestAleatorio } from '../../../data/model/dataCorreccionTestAleatorio';
 
 @Component({
   selector: 'app-test-container',
@@ -54,6 +58,8 @@ export class TestContainer implements OnInit, OnDestroy {
   private stateService = inject(StateService);
   private getTestPredefinidoService = inject(GetTestPredefinidoService);
   private getTestAleatorioService = inject(GetTestAleatorioService);
+  private correctTestPredefinidoService = inject(CorrectTestPredefinidoService);
+  private correctTestAleatorioService = inject(CorrectTestAleatorioService);
   private router = inject(Router);
   private dialog = inject(MatDialog);
   private bottomSheet = inject(MatBottomSheet);
@@ -63,6 +69,7 @@ export class TestContainer implements OnInit, OnDestroy {
   tipo = input.required<TipoTest>();
 
   testLoaded = signal(false);
+  testIsSaving = signal(false);
   numeroPregunta = signal(0);
   modoCorreccion = signal(false);
   showInfoModoTest = linkedSignal(() => { return this.stateService.showInfoModoTest });
@@ -127,6 +134,12 @@ export class TestContainer implements OnInit, OnDestroy {
     }
   }
 
+
+
+  /*************************/
+  /*   LLAMADAS A LA API   */
+  /*************************/
+
   // descarga un test predefinido
   getTestPredefinido(dataTestPredefinido: DataTestPredefinido) {
     this.stateService.loadingSpinner.set(true);
@@ -188,6 +201,107 @@ export class TestContainer implements OnInit, OnDestroy {
               }
 
               if (!this.showInfoModoTest()) { this.startTest() }
+
+            } else {
+              console.log('response', response.body.message);
+              this.router.navigate(['concurrencia', response.body.message]);
+            }
+          }
+        },
+        error: (error) => {
+          this.stateService.loadingSpinner.set(false);
+          console.log('error: ', error.message);
+          this.router.navigate(['error']);
+        }
+      }
+    )
+  }
+
+  // corrige un test predefinido
+  correctTestPredefinido() {
+
+    // detiene chrono
+    this.testIsSaving.set(true);
+    this.manageChrono();
+
+    const dataCorreccionTestPredefinido: DataCorreccionTestPredefinido = {
+      cdicurso: this.test.cdicurso,
+      id_curso: this.test.id_curso,
+      cdipermiso: this.test.cdipermiso,
+      cdicategoria: this.test.cdicategoria,
+      cditest: this.test.cditest,
+      propia: this.test.propia,
+      traducir: this.test.traducir,
+      idioma: this.test.idioma,
+      ayuda: this.test.ayuda,
+      autocorreccion: this.test.autocorreccion,
+      preguntas: this.test.preguntas
+    }
+
+    this.stateService.loadingSpinner.set(true);
+    this.correctTestPredefinidoService.correctTestPredefinido(dataCorreccionTestPredefinido).subscribe(
+      {
+        next: (response) => {
+          this.stateService.loadingSpinner.set(false);
+
+          if (response.status === 200) {
+            console.log(response.body);
+
+            if (response.body.datos_correcion) {
+
+              this.dataTestCorregido = response.body as DataResponseCorregirTest;
+              this.showResultadoTest.set(true);
+              this.testIsSaving.set(false);
+
+            } else {
+              console.log('response', response.body.message);
+              this.router.navigate(['concurrencia', response.body.message]);
+            }
+          }
+        },
+        error: (error) => {
+          this.stateService.loadingSpinner.set(false);
+          console.log('error: ', error.message);
+          this.router.navigate(['error']);
+        }
+      }
+    )
+  }
+
+  // corrige un test aleatorio
+  correctTestAleatorio() {
+
+    // detiene chrono
+    this.testIsSaving.set(true);
+    this.manageChrono();
+
+    const dataCorreccionTestAleatorio: DataCorreccionTestAleatorio = {
+      cdicurso: this.test.cdicurso,
+      id_curso: this.test.id_curso,
+      cdipermiso: this.test.cdipermiso,
+      cdicategoria: this.tipo() === TipoTest.TestAleatorioTematico ? this.test.cdicategoria : 0,
+      preguntas_falladas: this.tipo() === TipoTest.TestAleatorioPreguntasFalladas ? 1 : 0,
+      traducir: this.test.traducir,
+      idioma: this.test.idioma,
+      ayuda: this.test.ayuda,
+      autocorreccion: this.test.autocorreccion,
+      preguntas: this.test.preguntas
+    }
+
+    this.stateService.loadingSpinner.set(true);
+    this.correctTestAleatorioService.correctTestAleatorio(dataCorreccionTestAleatorio).subscribe(
+      {
+        next: (response) => {
+          this.stateService.loadingSpinner.set(false);
+
+          if (response.status === 200) {
+            console.log(response.body);
+
+            if (response.body.datos_correcion) {
+
+              this.dataTestCorregido = response.body as DataResponseCorregirTest;
+              this.showResultadoTest.set(true);
+              this.testIsSaving.set(false);
 
             } else {
               console.log('response', response.body.message);
@@ -284,6 +398,17 @@ export class TestContainer implements OnInit, OnDestroy {
       }
     }
     return checkResult;
+  }
+
+  clickRevisar() {
+    this.modoCorreccion.set(true);
+    this.showResultadoTest.set(false);
+  }
+
+  clickTerminar() {
+    this.modoCorreccion.set(true);
+    this.showResultadoTest.set(false);
+    this.checkNavigateBack();
   }
 
 
@@ -444,7 +569,8 @@ export class TestContainer implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(
       (respuesta) => {
         if (respuesta.accion) {
-          // TODO: llamar a correctTestAutocorreccion() el cual llama al endpoint para corregir test predefinido o aleatorio
+          // llama a corregir test predefinido o aleatorio
+          (this.tipo() === TipoTest.TestPredefinido) ? this.correctTestPredefinido() : this.correctTestAleatorio();
         }
       })
   }
@@ -468,7 +594,8 @@ export class TestContainer implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(
       (respuesta) => {
         if (respuesta.accion) {
-          // TODO: llamar endpoint para corregir test predefinido o aleatorio
+          // llama a corregir test predefinido o aleatorio
+          (this.tipo() === TipoTest.TestPredefinido) ? this.correctTestPredefinido() : this.correctTestAleatorio();
         }
       })
   }

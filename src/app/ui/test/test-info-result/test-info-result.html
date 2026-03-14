@@ -1,1 +1,30 @@
-<p>test-info-result works!</p>
+<section id="section_test_info_result">
+
+    <span>{{numeroPregunta() + 1}}.</span>
+
+    @if (resultado()) {
+        <div [ngStyle]="{background: tipoTest() === TipoTest.TestAleatorioPreguntasFalladas ? '#0E6CF3' : resultado()?.test_apto === 1 ? '#4AC04A' : '#FF0000'}">
+            <div>
+                <mat-icon>
+                    {{tipoTest() === TipoTest.TestAleatorioPreguntasFalladas ? 'info' : resultado()?.test_apto === 1 ? 'check_circle' : 'cancel'}}
+                </mat-icon>
+                <span>
+                    {{tipoTest() === TipoTest.TestAleatorioPreguntasFalladas ? 'RESULTADO' : resultado()?.test_apto === 1 ? 'APTO' : 'NO APTO'}}
+                </span>
+            </div>
+            <div class="resultado_puntuacion">
+                <span>Fallos: {{resultado()?.puntuacion}}</span>
+                @if(tipoTest() !== TipoTest.TestAleatorioPreguntasFalladas) {<strong> de {{resultado()?.umbral}}</strong>}
+            </div>
+        </div>
+    }
+    @else {
+        <div>
+            <div>
+                <mat-icon>info</mat-icon>
+                <span>RESULTADO</span>
+            </div>
+        </div>
+    }
+
+</section>

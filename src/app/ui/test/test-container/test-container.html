@@ -14,7 +14,12 @@
                 (navigateBackEmitter)="checkNavigateBack()" />
 
             <div class="test_container_pregunta">
-                @if(modoCorreccion()) {<app-test-info-result />}
+                @if(modoCorreccion()) {
+                    <app-test-info-result 
+                    [tipoTest]="tipo()"
+                    [numeroPregunta]="numeroPregunta()"
+                    [resultado]="dataTestCorregido?.datos_correcion ?? null" />
+                }
                 @else {<app-test-chrono
                     [numeroPregunta]="numeroPregunta()"
                     [chronoDisplayState]="chronoDisplayState()"
@@ -65,9 +70,9 @@
             [autocorreccion]="test.autocorreccion"
             (abandonarEmitter)="navigateBack()"
             (comenzarEmitter)="startTest()" />
-        }
+    }
 
-    @if (!chronoIsRunning() && !chronoTimeOut()) {
+    @if (!chronoIsRunning() && !chronoTimeOut() && !testIsSaving() && !modoCorreccion()) {
         <app-test-bloqueo-chrono (clickBloqueoEmitter)="manageChrono()" />
     }
 
@@ -82,10 +87,12 @@
         <app-test-time-out (corregirTestEmitter)="checkTestCompleto(true)" />
     }
 
-    <!-- @if (showResultadoTest()) { -->
+    @if (showResultadoTest()) {
         <app-test-resultado
         [tipoTestSeleccionado]="tipo()"
         [numeroPreguntas]="test.preguntas.length"
-        [resultado]="dataTestCorregido" />
-    <!-- } -->
+        [resultado]="dataTestCorregido"
+        (clickRevisarEmitter)="clickRevisar()"
+        (clickTerminarEmitter)="clickTerminar()" />
+    }
 }
