@@ -1,0 +1,17 @@
+<section id="section_estadisticas_grafica">
+
+    <main>
+        <div>
+            <app-estadisticas-grafica-canvas
+                [aptos]="aptos()"
+                [noAptos]="noAptos()" />
+        </div>
+        <div>
+            <p><span>{{aptos()}}</span>Aptos</p>
+            <p><span>{{noAptos()}}</span>No aptos</p>
+        </div>
+    </main>
+
+    <footer>Total test evaluados <span>{{aptos() + noAptos()}}</span></footer>
+
+</section>

@@ -4,4 +4,6 @@ export interface DataGetEstadisticas {
     nombre_curso: string;
     cdipermiso: number;
     nombre_permiso: string;
+    icono: string;
+    indexColor: number;
 }

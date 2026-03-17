@@ -1,0 +1,10 @@
+<section id="section_estadisticas_permiso" [ngStyle]="{background: colorList()[3]}">
+
+    <img #iconoPermiso (load)="iconoPermiso.style.opacity = '1'" [src]="icono()" alt="icono">
+
+    <div>
+        <p [innerHTML]="nombrepermiso()" [ngStyle]="{color: colorList()[0]}"></p>
+        <p [innerHTML]="nombrecurso()" [ngStyle]="{color: colorList()[1]}"></p>
+    </div>
+
+</section>

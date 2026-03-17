@@ -1,0 +1,26 @@
+<section id="section_estadisticas_resumen">
+
+    <ul>
+        <li>
+            <div class="predefinidos"><img src="svg/icon_predefinidos_blanco.svg" alt="icono"></div>
+            <strong>Test<br>predefinidos</strong>
+            <span>{{predefinidos()}}</span>
+        </li>
+        <li>
+            <div class="aleatorios"><img src="svg/icon_aleatorios_blanco.svg" alt="icono"></div>
+            <strong>Test<br>aleatorios</strong>
+            <span>{{aleatorios()}}</span>
+        </li>
+        <li>
+            <div class="falladas"><img src="svg/icon_falladas_blanco.svg" alt="icono"></div>
+            <strong>Test preguntas<br>falladas</strong>
+            <span>{{falladas()}}</span>
+        </li>
+    </ul>
+
+    <div>
+        <p>Test realizados <span>{{realizados()}}</span></p>
+        <p>&percnt; acierto <span>{{acierto() | numberFormat}}</span></p>
+    </div>
+
+</section>

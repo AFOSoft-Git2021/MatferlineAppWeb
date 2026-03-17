@@ -15,6 +15,7 @@ import { BotonTestAleatorio } from "../boton-test-aleatorio/boton-test-aleatorio
 import { DataTestAleatorio } from '../../../../data/model/dataTestAleatorio';
 import { AleatorioPermisoTestTematicoCategoria } from '../../../../data/model/aleatorioPermisoTestTematicoCategoria';
 import { TipoTest } from '../../../../data/model/tipoTestEnum';
+import { DataGetEstadisticas } from '../../../../data/model/dataGetEstadisticas';
 
 @Component({
   selector: 'app-aleatorios-test',
@@ -74,6 +75,16 @@ export class AleatoriosTest implements OnInit {
   }
 
   navigateEstadisticas() {
+    const DATA: DataGetEstadisticas = {
+      cdicurso: parseInt(this.cdicurso()),
+      id_curso: this.idCurso,
+      nombre_curso: this.nombreCurso,
+      cdipermiso: parseInt(this.cdipermiso()),
+      nombre_permiso: this.permiso?.nombre ?? '',
+      icono: this.permiso?.icono ?? '',
+      indexColor: this.indexColor()
+    }
+    this.stateService.dataEstadisticas.set(DATA);
     this.router.navigate(['/dashboard/estadisticas']);
   }
 

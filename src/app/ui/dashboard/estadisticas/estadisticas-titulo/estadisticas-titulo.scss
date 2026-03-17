@@ -1,0 +1,20 @@
+#section_estadisticas_titulo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: .5rem;
+    background-color: white;
+    border: 5px solid #C3DBFC;
+    border-radius: .8rem;
+    margin: .54rem 0;
+
+    img {
+        vertical-align: middle;
+        width: 44px;
+    }
+
+    span {
+        color: #A90094;
+        font-weight: 500;
+    }
+}

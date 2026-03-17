@@ -1,1 +1,27 @@
-<p>estadisticas works!</p>
+@defer(when estadisticas) {
+<section id="section_estadisticas">
+
+    <app-dashboard-app-bar [titulo]="servicioSeleccionado()" [nivel]=1 (goBackEmitter)="navigateBack()" />
+
+    <app-estadisticas-permiso
+        [nombrecurso]="dataEstadisticas?.nombre_curso || ''"
+        [nombrepermiso]="dataEstadisticas?.nombre_permiso || ''"
+        [icono]="dataEstadisticas?.icono || ''"
+        [indexColor]="dataEstadisticas?.indexColor || 0" />
+
+    <app-estadisticas-titulo />
+
+    <main>
+        <app-estadisticas-resumen
+            [predefinidos]="estadisticas?.num_test_predefinidos ?? 0"
+            [aleatorios]="estadisticas?.num_test_aleatorios ?? 0"
+            [falladas]="estadisticas?.num_test_preguntas_falladas ?? 0"
+            [acierto]="(estadisticas?.porcentaje_acierto ?? 0).toString()"
+            [realizados]="estadisticas?.num_test ?? 0" />
+
+        <app-estadisticas-grafica [aptos]="estadisticas?.num_test_aptos ?? 0" [noAptos]="estadisticas?.num_test_no_aptos ?? 0" />
+
+    </main>
+
+</section>
+}

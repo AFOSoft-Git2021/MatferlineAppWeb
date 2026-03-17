@@ -5,6 +5,7 @@ import { Alumno } from '../model/alumno'
 import { DataTestPredefinido } from '../model/dataTestPredefinidos'
 import { DataTestAleatorio } from '../model/dataTestAleatorio'
 import { Servicio } from '../model/servicioEnum'
+import { DataGetEstadisticas } from '../model/dataGetEstadisticas'
 
 @Injectable({
   providedIn: 'root',
@@ -51,6 +52,8 @@ export class StateService {
   // test aleatorio seleccionado
   testAleatorioSelected = signal<DataTestAleatorio | null>(null)
 
+  // acceso a estadisticas de un permiso
+  dataEstadisticas = signal<DataGetEstadisticas | null>(null)
 
 
 

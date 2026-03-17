@@ -1,0 +1,53 @@
+import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, input, ViewChild } from '@angular/core';
+
+@Component({
+  selector: 'app-estadisticas-grafica-canvas',
+  imports: [CommonModule],
+  templateUrl: './estadisticas-grafica-canvas.html',
+  styleUrl: './estadisticas-grafica-canvas.scss',
+})
+export class EstadisticasGraficaCanvas implements AfterViewInit {
+
+  @ViewChild('chartCanvas', { static: true }) chartCanvas!: ElementRef<HTMLCanvasElement>;
+
+  aptos = input.required<number>();
+  noAptos = input.required<number>();
+
+  ngAfterViewInit() {
+    this.drawChart();
+  }
+
+  private drawChart() {
+    const canvas = this.chartCanvas.nativeElement;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const total = this.aptos() + this.noAptos();
+    if (total === 0) return;
+
+    const aptosAngle = (this.aptos() / total) * 2 * Math.PI;
+    const noAptosAngle = (this.noAptos() / total) * 2 * Math.PI;
+    const radius = Math.min(50, 50);
+
+    // Sector aptos (verde)
+    ctx.beginPath();
+    ctx.moveTo(50, 50);
+    ctx.fillStyle = '#00B50C';
+    ctx.arc(50, 50, radius, 0, aptosAngle);
+    ctx.fill();
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Sector no aptos (rojo)
+    ctx.beginPath();
+    ctx.moveTo(50, 50);
+    ctx.fillStyle = '#FF0000';
+    ctx.arc(50, 50, radius, aptosAngle, aptosAngle + noAptosAngle);
+    ctx.fill();
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+}
