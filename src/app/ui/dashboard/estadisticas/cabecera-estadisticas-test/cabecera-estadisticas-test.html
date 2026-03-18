@@ -1,0 +1,15 @@
+<section (click)="showTest()" id="section_cabecera_estadisticas_test">
+
+    <div>
+        <p>TEST REALIZADOS</p>
+        <p>
+            <span>
+                <img src="svg/icon_numero_test.svg" alt="test">
+                {{ numeroTest() }} test
+            </span>            
+        </p>
+    </div>
+
+    <mat-icon>{{show() ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
+
+</section>

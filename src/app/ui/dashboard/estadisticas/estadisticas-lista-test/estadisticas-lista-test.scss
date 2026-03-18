@@ -1,0 +1,36 @@
+@import "../../../../../styles.scss";
+
+#section_estadisticas_lista_test {
+    animation: fade 0.5s ease;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    // border: 1px solid blue;
+
+    app-cabecera-estadisticas-test {
+        width: 100%;
+    }
+
+    >div {
+        width: 96%;
+        margin: 0 auto 0 auto;
+        // border: 1px solid red;
+    }
+
+    .contenedor_lista_test {
+        background-color: rgba(255, 255, 255, 0.5);
+        padding: 2px 8px 12px 8px;
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+        width: 98%;
+        margin: 2px auto 0 auto;
+    }
+
+    .item_test {
+        margin-top: 6px;
+    }
+}

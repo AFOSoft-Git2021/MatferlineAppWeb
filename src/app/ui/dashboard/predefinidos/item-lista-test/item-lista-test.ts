@@ -65,10 +65,10 @@ export class ItemListaTest {
     dialogRef.afterClosed().subscribe(
       (respuesta) => {
         if (respuesta.accion) {
-          //  TODO: ???
+          this.showInfoTest.set(false);
         }
       }
-    );
+    )
   }
 
 }

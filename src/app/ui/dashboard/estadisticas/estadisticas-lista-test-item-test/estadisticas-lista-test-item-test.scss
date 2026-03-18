@@ -1,0 +1,48 @@
+#section_estadisticas_lita_test_item_test {
+    width: 100%;
+    background-color: white;
+    border-radius: 50px;
+    border: 1px solid #79acff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 5px 5px 10px;
+    transition: all 0.2s ease-in-out;
+
+    &:active {
+        opacity: 0.6;
+    }
+
+    > div {
+        flex: 1;
+        padding-left: 8px;
+
+        > p {
+            margin: 0;
+            max-width: 230px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 0.9rem;
+
+            &:last-child {
+                color: #0b3e52;
+                font-size: 0.84rem;
+                padding-top: 2px;
+
+                strong {
+                    color: black;
+                    font-weight: 500;
+
+                    span {
+                        color: #0075ff;
+                    }
+                }
+            }
+        }
+    }
+
+    button {
+        color: #0e6cf3;
+    }
+}

@@ -21,6 +21,14 @@
 
         <app-estadisticas-grafica [aptos]="estadisticas?.num_test_aptos ?? 0" [noAptos]="estadisticas?.num_test_no_aptos ?? 0" />
 
+        @if (estadisticas?.test && (estadisticas?.test?.length ?? 0) > 0) {
+            <div>
+                <app-estadisticas-lista-test
+                    [idcurso]="dataEstadisticas?.id_curso ?? 0"
+                    [listaTest]="estadisticas?.test ?? []"
+                    (testSeleccionadoEmitter)="getTestRegenerado($event)" />
+            </div>
+        }
     </main>
 
 </section>

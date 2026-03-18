@@ -1,1 +1,20 @@
-<p>estadisticas-lista-test works!</p>
+<section id="section_estadisticas_lista_test">
+
+    <app-cabecera-estadisticas-test [numeroTest]="listaTest().length" [show]="showState()" (showTestEmitter)="showListaTest()" />
+
+    <div class="panel-content-wrapper" [class.is-open]="showState()">
+        <div class="panel-content">
+            <div class="inner-content contenedor_lista_test">
+                @for(test of listaTest(); track test.cditest; let indexTest = $index) {
+                    <div class="item_test">
+                        <app-estadisticas-lista-test-item-test
+                            [idcurso]="idcurso()"
+                            [test]="test"
+                            (clickTestEmitter)="testSeleccionado(test.cditest, test.tipo)" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</section>

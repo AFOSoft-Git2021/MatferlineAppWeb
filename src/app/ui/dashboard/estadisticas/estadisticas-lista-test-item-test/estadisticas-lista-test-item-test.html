@@ -1,1 +1,10 @@
-<p>estadisticas-lista-test-item-test works!</p>
+<section (click)="clickTest()" id="section_estadisticas_lita_test_item_test">
+    <img
+        [src]="(test().tipo.toLowerCase().includes('aleatorio')) ? 'svg/icon_aleatorios_gris.svg' : (test().tipo.toLowerCase().includes('predefinido')) ? 'svg/icon_predefinidos_gris.svg' : 'svg/icon_falladas_gris.svg'"
+        alt="icono">
+    <div>
+        <p [innerHTML]="test().nombre" [ngStyle]="{color: (test().apto.toLowerCase().includes('no')) ? '#FF0000' : '#00B50C'}"></p>
+        <p>{{test().fecha}} - {{test().hora}}<strong>{{idcurso() === 'CAP' ? '. Puntos: ' : '. Fallos: '}}<span>{{test().puntuacion}}</span> </strong></p>
+    </div>
+    <button (click)="showAlertInfoTest($event)" mat-icon-button type="button"><mat-icon>info</mat-icon></button>
+</section>

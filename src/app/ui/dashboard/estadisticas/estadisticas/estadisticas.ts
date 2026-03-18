@@ -13,10 +13,12 @@ import { EstadisticasResumen } from "../estadisticas-resumen/estadisticas-resume
 import { EstadisticasPermiso } from '../../../../data/model/estadisticasPermiso';
 import { EstadisticasPermisoCabecera } from "../estadisticas-permiso/estadisticas-permiso";
 import { EstadisticasGrafica } from "../estadisticas-grafica/estadisticas-grafica";
+import { EstadisticasListaTest } from "../estadisticas-lista-test/estadisticas-lista-test";
+import { TipoTest } from '../../../../data/model/tipoTestEnum';
 
 @Component({
   selector: 'app-estadisticas',
-  imports: [CommonModule, FormsModule, MatIconModule, MatButtonModule, DashboardAppBar, EstadisticasTitulo, EstadisticasResumen, EstadisticasPermisoCabecera, EstadisticasGrafica],
+  imports: [CommonModule, FormsModule, MatIconModule, MatButtonModule, DashboardAppBar, EstadisticasTitulo, EstadisticasResumen, EstadisticasPermisoCabecera, EstadisticasGrafica, EstadisticasListaTest],
   templateUrl: './estadisticas.html',
   styleUrl: './estadisticas.scss',
 })
@@ -51,7 +53,7 @@ export class Estadisticas implements OnInit {
           if (response.status === 200) {
             console.log(response.body);
 
-            if (response.body.num_test_aleatorios) {
+            if (response.body.num_test_aleatorios >= 0) {
 
               this.estadisticas = response.body as EstadisticasPermiso;
               this.stateService.dataEstadisticas.set(null);
@@ -69,6 +71,12 @@ export class Estadisticas implements OnInit {
         }
       }
     )
+  }
+
+  getTestRegenerado(event: any) {
+    const cdiTest = event.cditest;
+    const tipoTest = event.tipo;
+    console.log(`cditest: ${cdiTest} tipo: ${tipoTest}`);
   }
 
 
