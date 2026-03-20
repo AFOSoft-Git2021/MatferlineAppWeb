@@ -35,7 +35,6 @@
                 display: flex;
                 justify-content: flex-start;
                 align-items: center;
-                gap: 1rem;
                 color: #394b94;
                 font-size: 0.86rem;
                 padding-top: .3rem;
@@ -44,6 +43,7 @@
                     img {
                         height: 26px;
                         vertical-align: middle;
+                        padding-right: 5px;
                     }
                 }
 

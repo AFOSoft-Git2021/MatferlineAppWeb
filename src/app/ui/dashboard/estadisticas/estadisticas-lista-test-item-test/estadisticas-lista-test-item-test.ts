@@ -36,14 +36,27 @@ export class EstadisticasListaTestItemTest {
 
   popUpInfoTest(test: EstadisticasPermisoTest, modo: number, tipo: number) {
 
-    let mensajeCompleto = 'TODO: componer el mensaje';
+    const PUNTUACION = (this.idcurso() === "CAP") ? `Puntos: ${test.puntuacion}` : `Fallos: ${test.puntuacion}`;
+    const REVISION = (this.test().solo_revision === 0) ? 'No' : 'Sí';
+
+    let mensajeCompleto = `
+    Nombre: ${test.nombre}<br>
+    Fecha: ${test.fecha}<br>
+    Hora: ${test.hora}<br>
+    Apto: ${test.apto}<br>
+    ${PUNTUACION}<br>
+    Tipo: ${test.tipo}<br>
+    Solo revisión: ${REVISION}<br>`;
+
+    if (this.test().idioma.length > 0) { mensajeCompleto += `Idioma: ${test.idioma}<br>` }
+    if (this.test().bandera.length > 0) { mensajeCompleto += `Bandera: ${test.bandera}<br>` }
 
     const dialogRef = this.dialog.open(PopupConfirmComponent, {
       disableClose: true,
       width: '80%',
       maxHeight: '80vh',
       data: {
-        titulo: test.nombre,
+        titulo: 'Estadísticas. Test realizado',
         mensaje: mensajeCompleto,
         modo,
         tipo

@@ -6,6 +6,7 @@ import { DataTestPredefinido } from '../model/dataTestPredefinidos'
 import { DataTestAleatorio } from '../model/dataTestAleatorio'
 import { Servicio } from '../model/servicioEnum'
 import { DataGetEstadisticas } from '../model/dataGetEstadisticas'
+import { TestRegenerado } from '../model/testRegenerado'
 
 @Injectable({
   providedIn: 'root',
@@ -52,6 +53,9 @@ export class StateService {
   // test aleatorio seleccionado
   testAleatorioSelected = signal<DataTestAleatorio | null>(null)
 
+  // test regenerado seleccionado
+  testRegeneradoSelected = signal<TestRegenerado | null>(null)
+
   // acceso a estadisticas de un permiso
   dataEstadisticas = signal<DataGetEstadisticas | null>(null)
 
@@ -64,8 +68,8 @@ export class StateService {
   set token(token: string) { localStorage.setItem('token', token) }
   get token(): string | null { return localStorage.getItem('token') }
 
-  set showInfoModoTest(state: string) { localStorage.setItem('showInfoModoTest', state) }
-  get showInfoModoTest(): string | null { return localStorage.getItem('showInfoModoTest') }
+  set hideInfoModoTest(state: string) { localStorage.setItem('hideInfoModoTest', state) }
+  get hideInfoModoTest(): string | null { return localStorage.getItem('hideInfoModoTest') }
 
   // reset en login
   resetData() {

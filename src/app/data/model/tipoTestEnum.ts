@@ -4,4 +4,5 @@ export enum TipoTest {
     TestAleatorioExamen = 'Test Aleatorio de Examen',
     TestAleatorioPreguntasFalladas = 'Test Aleatorio de Preguntas Falladas',
     TestAleatorioTematico = 'Test Aleatorio Temático',
+    TestAleatorio = "TestAleatorio",
 }

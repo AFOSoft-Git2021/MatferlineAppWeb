@@ -1,0 +1,24 @@
+<section id="section_test_info_regenerado">
+
+    <div>
+        <img src="svg/image_opciones_test_realizado.svg" alt="logo">
+        <p>¡ Revisión de test realizado !</p>
+        <p>Elige qué deseas hacer con el test</p>
+    </div>
+
+    <div>
+        <button (click)="comenzar()" class="button_orange" mat-flat-button type="button">
+            Hacerlo de nuevo
+            <mat-icon>edit</mat-icon>
+        </button>
+        <button (click)="comenzar()" class="button_orange" mat-flat-button type="button">
+            Revisar el test
+            <mat-icon>rule</mat-icon>
+        </button>
+        <button (click)="abandonar()" class="button_orange_reverse" mat-flat-button type="button">
+            Abandonar
+            <mat-icon>open_in_new</mat-icon>
+        </button>
+    </div>
+
+</section>

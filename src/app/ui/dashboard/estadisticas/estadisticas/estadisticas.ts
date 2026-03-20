@@ -15,10 +15,25 @@ import { EstadisticasPermisoCabecera } from "../estadisticas-permiso/estadistica
 import { EstadisticasGrafica } from "../estadisticas-grafica/estadisticas-grafica";
 import { EstadisticasListaTest } from "../estadisticas-lista-test/estadisticas-lista-test";
 import { TipoTest } from '../../../../data/model/tipoTestEnum';
+import { Servicio } from '../../../../data/model/servicioEnum';
+import { GetTestRegeneradoService } from '../../../../data/repository/get-test-regenerado.service';
+import { MatDialog } from '@angular/material/dialog';
+import { PopupConfirmComponent } from '../../../shared/popup-confirm/popup-confirm.component';
 
 @Component({
   selector: 'app-estadisticas',
-  imports: [CommonModule, FormsModule, MatIconModule, MatButtonModule, DashboardAppBar, EstadisticasTitulo, EstadisticasResumen, EstadisticasPermisoCabecera, EstadisticasGrafica, EstadisticasListaTest],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatIconModule,
+    MatButtonModule,
+    DashboardAppBar,
+    EstadisticasTitulo,
+    EstadisticasResumen,
+    EstadisticasPermisoCabecera,
+    EstadisticasGrafica,
+    EstadisticasListaTest
+  ],
   templateUrl: './estadisticas.html',
   styleUrl: './estadisticas.scss',
 })
@@ -26,7 +41,9 @@ export class Estadisticas implements OnInit {
 
   private stateService = inject(StateService);
   private getEstadisticasService = inject(GetEstadisticasService);
+  private getTestRegeneradoService = inject(GetTestRegeneradoService);
   private router = inject(Router);
+  private dialog = inject(MatDialog);
 
   dataEstadisticas: any;
   servicioSeleccionado = computed(() => { return `Test ${this.stateService.serviceSelected()}` });
@@ -35,9 +52,10 @@ export class Estadisticas implements OnInit {
   ngOnInit() {
     this.dataEstadisticas = this.stateService.dataEstadisticas() as DataGetEstadisticas;
     console.log(this.dataEstadisticas);
-    
+
     this.getEstadisticas(this.dataEstadisticas);
   }
+
 
   /*************************/
   /*   LLAMADAS A LA API   */
@@ -74,9 +92,64 @@ export class Estadisticas implements OnInit {
   }
 
   getTestRegenerado(event: any) {
-    const cdiTest = event.cditest;
-    const tipoTest = event.tipo;
+    const cdiTest = event.cditest as string;
+    const tipoTest = event.tipo as string;
     console.log(`cditest: ${cdiTest} tipo: ${tipoTest}`);
+
+    const DATA = { cditest: cdiTest }
+
+    this.stateService.loadingSpinner.set(true);
+    this.getTestRegeneradoService.getTestRegenerado(JSON.stringify(DATA)).subscribe(
+      {
+        next: (response) => {
+          this.stateService.loadingSpinner.set(false);
+
+          if (response.status === 200) {
+            console.log(response.body);
+
+            if (response.body.test) {
+
+              const TEST_REGENERADO = {
+                test: response.body.test,
+                correccion: response.body.correccion
+              }
+
+              this.stateService.testRegeneradoSelected.set(TEST_REGENERADO);
+              const TIPO_TEST = tipoTest.toLowerCase().includes('predefinido') ? TipoTest.TestPredefinido : TipoTest.TestAleatorio;
+              this.router.navigate(['test', TIPO_TEST]);
+
+            } else {
+              this.popUpTestNoEncontrado(response.body.message);
+            }
+          }
+        },
+        error: (error) => {
+          this.stateService.loadingSpinner.set(false);
+          console.log('error: ', error.message);
+          this.router.navigate(['error']);
+        }
+      }
+    )
+  }
+
+
+
+  /*************************/
+  /*   GESTION DE POPUPS   */
+  /*************************/
+  // Alert de test no encontrado
+  popUpTestNoEncontrado(mensaje: string) {
+    const dialogRef = this.dialog.open(PopupConfirmComponent, {
+      disableClose: true,
+      width: '80%',
+      maxHeight: '80vh',
+      data: {
+        titulo: 'Oops ...',
+        mensaje: mensaje,
+        modo: 1,
+        tipo: 0
+      }
+    })
   }
 
 
@@ -85,7 +158,8 @@ export class Estadisticas implements OnInit {
   /*    METODOS ESTADISTICAS   */
   /*****************************/
   navigateBack() {
-    this.router.navigate(['/dashboard/aleatorios']);
+    const ROUTE = this.servicioSeleccionado().toLowerCase().includes('aleatorios') ? 'aleatorios' : 'predefinidos';
+    this.router.navigate([`/dashboard/${ROUTE}`]);
   }
 
 }

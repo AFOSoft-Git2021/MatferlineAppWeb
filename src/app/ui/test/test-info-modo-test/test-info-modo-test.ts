@@ -19,11 +19,11 @@ export class TestInfoModoTest {
   autocorreccion = input.required<boolean>();
   comenzarEmitter = output();
   abandonarEmitter = output();
-  mostrarAvisoModoTestEmitter = output<boolean>();
+  ocultarAvisoModoTestEmitter = output<boolean>();
   checked = signal(false);
 
   constructor() {
-    effect(() => { this.stateService.showInfoModoTest = this.checked() ? '0' : '1' })
+    effect(() => { this.stateService.hideInfoModoTest = this.checked() ? '0' : '1' })
   }
 
   comenzar() {
@@ -34,8 +34,8 @@ export class TestInfoModoTest {
     this.abandonarEmitter.emit();
   }
 
-  mostrarAvisoModoTest() {
-    this.mostrarAvisoModoTestEmitter.emit(this.checked());
+  ocultarAvisoModoTest() {
+    this.ocultarAvisoModoTestEmitter.emit(this.checked());
   }
 
 }

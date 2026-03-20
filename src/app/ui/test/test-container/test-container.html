@@ -1,4 +1,4 @@
-@defer (when testLoaded()) {
+<!-- @defer (when testLoaded()) { -->
     <section id="test_container_section">
 
         <main>
@@ -65,11 +65,12 @@
 
     </section>
 
-    @if (showInfoModoTest() && showInfoModoTest()?.toString() === '1') {
+    @if (hideInfoModoTest() && hideInfoModoTest()?.toString() === '0') {
         <app-test-info-modo-test
             [autocorreccion]="test.autocorreccion"
             (abandonarEmitter)="navigateBack()"
-            (comenzarEmitter)="startTest()" />
+            (comenzarEmitter)="startTest()"
+            (ocultarAvisoModoTestEmitter)="ocultarAvisoModoTest($event)" />
     }
 
     @if (!chronoIsRunning() && !chronoTimeOut() && !testIsSaving() && !modoCorreccion()) {
@@ -95,4 +96,8 @@
         (clickRevisarEmitter)="clickRevisar()"
         (clickTerminarEmitter)="clickTerminar()" />
     }
-}
+
+    @if (isTestRegenerado()) {
+        <app-test-info-regenerado [tipoTest]="tipo()" />
+    }
+<!-- } -->

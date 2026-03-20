@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, linkedSignal, OnDestroy, OnInit, signal, untracked } from '@angular/core';
+import { Component, computed, effect, inject, input, linkedSignal, OnDestroy, OnInit, signal, untracked } from '@angular/core';
 import { Router } from '@angular/router';
 import { StateService } from '../../../data/repository/state.service';
 import { GetTestPredefinidoService } from '../../../data/repository/get-test-predefinido.service';
@@ -33,6 +33,7 @@ import { CorrectTestPredefinidoService } from '../../../data/repository/correct-
 import { DataCorreccionTestPredefinido } from '../../../data/model/dataCorreccionTestPredefinido';
 import { CorrectTestAleatorioService } from '../../../data/repository/correct-test-aleatorio.service';
 import { DataCorreccionTestAleatorio } from '../../../data/model/dataCorreccionTestAleatorio';
+import { TestInfoRegenerado } from "../test-info-regenerado/test-info-regenerado";
 
 @Component({
   selector: 'app-test-container',
@@ -48,8 +49,9 @@ import { DataCorreccionTestAleatorio } from '../../../data/model/dataCorreccionT
     TestBloqueoChrono,
     TestPhotoZoom,
     TestTimeOut,
-    TestResultado
-  ],
+    TestResultado,
+    TestInfoRegenerado
+],
   templateUrl: './test-container.html',
   styleUrl: './test-container.scss',
 })
@@ -72,9 +74,10 @@ export class TestContainer implements OnInit, OnDestroy {
   testIsSaving = signal(false);
   numeroPregunta = signal(0);
   modoCorreccion = signal(false);
-  showInfoModoTest = linkedSignal(() => { return this.stateService.showInfoModoTest });
+  hideInfoModoTest = linkedSignal(() => { return this.stateService.hideInfoModoTest });
   showPhotoZoom = signal(false);
   showResultadoTest = signal(false);
+  isTestRegenerado = computed(() => { return this.stateService.testRegeneradoSelected() !== null });
 
   alumno: (Alumno | null) = null;
   test: any;
@@ -104,8 +107,13 @@ export class TestContainer implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (!this.stateService.showInfoModoTest) { this.stateService.showInfoModoTest = '1' }
-    this.loadTest()
+    // al entrar chequea si viene de un test regenerado de las estadisticas
+    if (this.isTestRegenerado()) {
+      console.log('Test regenerado');
+    } else {
+      if (!this.stateService.hideInfoModoTest) { this.stateService.hideInfoModoTest = '0' }
+      this.loadTest()
+    }
   }
 
   ngOnDestroy() {
@@ -132,6 +140,9 @@ export class TestContainer implements OnInit, OnDestroy {
         this.router.navigate(['/dashboard/aleatorios']);
       }
     }
+  }
+
+  loadTestRegenerado() {
   }
 
 
@@ -162,7 +173,7 @@ export class TestContainer implements OnInit, OnDestroy {
 
               this.testLoaded.set(true);
 
-              if (!this.showInfoModoTest()) { this.startTest() }
+              if (this.hideInfoModoTest() && this.hideInfoModoTest() === '1') { this.startTest() }
 
             } else {
               console.log('response', response.body.message);
@@ -200,7 +211,9 @@ export class TestContainer implements OnInit, OnDestroy {
                 this.listCorregidasAutocorreccion = new Array(this.test.preguntas.length).fill(false);
               }
 
-              if (!this.showInfoModoTest()) { this.startTest() }
+              if (this.hideInfoModoTest() && this.hideInfoModoTest() === '1') {
+                this.startTest()
+              }
 
             } else {
               console.log('response', response.body.message);
@@ -324,7 +337,7 @@ export class TestContainer implements OnInit, OnDestroy {
   /*     GESTION DEL CRONO     */
   /*****************************/
   startTest() {
-    this.showInfoModoTest.set('0');
+    this.hideInfoModoTest.set('1');
     this.chronoTime.set(this.test.preguntas.length * 60);
     this.chronoCounter.set(this.chronoTime());
     console.log('chronoTime', this.chronoTime());
@@ -409,6 +422,10 @@ export class TestContainer implements OnInit, OnDestroy {
     this.modoCorreccion.set(true);
     this.showResultadoTest.set(false);
     this.checkNavigateBack();
+  }
+
+  ocultarAvisoModoTest(state: boolean) {
+    this.stateService.hideInfoModoTest = state ? '1' : '0';
   }
 
 
@@ -509,7 +526,6 @@ export class TestContainer implements OnInit, OnDestroy {
   /*************************/
   /*   GESTION DE POPUPS   */
   /*************************/
-
   // SnackBar
   showInfoSnackbar(mensaje: string) {
     this.matSnackbar.open(mensaje, 'Ok', {

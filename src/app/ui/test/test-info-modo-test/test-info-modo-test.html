@@ -28,7 +28,7 @@
 
     <p>
         <span>No volver a mostrar este aviso</span>
-        <mat-slide-toggle [(ngModel)]="checked" name="aviso"></mat-slide-toggle>
+        <mat-slide-toggle (change)="ocultarAvisoModoTest()" [(ngModel)]="checked" name="aviso"></mat-slide-toggle>
     </p>
     
 </section>
