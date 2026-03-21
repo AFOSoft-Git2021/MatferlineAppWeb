@@ -7,6 +7,9 @@ import { ProfewebProfe } from '../../../../data/model/profewebProfe';
 import { ItemListaTest } from "../item-lista-profe-tema/item-lista-profe-tema";
 import { ItemCategoriaProfe } from "../item-categoria-profe/item-categoria-profe";
 import { BotonExamenEstudio } from "../../boton-examen-estudio/boton-examen-estudio";
+import { ProfeDataGetTema } from '../../../../data/model/profeDataGetTema';
+import { Profeweb } from '../../../../data/model/profeweb';
+import { ProfewebProfeCategoriaTema } from '../../../../data/model/profewebProfeCategoriaTema';
 
 @Component({
   selector: 'app-profeweb-categorias',
@@ -62,12 +65,30 @@ export class ProfewebCategorias implements OnInit {
 
   setAutocorreccionCategoria(index: number, value: number) {
     console.log(`setAutocorreccionCategoria: index=${index}, value=${value}`);
-    
+
     this.autocorreccionState()[index] = value;
   }
 
-  getTemaProfe(event: any) {
-    console.log(event);
+  getTemaProfe(indexCategoria: number, tema: ProfewebProfeCategoriaTema) {
+    const profeDataGetTema: ProfeDataGetTema = {
+      cdicurso: this.profewebcdi().toString(),
+      id_curso: this.profewebid(),
+      nombre_curso: this.nombreProfe(),
+      cdiprofe: this.profecdi().toString(),
+      nombre_profe: this.profeweb?.nombre ?? '',
+      cdicategoria: this.profeweb?.categorias[indexCategoria].cdi.toString() ?? '',
+      nombre_categoria: this.profeweb?.categorias[indexCategoria].nombre ?? '',
+      cditema: tema.cdi.toString(),
+      nombre_tema: tema.titulo,
+      descripcion_tema: tema.descripcion,
+      cditest: tema.cditest.toString(),
+      traducir: this.idiomaSelected().toString(),
+      idioma: (this.idiomaSelected() === 1 ? this.stateService.alumnoLogeado()?.idioma?.code : '') ?? '',
+      ayuda: '1',
+      autocorreccion: this.profeweb?.categorias[indexCategoria].autocorreccion.toString() ?? '0'
+    }
+    this.stateService.profeDataGetTema.set(profeDataGetTema);
+    this.router.navigate(['/profeweb']);
   }
 
   navigateEstadisticas(cdicategoria: number, nombrecategoria: string, iconocategoria: string) {

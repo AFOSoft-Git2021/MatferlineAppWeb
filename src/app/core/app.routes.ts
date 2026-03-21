@@ -35,6 +35,7 @@ export const routes: Routes = [
         ]
     },
     { path: 'test/:tipo', loadComponent: () => import('../ui/test/test-container/test-container').then(c => c.TestContainer), canActivate: [authGuard] },
+    { path: 'profeweb', loadComponent: () => import('../ui/profe/profe-container/profe-container').then(c => c.ProfeContainer), canActivate: [authGuard] },
     { path: 'error', loadComponent: () => import('../ui/shared/server-error/server-error').then(c => c.ServerError) },
     { path: 'concurrencia/:mensaje', loadComponent: () => import('../ui/shared/concurrence-error/concurrence-error').then(c => c.ConcurrenceError) },
     { path: '**', redirectTo: 'inicio' }

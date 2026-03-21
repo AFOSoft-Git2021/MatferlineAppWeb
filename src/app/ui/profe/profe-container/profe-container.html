@@ -1,0 +1,10 @@
+<section id="section_profe_container">
+
+    <h1 [innerHTML]="profeTema?.nombre_tema"></h1>
+
+    <ul>
+        @for(elemento of profeTema?.elementos; track $index) {
+            <ol [innerHTML]="elemento.sonido"></ol>
+        }
+    </ul>
+</section>

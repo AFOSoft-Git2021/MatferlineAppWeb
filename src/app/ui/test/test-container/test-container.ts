@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, input, linkedSignal, OnDestroy, OnInit, signal, untracked } from '@angular/core';
+import { Component, effect, inject, input, linkedSignal, OnDestroy, OnInit, signal, untracked } from '@angular/core';
 import { Router } from '@angular/router';
 import { StateService } from '../../../data/repository/state.service';
 import { GetTestPredefinidoService } from '../../../data/repository/get-test-predefinido.service';
@@ -34,6 +34,8 @@ import { DataCorreccionTestPredefinido } from '../../../data/model/dataCorreccio
 import { CorrectTestAleatorioService } from '../../../data/repository/correct-test-aleatorio.service';
 import { DataCorreccionTestAleatorio } from '../../../data/model/dataCorreccionTestAleatorio';
 import { TestInfoRegenerado } from "../test-info-regenerado/test-info-regenerado";
+import { Servicio } from '../../../data/model/servicioEnum';
+import { TestRegenerado } from '../../../data/model/testRegenerado';
 
 @Component({
   selector: 'app-test-container',
@@ -51,7 +53,7 @@ import { TestInfoRegenerado } from "../test-info-regenerado/test-info-regenerado
     TestTimeOut,
     TestResultado,
     TestInfoRegenerado
-],
+  ],
   templateUrl: './test-container.html',
   styleUrl: './test-container.scss',
 })
@@ -77,7 +79,7 @@ export class TestContainer implements OnInit, OnDestroy {
   hideInfoModoTest = linkedSignal(() => { return this.stateService.hideInfoModoTest });
   showPhotoZoom = signal(false);
   showResultadoTest = signal(false);
-  isTestRegenerado = computed(() => { return this.stateService.testRegeneradoSelected() !== null });
+  isTestRegenerado = linkedSignal(() => { return this.stateService.testRegeneradoSelected() !== null });
 
   alumno: (Alumno | null) = null;
   test: any;
@@ -110,6 +112,7 @@ export class TestContainer implements OnInit, OnDestroy {
     // al entrar chequea si viene de un test regenerado de las estadisticas
     if (this.isTestRegenerado()) {
       console.log('Test regenerado');
+      this.loadTestRegenerado();
     } else {
       if (!this.stateService.hideInfoModoTest) { this.stateService.hideInfoModoTest = '0' }
       this.loadTest()
@@ -118,6 +121,7 @@ export class TestContainer implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     clearInterval(this.chrono);
+    this.stateService.testRegeneradoSelected.set(null);
   }
 
   loadTest() {
@@ -143,14 +147,31 @@ export class TestContainer implements OnInit, OnDestroy {
   }
 
   loadTestRegenerado() {
-  }
+    const DATA_REGENERADO = this.stateService.testRegeneradoSelected() as TestRegenerado;
+    const TIPO_TEST = DATA_REGENERADO.test.tipo_test.toString().toLowerCase();
 
+    if (TIPO_TEST.includes('predefinido')) {
+      this.test = DATA_REGENERADO.test as TestPredefinido;
+    } else {
+      this.test = DATA_REGENERADO.test as TestAleatorio;
+    }
+
+    console.log(this.test);
+
+    this.dataTestCorregido = {
+      status: 'OK',
+      code: 200,
+      message: '',
+      datos_correcion: DATA_REGENERADO.correccion
+    };
+
+    this.testLoaded.set(true);
+  }
 
 
   /*************************/
   /*   LLAMADAS A LA API   */
   /*************************/
-
   // descarga un test predefinido
   getTestPredefinido(dataTestPredefinido: DataTestPredefinido) {
     this.stateService.loadingSpinner.set(true);
@@ -205,15 +226,14 @@ export class TestContainer implements OnInit, OnDestroy {
 
               this.test = response.body as TestAleatorio;
               this.stateService.testAleatorioSelected.set(null);
-              this.testLoaded.set(true);
 
               if (this.test.autocorreccion === 1) {
                 this.listCorregidasAutocorreccion = new Array(this.test.preguntas.length).fill(false);
               }
 
-              if (this.hideInfoModoTest() && this.hideInfoModoTest() === '1') {
-                this.startTest()
-              }
+              this.testLoaded.set(true);
+
+              if (this.hideInfoModoTest() && this.hideInfoModoTest() === '1') { this.startTest() }
 
             } else {
               console.log('response', response.body.message);
@@ -332,7 +352,6 @@ export class TestContainer implements OnInit, OnDestroy {
   }
 
 
-
   /*****************************/
   /*     GESTION DEL CRONO     */
   /*****************************/
@@ -385,7 +404,6 @@ export class TestContainer implements OnInit, OnDestroy {
   }
 
 
-
   /****************************/
   /*     GESTION DEL TEST     */
   /****************************/
@@ -428,6 +446,22 @@ export class TestContainer implements OnInit, OnDestroy {
     this.stateService.hideInfoModoTest = state ? '1' : '0';
   }
 
+  comenzarTestRegenerado() {
+    this.numeroPregunta.set(0);
+    this.test.preguntas.map((pregunta: TestPregunta) => pregunta.seleccion = 0);
+    this.modoCorreccion.set(false);
+    this.isTestRegenerado.set(false);
+    this.startTest();
+  }
+
+  revisarTestRegenerado() {
+    this.modoCorreccion.set(true);
+    this.isTestRegenerado.set(false);
+  }
+
+  abandonarTestRegenerado() {
+    this.navigateBack();
+  }
 
 
   /*****************************/
@@ -440,7 +474,6 @@ export class TestContainer implements OnInit, OnDestroy {
       this.test.preguntas[this.numeroPregunta()].seleccion = respuesta + 1;
     }
   }
-
 
 
   /***************************/
@@ -493,7 +526,6 @@ export class TestContainer implements OnInit, OnDestroy {
   }
 
 
-
   /****************/
   /* BOTTOM SHEET */
   /****************/
@@ -522,7 +554,6 @@ export class TestContainer implements OnInit, OnDestroy {
   }
 
 
-
   /*************************/
   /*   GESTION DE POPUPS   */
   /*************************/
@@ -543,9 +574,10 @@ export class TestContainer implements OnInit, OnDestroy {
   }
 
   navigateBack() {
-    // TODO: reset del crono y otras variables
-    const ROUTE = this.tipo() === TipoTest.TestPredefinido ? '/dashboard/predefinidos' : '/dashboard/aleatorios';
-    this.router.navigate([ROUTE]);
+    // TODO: reset del crono y otras variables ???
+    const SERVICIO = this.stateService.serviceSelected();
+    const ROUTE = SERVICIO === Servicio.TestPredefinidos ? 'predefinidos' : 'aleatorios';
+    this.router.navigate([`/dashboard/${ROUTE}`]);
   }
 
   popUpNavigateBack() {
@@ -565,7 +597,6 @@ export class TestContainer implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(
       (respuesta) => { if (respuesta.accion) { this.navigateBack() } })
   }
-
 
   // Alert test de estudio completado
   popUpAutocorreccionCompleta() {
@@ -590,7 +621,6 @@ export class TestContainer implements OnInit, OnDestroy {
         }
       })
   }
-
 
   // Alert corregir el test
   popUpCorregirTest() {

@@ -7,6 +7,7 @@ import { DataTestAleatorio } from '../model/dataTestAleatorio'
 import { Servicio } from '../model/servicioEnum'
 import { DataGetEstadisticas } from '../model/dataGetEstadisticas'
 import { TestRegenerado } from '../model/testRegenerado'
+import { ProfeDataGetTema } from '../model/profeDataGetTema'
 
 @Injectable({
   providedIn: 'root',
@@ -47,10 +48,10 @@ export class StateService {
   // servicio seleccionado
   serviceSelected = signal<Servicio>(Servicio.TestPredefinidos)
 
-  // test predefinido seleccionado
+  // acceso a predefinido seleccionado
   testPredefinidoSelected = signal<DataTestPredefinido | null>(null)
 
-  // test aleatorio seleccionado
+  // acceso a aleatorio seleccionado
   testAleatorioSelected = signal<DataTestAleatorio | null>(null)
 
   // test regenerado seleccionado
@@ -58,6 +59,9 @@ export class StateService {
 
   // acceso a estadisticas de un permiso
   dataEstadisticas = signal<DataGetEstadisticas | null>(null)
+
+  // acceso a un tema de Profe
+  profeDataGetTema = signal<ProfeDataGetTema | null>(null)
 
 
 

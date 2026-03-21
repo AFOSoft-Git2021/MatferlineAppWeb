@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit } from '@angular/core';
 import { StateService } from '../../../../data/repository/state.service';
 import { GetEstadisticasService } from '../../../../data/repository/get-estadisticas.service';
 import { Router } from '@angular/router';
@@ -15,10 +15,11 @@ import { EstadisticasPermisoCabecera } from "../estadisticas-permiso/estadistica
 import { EstadisticasGrafica } from "../estadisticas-grafica/estadisticas-grafica";
 import { EstadisticasListaTest } from "../estadisticas-lista-test/estadisticas-lista-test";
 import { TipoTest } from '../../../../data/model/tipoTestEnum';
-import { Servicio } from '../../../../data/model/servicioEnum';
 import { GetTestRegeneradoService } from '../../../../data/repository/get-test-regenerado.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupConfirmComponent } from '../../../shared/popup-confirm/popup-confirm.component';
+import { Servicio } from '../../../../data/model/servicioEnum';
+import { TestRegenerado } from '../../../../data/model/testRegenerado';
 
 @Component({
   selector: 'app-estadisticas',
@@ -37,7 +38,7 @@ import { PopupConfirmComponent } from '../../../shared/popup-confirm/popup-confi
   templateUrl: './estadisticas.html',
   styleUrl: './estadisticas.scss',
 })
-export class Estadisticas implements OnInit {
+export class Estadisticas implements OnInit, OnDestroy {
 
   private stateService = inject(StateService);
   private getEstadisticasService = inject(GetEstadisticasService);
@@ -56,11 +57,13 @@ export class Estadisticas implements OnInit {
     this.getEstadisticas(this.dataEstadisticas);
   }
 
+  ngOnDestroy() {
+    this.stateService.dataEstadisticas.set(null);
+  }
 
   /*************************/
   /*   LLAMADAS A LA API   */
   /*************************/
-
   getEstadisticas(data: DataGetEstadisticas) {
     this.stateService.loadingSpinner.set(true);
     this.getEstadisticasService.getEstadisticas(data).subscribe(
@@ -109,7 +112,7 @@ export class Estadisticas implements OnInit {
 
             if (response.body.test) {
 
-              const TEST_REGENERADO = {
+              const TEST_REGENERADO: TestRegenerado = {
                 test: response.body.test,
                 correccion: response.body.correccion
               }
@@ -132,8 +135,6 @@ export class Estadisticas implements OnInit {
     )
   }
 
-
-
   /*************************/
   /*   GESTION DE POPUPS   */
   /*************************/
@@ -152,13 +153,12 @@ export class Estadisticas implements OnInit {
     })
   }
 
-
-
   /*****************************/
   /*    METODOS ESTADISTICAS   */
   /*****************************/
   navigateBack() {
-    const ROUTE = this.servicioSeleccionado().toLowerCase().includes('aleatorios') ? 'aleatorios' : 'predefinidos';
+    const SERVICIO = this.stateService.serviceSelected();
+    const ROUTE = SERVICIO === Servicio.TestPredefinidos ? 'predefinidos' : 'aleatorios';
     this.router.navigate([`/dashboard/${ROUTE}`]);
   }
 

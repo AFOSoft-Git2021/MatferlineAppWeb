@@ -7,11 +7,13 @@
     </div>
 
     <div>
+        @if(tipoTest() !== TipoTest.TestPredefinido){
         <button (click)="comenzar()" class="button_orange" mat-flat-button type="button">
             Hacerlo de nuevo
             <mat-icon>edit</mat-icon>
         </button>
-        <button (click)="comenzar()" class="button_orange" mat-flat-button type="button">
+        }
+        <button (click)="revisar()" class="button_orange" mat-flat-button type="button">
             Revisar el test
             <mat-icon>rule</mat-icon>
         </button>

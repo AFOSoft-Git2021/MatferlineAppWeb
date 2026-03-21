@@ -10,7 +10,7 @@
         (clickIdiomaEmitter)="setIidiomaSelected($event)" />
 
     <div>
-        @for(categoria of profeweb?.categorias; track categoria.cdi) {
+        @for(categoria of profeweb?.categorias; track categoria.cdi; let indexCategoria = $index) {
         <div class="item_categoria">
             <app-item-categoria-profe
                 [cdi]="categoria.cdi"
@@ -33,11 +33,11 @@
                             </li>
                         </ul>
 
-                        @for(tema of categoria.temas; track tema.cdi) {
+                        @for(tema of categoria.temas; track tema.cdi; let indextema = $index) {
                         <div class="item_test">
                             <app-item-lista-profe-tema
                                 [tema]="tema"
-                                (clickTemaEmitter)="getTemaProfe($index)" />
+                                (clickTemaEmitter)="getTemaProfe(indexCategoria, tema)" />
                         </div>
                         }
 
