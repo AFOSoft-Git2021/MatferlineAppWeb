@@ -67,7 +67,7 @@
 
     </section>
 
-    @if (hideInfoModoTest() && hideInfoModoTest()?.toString() === '0') {
+    @if (hideInfoModoTest()?.toString() === '0' && !isTestRegenerado()) {
         <app-test-info-modo-test
             [autocorreccion]="test.autocorreccion"
             (abandonarEmitter)="navigateBack()"
@@ -100,7 +100,7 @@
     }
 }
 
-@if (isTestRegenerado()) {
+@if (showInfoTestRegenerado()) {
     <app-test-info-regenerado
         [tipoTest]="tipo()"
         (comenzarEmitter)="comenzarTestRegenerado()"

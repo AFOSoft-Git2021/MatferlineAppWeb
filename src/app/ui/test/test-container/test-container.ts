@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, linkedSignal, OnDestroy, OnInit, signal, untracked } from '@angular/core';
+import { Component, computed, effect, inject, input, linkedSignal, OnDestroy, OnInit, signal, untracked } from '@angular/core';
 import { Router } from '@angular/router';
 import { StateService } from '../../../data/repository/state.service';
 import { GetTestPredefinidoService } from '../../../data/repository/get-test-predefinido.service';
@@ -79,7 +79,8 @@ export class TestContainer implements OnInit, OnDestroy {
   hideInfoModoTest = linkedSignal(() => { return this.stateService.hideInfoModoTest });
   showPhotoZoom = signal(false);
   showResultadoTest = signal(false);
-  isTestRegenerado = linkedSignal(() => { return this.stateService.testRegeneradoSelected() !== null });
+  isTestRegenerado = computed(() => { return this.stateService.testRegeneradoSelected() !== null });
+  showInfoTestRegenerado = signal(false);
 
   alumno: (Alumno | null) = null;
   test: any;
@@ -109,14 +110,10 @@ export class TestContainer implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    if (!this.stateService.hideInfoModoTest) { this.stateService.hideInfoModoTest = '0' }
+    console.log('hideInfoModoTest', this.hideInfoModoTest());
     // al entrar chequea si viene de un test regenerado de las estadisticas
-    if (this.isTestRegenerado()) {
-      console.log('Test regenerado');
-      this.loadTestRegenerado();
-    } else {
-      if (!this.stateService.hideInfoModoTest) { this.stateService.hideInfoModoTest = '0' }
-      this.loadTest()
-    }
+    this.isTestRegenerado() ? this.loadTestRegenerado() : this.loadTest();
   }
 
   ngOnDestroy() {
@@ -147,6 +144,8 @@ export class TestContainer implements OnInit, OnDestroy {
   }
 
   loadTestRegenerado() {
+    this.showInfoTestRegenerado.set(true);
+
     const DATA_REGENERADO = this.stateService.testRegeneradoSelected() as TestRegenerado;
     const TIPO_TEST = DATA_REGENERADO.test.tipo_test.toString().toLowerCase();
 
@@ -450,13 +449,13 @@ export class TestContainer implements OnInit, OnDestroy {
     this.numeroPregunta.set(0);
     this.test.preguntas.map((pregunta: TestPregunta) => pregunta.seleccion = 0);
     this.modoCorreccion.set(false);
-    this.isTestRegenerado.set(false);
+    this.showInfoTestRegenerado.set(false);
     this.startTest();
   }
 
   revisarTestRegenerado() {
     this.modoCorreccion.set(true);
-    this.isTestRegenerado.set(false);
+    this.showInfoTestRegenerado.set(false);
   }
 
   abandonarTestRegenerado() {

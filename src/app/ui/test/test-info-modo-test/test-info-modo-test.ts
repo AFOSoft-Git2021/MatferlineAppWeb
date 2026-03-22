@@ -23,7 +23,7 @@ export class TestInfoModoTest {
   checked = signal(false);
 
   constructor() {
-    effect(() => { this.stateService.hideInfoModoTest = this.checked() ? '0' : '1' })
+    effect(() => { this.stateService.hideInfoModoTest = this.checked() ? '1' : '0' })
   }
 
   comenzar() {

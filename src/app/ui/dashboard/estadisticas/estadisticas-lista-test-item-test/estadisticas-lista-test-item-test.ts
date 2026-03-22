@@ -49,7 +49,7 @@ export class EstadisticasListaTestItemTest {
     Solo revisión: ${REVISION}<br>`;
 
     if (this.test().idioma.length > 0) { mensajeCompleto += `Idioma: ${test.idioma}<br>` }
-    if (this.test().bandera.length > 0) { mensajeCompleto += `Bandera: ${test.bandera}<br>` }
+    // if (this.test().bandera.length > 0) { mensajeCompleto += `Bandera: ${test.bandera}<br>` }
 
     const dialogRef = this.dialog.open(PopupConfirmComponent, {
       disableClose: true,
