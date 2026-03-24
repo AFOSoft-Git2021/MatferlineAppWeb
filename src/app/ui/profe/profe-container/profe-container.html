@@ -1,10 +1,33 @@
+@defer (when temaLoaded()) {
 <section id="section_profe_container">
 
-    <h1 [innerHTML]="profeTema?.nombre_tema"></h1>
+    <app-top-app-bar-logged [alumno]="alumno()" />
 
-    <ul>
-        @for(elemento of profeTema?.elementos; track $index) {
-            <ol [innerHTML]="elemento.sonido"></ol>
-        }
-    </ul>
+    <main>
+        <div>
+            <app-profe-menu-header
+                [nombreTema]="profeTema?.nombre_tema ?? ''"
+                (navigateBackEmitter)="headerNavigateBack()"
+                (showInfoEmitter)="headerShowInfo()"
+                (goToTestEmitter)="headerGoToTest()" />
+        </div>
+
+        <div>
+            <app-profe-elemento-activo
+                [elemento]="profeTema?.elementos?.[indexEA()]"
+                [numeroElementos]="profeTema?.elementos?.length"
+                [indexEA]="indexEA()"
+                (clickEpigrafesEmitter)="clickEpigrafes()"
+                (clickElementosEmitter)="clickElementos()" />
+        </div>
+    </main>
+
+    <app-profe-bottom-menu
+        (clickAtrasEmitter)="clickAtras()"
+        (clickAlanteEmitter)="clickAlante()"
+        (clickPausaEmitter)="clickPausa()"
+        (clickRepetirEmitter)="clickRepetir()"
+        (clickSonidoEmitter)="clickSonido()" />
+
 </section>
+}

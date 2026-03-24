@@ -1,6 +1,4 @@
-// @import "../../../../styles.scss";
-
-#section_bottom_navigation {
+#section_profe_bottom_menu {
     width: 100%;
 
     ul {
@@ -23,13 +21,10 @@
             font-weight: 500;
             flex: 1 1 0; /* shorthand de: flex-grow: 1, flex-shrink: 1, flex-basis: 0 */
             text-align: center;
-            transition: all 0.1s ease;
             // border: 1px solid #ccc;
 
-            &:not(.servicio_activo) {
-                &:active {
-                    opacity: 0.25;
-                }
+            button {
+                color: #a90094;
             }
         }
     }

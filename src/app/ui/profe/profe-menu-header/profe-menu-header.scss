@@ -1,0 +1,38 @@
+#section_profe_menu_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: #e8caef;
+    border-radius: 12px;
+    padding: 4px;
+    color: #c426b4;
+
+    > span {
+        flex: 1;
+        // max-width: 260px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align: left;
+    }
+
+    button {
+        color: #c426b4;
+    }
+
+    > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        img {
+            width: 36px;
+            transition: all 0.2s ease-in-out;
+
+            &:active {
+                opacity: 0.4;
+            }
+        }
+    }
+}

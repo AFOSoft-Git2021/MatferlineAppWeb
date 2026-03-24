@@ -1,0 +1,10 @@
+<section id="section_profe_elemento_activo_visor">
+
+    @if (!isLast() && foto().length > 0) {
+    <img [src]="elemento().length > 0 ? foto() : 'svg/imagen_no_elemento_activo.svg'" #fotoEA (load)="fotoEA.style.opacity = '1'" alt="foto">
+    }
+    @else {
+    <img src="svg/image_fin_tema.svg" class="foto_fin" alt="fin">
+    }
+
+</section>

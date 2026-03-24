@@ -1,13 +1,20 @@
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { StateService } from '../../../data/repository/state.service';
 import { GetTemaProfeService } from '../../../data/repository/get-tema-profe.service';
 import { ProfeTema } from '../../../data/model/profeTema';
 import { ProfeDataGetTema } from '../../../data/model/profeDataGetTema';
+import { TopAppBarLogged } from '../../shared/top-app-bar-logged/top-app-bar-logged';
+import { ProfeBottomMenu } from "../profe-bottom-menu/profe-bottom-menu";
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { PopupConfirmComponent } from '../../shared/popup-confirm/popup-confirm.component';
+import { ProfeMenuHeader } from "../profe-menu-header/profe-menu-header";
+import { ProfeElementoActivo } from "../profe-elemento-activo/profe-elemento-activo";
 
 @Component({
   selector: 'app-profe-container',
-  imports: [],
+  imports: [TopAppBarLogged, ProfeBottomMenu, ProfeMenuHeader, ProfeElementoActivo],
   templateUrl: './profe-container.html',
   styleUrl: './profe-container.scss',
 })
@@ -16,10 +23,18 @@ export class ProfeContainer implements OnInit, OnDestroy {
   private router = inject(Router);
   private stateService = inject(StateService);
   private getTemaProfeService = inject(GetTemaProfeService);
+  private dialog = inject(MatDialog);
+  private matSnackbar = inject(MatSnackBar);
 
-  temaLoaded = signal(false);
+  alumno = computed(() => this.stateService.alumnoLogeado());
   profeDataGetTema: any;
   profeTema: ProfeTema | null = null;
+  temaLoaded = signal(false);
+  indexEA = signal(0);
+
+  showListaElementos = signal(false);
+  showListaEpigrafes = signal(false);
+  listaDeEpigrafes: [number, string][] = [];
 
   ngOnInit() {
     this.profeDataGetTema = this.stateService.profeDataGetTema() as ProfeDataGetTema;
@@ -33,6 +48,7 @@ export class ProfeContainer implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.stateService.profeDataGetTema.set(null);
   }
+
 
   /*************************/
   /*   LLAMADAS A LA API   */
@@ -52,6 +68,12 @@ export class ProfeContainer implements OnInit, OnDestroy {
 
               this.profeTema = response.body;
               this.stateService.profeDataGetTema.set(null);
+
+              this.profeTema?.elementos.map((elemento, index) => {
+                if (elemento.texto_epigrafe.length > 0) { this.listaDeEpigrafes.push([index, elemento.texto_epigrafe]) }
+              })
+              console.log(this.listaDeEpigrafes);
+
               this.temaLoaded.set(true);
 
             } else {
@@ -69,4 +91,117 @@ export class ProfeContainer implements OnInit, OnDestroy {
     )
   }
 
+
+  /**********************************/
+  /*   GESTION DE ELEMENTO ACTIVO   */
+  /**********************************/
+  clickEpigrafes() {
+    this.showListaElementos.set(false);
+    this.showListaEpigrafes.set(true);
+  }
+
+  clickElementos() {
+    this.showListaEpigrafes.set(false);
+    this.showListaElementos.set(true);
+  }
+
+
+  /******************************/
+  /*   GESTION DE MENU HEADER   */
+  /******************************/
+  headerNavigateBack() {
+    this.popUpNavigateBack(
+      'Terminar el tema',
+      'Vas a salir del tema. ¿Deseas continuar?',
+      0
+    )
+  }
+
+  headerShowInfo() {
+    this.popUpNavigateBack(
+      this.profeTema?.nombre_tema ?? '',
+      this.profeTema?.descripcion_tema ?? '',
+      1
+    )
+  }
+
+  headerGoToTest() {
+    this.popUpNavigateBack(
+      'Realizar el test',
+      'Vas a realizar el test de este tema. ¿Deseas continuar?',
+      2
+    )
+  }
+
+
+  /******************************/
+  /*   GESTION DE MENU BOTTOM   */
+  /******************************/
+  clickAtras() {
+    if (this.indexEA() > 0) {
+      this.indexEA.set(this.indexEA() - 1);
+    }
+  }
+
+  clickAlante() {
+    const totalElementos = this.profeTema?.elementos?.length ?? 0;
+    if (totalElementos > 0 && (this.indexEA() < (totalElementos - 1))) {
+      this.indexEA.set(this.indexEA() + 1);
+    }
+  }
+
+  clickPausa() {
+  }
+
+  clickRepetir() {
+  }
+
+  clickSonido() {
+  }
+
+
+  /*************************/
+  /*   GESTION DE POPUPS   */
+  /*************************/
+  // SnackBar
+  showInfoSnackbar(mensaje: string) {
+    this.matSnackbar.open(mensaje, 'Ok', {
+      duration: 4000
+    })
+  }
+
+  popUpNavigateBack(titulo: string, mensaje: string, origen: number) {
+    const dialogRef = this.dialog.open(PopupConfirmComponent, {
+      disableClose: true,
+      width: '80%',
+      maxHeight: '80vh',
+      data: {
+        titulo: titulo,
+        mensaje: mensaje,
+        modo: origen === 1 ? 0 : 1,
+        tipo: origen === 1 ? 0 : 1
+      }
+    });
+
+    // al cerrar popup ...
+    dialogRef.afterClosed().subscribe(
+      (respuesta) => {
+        if (respuesta.accion) {
+          switch (origen) {
+            case 0:
+              this.navigateBack();
+              break;
+
+            case 2:
+              // TODO: cargar test tema;
+              break;
+          }
+        }
+      })
+  }
+
+  navigateBack() {
+    // TODO: reset de players y otras variables ???
+    this.router.navigate(['/dashboard/profeweb']);
+  }
 }

@@ -1,0 +1,20 @@
+<section id="section_profe_bottom_menu">
+
+    <ul>
+        <li (click)="clickAtras()">
+            <button mat-icon-button type="button"><mat-icon>arrow_back_ios</mat-icon></button>
+        </li>
+        <li (click)="clickAlante()">
+            <button mat-icon-button type="button"><mat-icon>arrow_forward_ios</mat-icon></button>
+        </li>
+        <li (click)="clickPausa()">
+            <button mat-icon-button type="button"><mat-icon>{{playingState() ? 'pause' : 'play_arrow'}}</mat-icon></button>
+        </li>
+        <li (click)="clickRepetir()">
+            <button mat-icon-button type="button"><mat-icon>refresh</mat-icon></button>
+        </li>
+        <li (click)="clickSonido()">
+            <button mat-icon-button type="button"><mat-icon>{{soundMuted() ? 'volume_off' : 'volume_up'}}</mat-icon></button>
+        </li>
+    </ul>
+</section>

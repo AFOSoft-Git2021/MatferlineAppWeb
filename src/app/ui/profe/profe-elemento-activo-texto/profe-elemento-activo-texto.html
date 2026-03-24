@@ -1,0 +1,21 @@
+<section id="section_elemento_activo_texto">
+
+    <div>
+        @if (cabecera().length > 0) {
+        <h4>
+            <mat-icon>start</mat-icon>
+            <span [innerHTML]="cabecera()"></span>
+        </h4>
+        }
+
+        @if (pie().length > 0) {
+        <h4>
+            <mat-icon>start</mat-icon>
+            <span [innerHTML]="pie()"></span>
+        </h4>
+        }
+
+        <p [innerHTML]="texto()"></p>
+    </div>
+
+</section>

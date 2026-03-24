@@ -1,0 +1,30 @@
+<section id="section_elemento_activo">
+
+    @if (elemento()?.tipo === 'f') {
+    <app-profe-elemento-activo-visor
+        [isLast]="indexEA() >= ((numeroElementos() ?? 0) - 1)"
+        [elemento]="elemento()?.elemento ?? ''" />
+    }
+    @else {
+    <app-profe-elemento-activo-video />
+    }
+
+    <app-profe-elemento-activo-botones
+        [elementoIndex]="indexEA()"
+        [elementos]="numeroElementos() ?? 0"
+        (clickEpigrafesEmitter)="clickEpigrafes()"
+        (clickElementosEmitter)="clickElementos()" />
+
+    <footer>
+        @if ((elemento()?.texto_cabecera?.length ?? 0) <= 0 && (elemento()?.texto_pie?.length ?? 0) <= 0 && (elemento()?.texto?.length ?? 0) <= 0) {
+        <app-profe-elemento-activo-no-texto />
+        }
+        @else {
+        <app-profe-elemento-activo-texto
+            [cabecera]="elemento()?.texto_cabecera ?? ''"
+            [texto]="elemento()?.texto ?? ''"
+            [pie]="elemento()?.texto_pie ?? ''" />
+        }
+    </footer>
+
+</section>
