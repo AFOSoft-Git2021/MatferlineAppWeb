@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { StateService } from '../../../data/repository/state.service';
 import { GetTemaProfeService } from '../../../data/repository/get-tema-profe.service';
@@ -11,12 +11,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { PopupConfirmComponent } from '../../shared/popup-confirm/popup-confirm.component';
 import { ProfeMenuHeader } from "../profe-menu-header/profe-menu-header";
 import { ProfeElementoActivo } from "../profe-elemento-activo/profe-elemento-activo";
+import { AudioService } from '../../../domain-usecase/profe/audio.service';
 
 @Component({
   selector: 'app-profe-container',
   imports: [TopAppBarLogged, ProfeBottomMenu, ProfeMenuHeader, ProfeElementoActivo],
   templateUrl: './profe-container.html',
   styleUrl: './profe-container.scss',
+  providers: [AudioService]
 })
 export class ProfeContainer implements OnInit, OnDestroy {
 
@@ -25,6 +27,7 @@ export class ProfeContainer implements OnInit, OnDestroy {
   private getTemaProfeService = inject(GetTemaProfeService);
   private dialog = inject(MatDialog);
   private matSnackbar = inject(MatSnackBar);
+  private audioService = inject(AudioService);
 
   alumno = computed(() => this.stateService.alumnoLogeado());
   profeDataGetTema: any;
@@ -35,6 +38,15 @@ export class ProfeContainer implements OnInit, OnDestroy {
   showListaElementos = signal(false);
   showListaEpigrafes = signal(false);
   listaDeEpigrafes: [number, string][] = [];
+
+  constructor() {
+    effect(() => {
+      if (this.temaLoaded()) {
+        this.audioService.loadSound(this.profeTema?.elementos[this.indexEA()]?.sonido ?? '');
+        this.audioService.play();
+      }
+    })
+  }
 
   ngOnInit() {
     this.profeDataGetTema = this.stateService.profeDataGetTema() as ProfeDataGetTema;
@@ -47,6 +59,7 @@ export class ProfeContainer implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.stateService.profeDataGetTema.set(null);
+    this.audioService.destroyAudio();
   }
 
 
@@ -151,12 +164,15 @@ export class ProfeContainer implements OnInit, OnDestroy {
   }
 
   clickPausa() {
+    this.audioService.managePlaying();
   }
 
   clickRepetir() {
+    this.audioService.repeatSound();
   }
 
   clickSonido() {
+    this.audioService.muteSound();
   }
 
 

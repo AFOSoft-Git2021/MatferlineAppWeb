@@ -29,7 +29,10 @@
                                 <img (click)="navigateEstadisticas(categoria.cdi, categoria.nombre, categoria.icono)" src="svg/icon_lista_reproducciones.svg" alt="reproducciones">
                             </li>
                             <li>
-                                <app-boton-examen-estudio [buttonEnabled]="true" (onClickEmitter)="setAutocorreccionCategoria($index, $event)" />
+                                <div>
+                                    <span>Tipo test</span>
+                                    <app-boton-examen-estudio [buttonEnabled]="true" (onClickEmitter)="setAutocorreccionCategoria($index, $event)" />
+                                </div>
                             </li>
                         </ul>
 
