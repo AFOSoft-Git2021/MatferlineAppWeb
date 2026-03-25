@@ -120,7 +120,11 @@ body {
   font-size: $font-size;
   overflow: hidden;
   overscroll-behavior-y: contain;
-  // padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+
+  // Fallback para navegadores que no soporten env()
+  padding-top: constant(safe-area-inset-top);
+  padding-bottom: constant(safe-area-inset-bottom);
 }
 
 /***********************************/
