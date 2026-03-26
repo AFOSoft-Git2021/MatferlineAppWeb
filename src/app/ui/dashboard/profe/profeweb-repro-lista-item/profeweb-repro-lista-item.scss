@@ -10,7 +10,8 @@
 
         &:first-child {
             color: black;
-            max-width: 360px;
+            // max-width: 360px;
+            max-width: 76vw;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;

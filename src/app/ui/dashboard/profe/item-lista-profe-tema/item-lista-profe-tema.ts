@@ -61,7 +61,7 @@ export class ItemListaTest {
     dialogRef.afterClosed().subscribe(
       (respuesta) => {
         if (respuesta.accion) {
-          //  TODO: ???
+          this.showInfoTema.set(false);
         }
       }
     );

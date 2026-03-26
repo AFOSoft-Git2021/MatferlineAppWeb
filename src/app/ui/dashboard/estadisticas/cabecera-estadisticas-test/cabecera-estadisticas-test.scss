@@ -7,7 +7,7 @@
     border: 3px solid #bcd7ff;
     border-radius: 0.8rem;
     background-color: white;
-    padding: .6rem;
+    padding: 0.6rem;
     transition: opacity 0.2s ease;
 
     &:active {
@@ -24,12 +24,12 @@
             color: black;
 
             &:first-child {
-                max-width: 320px;
+                // max-width: 320px;
+                max-width: 75vw;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
             }
-
 
             &:last-child {
                 display: flex;
@@ -37,7 +37,7 @@
                 align-items: center;
                 color: #394b94;
                 font-size: 0.86rem;
-                padding-top: .3rem;
+                padding-top: 0.3rem;
 
                 span {
                     img {
@@ -48,7 +48,7 @@
                 }
 
                 .no_traduccion {
-                    color: #D80000;
+                    color: #d80000;
                 }
             }
         }

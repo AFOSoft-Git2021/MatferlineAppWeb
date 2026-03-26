@@ -7,10 +7,11 @@ import { HorizontalScreen } from "../shared/horizontal-screen/horizontal-screen"
 import { ConnectionError } from "../shared/connection-error/connection-error";
 import { ServerError } from "../shared/server-error/server-error";
 import { ConcurrenceError } from "../shared/concurrence-error/concurrence-error";
+import { Installation } from "../shared/installation/installation";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SpinnerLoading, HorizontalScreen, ConcurrenceError, ServerError, ConnectionError],
+  imports: [RouterOutlet, SpinnerLoading, HorizontalScreen, ConcurrenceError, ServerError, ConnectionError, Installation],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -22,13 +23,17 @@ export class App {
   loading = computed(() => this.stateService.loadingSpinner());
   deviceOrientation = computed(() => this.stateService.deviceOrientation());
   offline = computed(() => this.stateService.offline());
+  isInstalled = computed(() => { return this.stateService.isInstalled === '1' });
 
   ngOnInit() {
     if (this.checkMobile()) {
 
+      // TODO: antes que nada verificar si la app esta instalada: grabar el estado el localstorage, para verificar al entrar
+      console.log('isInstalled', this.isInstalled());
+
       this.setOrientation();
       this.router.navigate([this.checkInitialNavigationState() ? 'enter' : 'loader']);
-      
+
     } else {
       location.href = 'https://matferline.com';
     }

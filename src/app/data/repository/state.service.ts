@@ -75,6 +75,9 @@ export class StateService {
   set hideInfoModoTest(state: string) { localStorage.setItem('hideInfoModoTest', state) }
   get hideInfoModoTest(): string | null { return localStorage.getItem('hideInfoModoTest') }
 
+  set isInstalled(state: string) { localStorage.setItem('installed', state) }
+  get isInstalled(): string | null { return localStorage.getItem('installed') }
+
   // reset en login
   resetData() {
     this.clearLocalStorageStorage()

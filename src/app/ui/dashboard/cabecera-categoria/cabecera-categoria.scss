@@ -24,7 +24,8 @@
             color: black;
 
             &:first-child {
-                max-width: 320px;
+                // max-width: 320px;
+                max-width: 75vw;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;

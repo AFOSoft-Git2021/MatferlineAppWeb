@@ -1,0 +1,25 @@
+@import "../../../../styles.scss";
+
+#section_installation {
+    background-color: $BlueLight;
+    background-image: url("../../../../../public/svg/fondo_oscuro.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 99;
+
+    > div:not(.info) {
+        text-align: center;
+        > img {
+            width: 86%;
+
+            &:first-child {
+                width: 84%;
+                padding-bottom: 3rem;
+            }
+        }
+    }
+}

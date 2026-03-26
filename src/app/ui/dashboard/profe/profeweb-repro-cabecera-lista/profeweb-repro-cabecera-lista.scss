@@ -17,6 +17,7 @@
     > img {
         vertical-align: middle;
         width: 44px;
+        // border: 1px solid red;
     }
 
     > div {
@@ -29,7 +30,8 @@
             color: black;
 
             &:first-child {
-                max-width: 320px;
+                // max-width: 320px;
+                max-width: 60vw;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
