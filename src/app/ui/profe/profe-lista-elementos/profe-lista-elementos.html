@@ -1,0 +1,34 @@
+<section (click)="closeListaElementos()" id="section_profe_lista_elementos">
+
+    <header>
+        <span [innerHTML]="nombreTema()"></span>
+        <button (click)="closeListaElementos()" mat-icon-button type="button"><mat-icon>close</mat-icon></button>
+    </header>
+
+    <main>
+        <h1>
+            <mat-icon>apps</mat-icon>
+            <span>Selecciona un elemento</span>
+            <strong>{{listaElementos().length}}</strong>
+        </h1>
+
+        <div>
+            @for (elemento of listaElementos(); track $index) {
+                <div
+                    #listItem
+                    (click)="clickGoToElemento($index)"
+                    [style.background-image]="'url(' + elemento[1] + ')'"
+                    [style.border-color]="indexEA() === $index ? 'red' : '#5E77FF'"
+                    class="elemento_item">
+
+                    <div [style.background-color]="indexEA() === $index ? 'red' : elemento[0] === 'f' ? '#00B7FF' : '#C426B4'">
+                        <mat-icon>
+                            {{elemento[0] === 'f' ? 'camera_alt' : 'video_camera_back'}}
+                        </mat-icon>
+                    </div>
+                </div>
+            }
+        </div>
+    </main>
+
+</section>

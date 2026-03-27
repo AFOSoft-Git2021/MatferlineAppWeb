@@ -23,6 +23,9 @@ export class AudioService {
 
   loadSound(sound: string) {
     this.audioPlayer.src = sound;
+    if (!this.isplaying()) {
+      this.play();
+    }
   }
 
   managePlaying() {

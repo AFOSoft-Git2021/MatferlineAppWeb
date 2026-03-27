@@ -36,6 +36,7 @@ import { DataCorreccionTestAleatorio } from '../../../data/model/dataCorreccionT
 import { TestInfoRegenerado } from "../test-info-regenerado/test-info-regenerado";
 import { Servicio } from '../../../data/model/servicioEnum';
 import { TestRegenerado } from '../../../data/model/testRegenerado';
+import { DataTestPredefinidoTemaProfe } from '../../../data/model/dataTestPredefinidoTemaProfe';
 
 @Component({
   selector: 'app-test-container',
@@ -80,6 +81,7 @@ export class TestContainer implements OnInit, OnDestroy {
   showPhotoZoom = signal(false);
   showResultadoTest = signal(false);
   isTestRegenerado = computed(() => { return this.stateService.testRegeneradoSelected() !== null });
+  isTestPredefinidoTemaProfe = computed(() => { return this.stateService.testPredefinidoTemaProfeSelected() !== null });
   showInfoTestRegenerado = signal(false);
 
   alumno: (Alumno | null) = null;
@@ -123,23 +125,31 @@ export class TestContainer implements OnInit, OnDestroy {
 
   loadTest() {
     console.log(this.tipo());
-
     this.alumno = this.stateService.alumnoLogeado();
 
     if (this.tipo() === TipoTest.TestPredefinido) {
-      this.dataTest = this.stateService.testPredefinidoSelected() as DataTestPredefinido;
+
+      if (this.isTestPredefinidoTemaProfe()) {
+        this.dataTest = this.stateService.testPredefinidoTemaProfeSelected() as DataTestPredefinidoTemaProfe;
+      } else {
+        this.dataTest = this.stateService.testPredefinidoSelected() as DataTestPredefinido;
+      }
+
       if (this.dataTest) {
         this.getTestPredefinido(this.dataTest);
       } else {
         this.router.navigate(['/dashboard/predefinidos']);
       }
+
     } else {
+
       this.dataTest = this.stateService.testAleatorioSelected() as DataTestAleatorio;
       if (this.dataTest) {
         this.getTestAleatorio(this.dataTest);
       } else {
         this.router.navigate(['/dashboard/aleatorios']);
       }
+
     }
   }
 
@@ -185,6 +195,13 @@ export class TestContainer implements OnInit, OnDestroy {
             if (response.body.tipo_test) {
 
               this.test = response.body as TestPredefinido;
+
+              if (this.isTestPredefinidoTemaProfe()) {
+                this.stateService.testPredefinidoTemaProfeSelected.set(null);
+              } else {
+                this.stateService.testPredefinidoSelected.set(null);
+              }
+                
               this.stateService.testPredefinidoSelected.set(null);
 
               if (this.test.autocorreccion === 1) {

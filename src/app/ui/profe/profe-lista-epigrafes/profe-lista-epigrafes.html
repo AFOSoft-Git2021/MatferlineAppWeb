@@ -1,0 +1,21 @@
+<section (click)="closeListaEpigrafes()" id="section_profe_lista_epigrafes">
+
+    <header>
+        <span [innerHTML]="nombreTema()"></span>
+        <button (click)="closeListaEpigrafes()" mat-icon-button type="button"><mat-icon>close</mat-icon></button>
+    </header>
+
+    <main>
+        <h1>
+            <mat-icon>ballot</mat-icon>
+            <span>Selecciona un epígrafe del tema</span>
+        </h1>
+
+        <ul>
+            @for (epigrafe of listaDeEpigrafes(); track $index) {
+                <li (click)="clickGoToEpigrafe(epigrafe[0])" [innerHTML]="epigrafe[1]"></li>
+            }
+        </ul>
+    </main>
+
+</section>

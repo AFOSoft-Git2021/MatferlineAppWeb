@@ -8,6 +8,7 @@ import { Servicio } from '../model/servicioEnum'
 import { DataGetEstadisticas } from '../model/dataGetEstadisticas'
 import { TestRegenerado } from '../model/testRegenerado'
 import { ProfeDataGetTema } from '../model/profeDataGetTema'
+import { DataTestPredefinidoTemaProfe } from '../model/dataTestPredefinidoTemaProfe'
 
 @Injectable({
   providedIn: 'root',
@@ -62,6 +63,9 @@ export class StateService {
 
   // acceso a un tema de Profe
   profeDataGetTema = signal<ProfeDataGetTema | null>(null)
+
+  // acceso a predefinido de un tema de Profe
+  testPredefinidoTemaProfeSelected = signal<DataTestPredefinidoTemaProfe | null>(null)
 
 
 

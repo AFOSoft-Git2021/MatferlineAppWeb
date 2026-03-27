@@ -85,7 +85,7 @@ export class ProfewebCategorias implements OnInit {
       traducir: this.idiomaSelected().toString(),
       idioma: (this.idiomaSelected() === 1 ? this.stateService.alumnoLogeado()?.idioma?.code : '') ?? '',
       ayuda: '1',
-      autocorreccion: this.profeweb?.categorias[indexCategoria].autocorreccion.toString() ?? '0'
+      autocorreccion: this.autocorreccionState()[indexCategoria].toString() ?? '0'
     }
     this.stateService.profeDataGetTema.set(profeDataGetTema);
     this.router.navigate(['/profeweb']);

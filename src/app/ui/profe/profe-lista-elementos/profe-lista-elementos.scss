@@ -1,0 +1,111 @@
+@import "../../../../styles.scss";
+
+#section_profe_lista_elementos {
+    animation: fade 0.5s ease;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    left: 0;
+    top: 0;
+    background-color: rgba($color: #ecefd5, $alpha: 0.95);
+    overflow: hidden;
+    padding: 1.2rem;
+    z-index: 10;
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        color: $ButtonMagenta;
+        border-bottom: 1px solid $ButtonMagenta;
+        margin-bottom: 1rem;
+        padding-bottom: 0.6rem;
+
+        span {
+            display: block;
+            flex: 1;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        button {
+            color: $ButtonMagenta;
+        }
+    }
+
+    main {
+        flex: 1;
+        overflow: auto;
+        width: 100%;
+        // border: 1px solid red;
+
+        h1 {
+            margin: 0;
+            padding-bottom: 1rem;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 0.5rem;
+            color: #394b94;
+            font-size: 1rem;
+            font-weight: 400;
+
+            mat-icon {
+                color: #394b94;
+            }
+
+            strong {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #F5851F;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+
+                font-size: 0.8rem;
+                font-weight: 500;
+                color: white;
+            }
+        }
+
+        > div {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px; /* separación entre filas y columnas */
+
+            div.elemento_item {
+                border: 2px solid;
+                border-radius: 0.3rem;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
+                height: 118px;
+                display: flex;
+                justify-content: flex-end;
+                align-items: flex-end;
+                padding: 2px;
+                transition: opacity 0.2s ease;
+
+                &:active {
+                    opacity: 0.4;
+                }
+
+                > div {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: 1px solid white;
+                    border-radius: 3px;
+                    padding: 2px;
+                }
+            }
+        }
+    }
+}

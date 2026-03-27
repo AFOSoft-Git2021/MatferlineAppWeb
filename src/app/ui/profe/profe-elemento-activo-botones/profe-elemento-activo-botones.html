@@ -1,13 +1,13 @@
 <section id="section_elemento_activo_botones">
 
-    <button mat-flat-button type="button">
+    <button (click)="clickEpigrafes()" mat-flat-button type="button">
         <mat-icon>ballot</mat-icon>
         <span>Epígrafes</span>
     </button>
 
     <span><strong>{{elementoIndex() + 1}}</strong>/{{elementos()}}</span>
 
-    <button mat-flat-button type="button">
+    <button (click)="clickElementos()" mat-flat-button type="button">
         <mat-icon>apps</mat-icon>
         <span>Elementos</span>
     </button>

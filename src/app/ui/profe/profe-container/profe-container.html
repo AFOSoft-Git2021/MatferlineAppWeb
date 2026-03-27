@@ -29,5 +29,22 @@
         (clickRepetirEmitter)="clickRepetir()"
         (clickSonidoEmitter)="clickSonido()" />
 
+    @if (showListaEpigrafes()) {
+        <app-profe-lista-epigrafes
+            [nombreTema]="profeTema?.nombre_tema ?? ''"
+            [listaDeEpigrafes]="listaDeEpigrafes"
+            (closeListaEpigrafesEmitter)="closeListaEpigrafes()"
+            (clickGoToEpigrafeEmitter)="clickGoToEpigrafe($event)" />
+    }
+
+    @if (showListaElementos()) {
+        <app-profe-lista-elementos
+            [indexEA]="indexEA()"
+            [nombreTema]="profeTema?.nombre_tema ?? ''"
+            [listaElementos]="listaDeElementos"
+            (closeListaElementosEmitter)="closeListaElementos()"
+            (clickGoToElementoEmitter)="clickGoToElemento($event)" />
+    }
+
 </section>
 }

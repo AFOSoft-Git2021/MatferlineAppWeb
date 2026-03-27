@@ -12,10 +12,17 @@ import { PopupConfirmComponent } from '../../shared/popup-confirm/popup-confirm.
 import { ProfeMenuHeader } from "../profe-menu-header/profe-menu-header";
 import { ProfeElementoActivo } from "../profe-elemento-activo/profe-elemento-activo";
 import { AudioService } from '../../../domain-usecase/profe/audio.service';
+import { ProfeListaEpigrafes } from "../profe-lista-epigrafes/profe-lista-epigrafes";
+import { ProfeListaElementos } from "../profe-lista-elementos/profe-lista-elementos";
+import { SetReproduccionTemaProfeService } from '../../../data/repository/set-reproduccion-tema-profe.service';
+import { DataSetReproduccionTemaProfe } from '../../../data/model/dataSetReproduccionTemaProfe';
+import { DataTestPredefinidoTemaProfe } from '../../../data/model/dataTestPredefinidoTemaProfe';
+import { TipoTest } from '../../../data/model/tipoTestEnum';
+import { Servicio } from '../../../data/model/servicioEnum';
 
 @Component({
   selector: 'app-profe-container',
-  imports: [TopAppBarLogged, ProfeBottomMenu, ProfeMenuHeader, ProfeElementoActivo],
+  imports: [TopAppBarLogged, ProfeBottomMenu, ProfeMenuHeader, ProfeElementoActivo, ProfeListaEpigrafes, ProfeListaElementos],
   templateUrl: './profe-container.html',
   styleUrl: './profe-container.scss',
   providers: [AudioService]
@@ -25,6 +32,7 @@ export class ProfeContainer implements OnInit, OnDestroy {
   private router = inject(Router);
   private stateService = inject(StateService);
   private getTemaProfeService = inject(GetTemaProfeService);
+  private setReproduccionTemaProfeService = inject(SetReproduccionTemaProfeService);
   private dialog = inject(MatDialog);
   private matSnackbar = inject(MatSnackBar);
   private audioService = inject(AudioService);
@@ -33,17 +41,23 @@ export class ProfeContainer implements OnInit, OnDestroy {
   profeDataGetTema: any;
   profeTema: ProfeTema | null = null;
   temaLoaded = signal(false);
+  temaEstudiado = signal(false);
   indexEA = signal(0);
 
   showListaElementos = signal(false);
   showListaEpigrafes = signal(false);
   listaDeEpigrafes: [number, string][] = [];
+  listaDeElementos: [string, string][] = [];
+  elementosEstudiadosList: boolean[] = [];
 
   constructor() {
     effect(() => {
       if (this.temaLoaded()) {
         this.audioService.loadSound(this.profeTema?.elementos[this.indexEA()]?.sonido ?? '');
-        this.audioService.play();
+        if (!this.temaEstudiado()) {
+          this.elementosEstudiadosList[this.indexEA()] = true;
+          this.checkUmbralTema();
+        }
       }
     })
   }
@@ -83,10 +97,11 @@ export class ProfeContainer implements OnInit, OnDestroy {
               this.stateService.profeDataGetTema.set(null);
 
               this.profeTema?.elementos.map((elemento, index) => {
-                if (elemento.texto_epigrafe.length > 0) { this.listaDeEpigrafes.push([index, elemento.texto_epigrafe]) }
+                if (elemento.texto_epigrafe.length > 0) { this.listaDeEpigrafes.push([index, elemento.texto_epigrafe]) };
+                this.listaDeElementos.push([elemento.tipo, elemento.thumbnail]);
               })
-              console.log(this.listaDeEpigrafes);
 
+              this.elementosEstudiadosList = new Array(this.profeTema?.elementos.length).fill(false);
               this.temaLoaded.set(true);
 
             } else {
@@ -104,18 +119,91 @@ export class ProfeContainer implements OnInit, OnDestroy {
     )
   }
 
+  // graba el tema como visto
+  setReproduccionTemaProfe() {
+    // this.stateService.loadingSpinner.set(true);
+    const DATA: DataSetReproduccionTemaProfe = {
+      cdicurso: this.profeDataGetTema.cdicurso,
+      cdicategoria: this.profeDataGetTema.cdicategoria,
+      cditema: this.profeDataGetTema.cditema
+    }
+
+    this.setReproduccionTemaProfeService.setReproduccionTemaProfe(DATA).subscribe(
+      {
+        next: (response) => {
+          // this.stateService.loadingSpinner.set(false);
+
+          if (response.status === 200) {
+            console.log(response.body);
+
+            if (response.body.reproduccion.length > 0) {
+
+              this.showInfoSnackbar(`Enhorabuena, has superado el ${this.profeTema?.umbral}% del tema`);
+
+            } else {
+              console.log('response', response.body.message);
+              this.router.navigate(['concurrencia', response.body.message]);
+            }
+          }
+        },
+        error: (error) => {
+          // this.stateService.loadingSpinner.set(false);
+          console.log('error: ', error.message);
+          this.router.navigate(['error']);
+        }
+      }
+    )
+  }
+
 
   /**********************************/
   /*   GESTION DE ELEMENTO ACTIVO   */
   /**********************************/
+  // chequea si ya se supero el umbral de estudio del tema
+  checkUmbralTema() {
+    const UMBRAL_INDEX = Math.round((this.profeTema?.umbral ?? 0) * (this.profeTema?.elementos?.length ?? 0) / 100);
+    console.log('UMBRAL_INDEX', UMBRAL_INDEX);
+
+    let count = 0;
+    this.elementosEstudiadosList.map(elemento => { if (elemento) { count++ } })
+    if (count >= UMBRAL_INDEX) {
+      this.temaEstudiado.set(true);
+      this.setReproduccionTemaProfe();
+    }
+  }
+
   clickEpigrafes() {
-    this.showListaElementos.set(false);
-    this.showListaEpigrafes.set(true);
+    if (this.listaDeEpigrafes.length > 0) {
+      this.dialog.closeAll();
+      this.showListaElementos.set(false);
+      this.showListaEpigrafes.set(true);
+    } else {
+      this.showInfoSnackbar('Este tema no tiene epígrafes');
+    }
+  }
+
+  clickGoToEpigrafe(index: number) {
+    this.indexEA.set(index);
+    this.closeListaEpigrafes();
+  }
+
+  closeListaEpigrafes() {
+    this.showListaEpigrafes.set(false);
   }
 
   clickElementos() {
+    this.dialog.closeAll();
     this.showListaEpigrafes.set(false);
     this.showListaElementos.set(true);
+  }
+
+  clickGoToElemento(index: number) {
+    this.indexEA.set(index);
+    this.closeListaElementos();
+  }
+
+  closeListaElementos() {
+    this.showListaElementos.set(false);
   }
 
 
@@ -209,11 +297,30 @@ export class ProfeContainer implements OnInit, OnDestroy {
               break;
 
             case 2:
-              // TODO: cargar test tema;
+              // cargar test tema
+              this.getTestPredefinido();
+              break;
+
+            default:
               break;
           }
         }
       })
+  }
+
+  getTestPredefinido() {
+    const DATA: DataTestPredefinidoTemaProfe = {
+      cditest_tema: this.profeTema?.cditest ?? 0,
+      traducir: this.profeTema?.traducir ?? 0,
+      idioma: this.profeTema?.idioma ?? '',
+      ayuda: this.profeTema?.ayuda ?? 0,
+      autocorreccion: this.profeTema?.autocorreccion ?? 0,
+      propia: 0
+    }
+
+    this.stateService.testPredefinidoTemaProfeSelected.set(DATA);
+    this.stateService.serviceSelected.set(Servicio.TestPredefinidos);
+    this.router.navigate(['test', TipoTest.TestPredefinido]);
   }
 
   navigateBack() {
