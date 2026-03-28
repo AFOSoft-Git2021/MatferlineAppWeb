@@ -11,6 +11,11 @@
     justify-content: space-between;
     align-items: center;
 
+    app-profe-elemento-activo-visor,
+    app-profe-elemento-activo-video {
+        width: 100%;
+    }
+
     app-profe-elemento-activo-botones {
         width: 96%;
     }

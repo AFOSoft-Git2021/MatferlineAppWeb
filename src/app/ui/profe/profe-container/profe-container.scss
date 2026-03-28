@@ -30,7 +30,8 @@
             &:first-child {
                 padding: 0.4rem;
 
-                app-profe-menu-header {
+                app-profe-menu-header,
+                app-profe-elemento-activo {
                     width: 100%;
                 }
             }
