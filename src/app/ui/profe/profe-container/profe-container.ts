@@ -53,7 +53,7 @@ export class ProfeContainer implements OnInit, OnDestroy {
   constructor() {
     effect(() => {
       if (this.temaLoaded()) {
-        this.audioService.loadSound(this.profeTema?.elementos[this.indexEA()]?.sonido ?? '');
+        this.audioService.loadSound(this.profeTema?.elementos[this.indexEA()]?.sonido ?? '')
         if (!this.temaEstudiado()) {
           this.elementosEstudiadosList[this.indexEA()] = true;
           this.checkUmbralTema();
@@ -74,6 +74,8 @@ export class ProfeContainer implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.stateService.profeDataGetTema.set(null);
     this.audioService.destroyAudio();
+
+    // TODO: reset de players y otras variables ???
   }
 
 
@@ -138,6 +140,7 @@ export class ProfeContainer implements OnInit, OnDestroy {
 
             if (response.body.reproduccion.length > 0) {
 
+              this.setTemaReproducido(DATA.cditema);
               this.showInfoSnackbar(`Enhorabuena, has superado el ${this.profeTema?.umbral}% del tema`);
 
             } else {
@@ -155,6 +158,17 @@ export class ProfeContainer implements OnInit, OnDestroy {
     )
   }
 
+  setTemaReproducido(cditema: number) {
+    const temaEstudiado = this.stateService.alumnoLogeado()?.profeweb
+      ?.flatMap(profeweb => profeweb.profes)
+      ?.flatMap(profe => profe.categorias)
+      ?.flatMap(categoria => categoria.temas)
+      ?.find(tema => tema.cdi.toString() === cditema.toString());
+
+    if (temaEstudiado) { temaEstudiado.reproducido = 1 }
+    console.log('temaEstudiado', temaEstudiado?.titulo);
+  }
+
 
   /**********************************/
   /*   GESTION DE ELEMENTO ACTIVO   */
@@ -165,7 +179,7 @@ export class ProfeContainer implements OnInit, OnDestroy {
     console.log('UMBRAL_INDEX', UMBRAL_INDEX);
 
     let count = 0;
-    this.elementosEstudiadosList.map(elemento => { if (elemento) { count++ } })
+    this.elementosEstudiadosList.map(elemento => { if (elemento) { count++ } });
     if (count >= UMBRAL_INDEX) {
       this.temaEstudiado.set(true);
       this.setReproduccionTemaProfe();
@@ -251,12 +265,12 @@ export class ProfeContainer implements OnInit, OnDestroy {
     }
   }
 
-  clickPausa() {
-    this.audioService.managePlaying();
+  clickPausa(playingState: boolean) {
+    playingState ? this.audioService.play() : this.audioService.pause();
   }
 
-  clickRepetir() {
-    this.audioService.repeatSound();
+  clickRepetir(playingState: boolean) {
+    if (playingState) { this.audioService.repeatSound() }
   }
 
   clickSonido() {
@@ -324,7 +338,6 @@ export class ProfeContainer implements OnInit, OnDestroy {
   }
 
   navigateBack() {
-    // TODO: reset de players y otras variables ???
     this.router.navigate(['/dashboard/profeweb']);
   }
 }

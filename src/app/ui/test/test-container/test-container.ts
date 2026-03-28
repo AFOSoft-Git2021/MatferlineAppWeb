@@ -201,8 +201,6 @@ export class TestContainer implements OnInit, OnDestroy {
               } else {
                 this.stateService.testPredefinidoSelected.set(null);
               }
-                
-              this.stateService.testPredefinidoSelected.set(null);
 
               if (this.test.autocorreccion === 1) {
                 this.listCorregidasAutocorreccion = new Array(this.test.preguntas.length).fill(false);

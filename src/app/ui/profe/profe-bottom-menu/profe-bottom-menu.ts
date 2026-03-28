@@ -13,8 +13,8 @@ export class ProfeBottomMenu {
 
   clickAtrasEmitter = output();
   clickAlanteEmitter = output();
-  clickPausaEmitter = output();
-  clickRepetirEmitter = output();
+  clickPausaEmitter = output<boolean>();
+  clickRepetirEmitter = output<boolean>();
   clickSonidoEmitter = output();
 
   playingState = signal(true);
@@ -30,11 +30,11 @@ export class ProfeBottomMenu {
 
   clickPausa() {
     this.playingState.set(!this.playingState());
-    this.clickPausaEmitter.emit();
+    this.clickPausaEmitter.emit(this.playingState());
   }
 
   clickRepetir() {
-    this.clickRepetirEmitter.emit();
+    this.clickRepetirEmitter.emit(this.playingState());
   }
 
   clickSonido() {

@@ -25,8 +25,8 @@
     <app-profe-bottom-menu
         (clickAtrasEmitter)="clickAtras()"
         (clickAlanteEmitter)="clickAlante()"
-        (clickPausaEmitter)="clickPausa()"
-        (clickRepetirEmitter)="clickRepetir()"
+        (clickPausaEmitter)="clickPausa($event)"
+        (clickRepetirEmitter)="clickRepetir($event)"
         (clickSonidoEmitter)="clickSonido()" />
 
     @if (showListaEpigrafes()) {

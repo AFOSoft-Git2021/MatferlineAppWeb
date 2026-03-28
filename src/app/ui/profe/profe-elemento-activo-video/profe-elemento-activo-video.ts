@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-profe-elemento-activo-video',
@@ -6,6 +6,13 @@ import { Component } from '@angular/core';
   templateUrl: './profe-elemento-activo-video.html',
   styleUrl: './profe-elemento-activo-video.scss',
 })
-export class ProfeElementoActivoVideo {
+export class ProfeElementoActivoVideo implements OnInit {
+
+  video = input.required<string>();
+  
+  ngOnInit() {
+    
+  }
+
 
 }

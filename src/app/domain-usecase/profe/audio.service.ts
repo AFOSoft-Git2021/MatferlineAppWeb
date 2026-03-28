@@ -6,7 +6,6 @@ import { Injectable, signal } from '@angular/core';
 export class AudioService {
 
   private audioPlayer: HTMLAudioElement;
-  private isplaying = signal(false);
   private isMuted = signal(false);
 
   constructor() {
@@ -23,14 +22,7 @@ export class AudioService {
 
   loadSound(sound: string) {
     this.audioPlayer.src = sound;
-    if (!this.isplaying()) {
-      this.play();
-    }
-  }
-
-  managePlaying() {
-    this.isplaying.set(!this.isplaying());
-    this.isplaying() ? this.pause() : this.play();
+    this.play();
   }
 
   repeatSound() {
