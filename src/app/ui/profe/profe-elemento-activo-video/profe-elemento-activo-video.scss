@@ -1,10 +1,16 @@
 #section_profe_elemento_activo_video {
+    /* estilos no fullscreen */
     width: calc(100% - 8px);
     height: 296px;
     padding: 4px 4px 0 4px;
     margin: 4px 4px 0 4px;
     border-radius: 8px;
     background-color: rgba($color: white, $alpha: 0.6);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
 
     .video-wrapper {
         position: relative;
@@ -16,4 +22,40 @@
         width: 100%;
         height: 100%;
     }
+}
+
+#section_profe_elemento_activo_video_fullscreen {
+    animation: fade 0.3s ease-out;
+    width: 100vh;
+    height: 100vw;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%) rotate(90deg);
+
+    transform-origin: center;
+    object-fit: contain;
+    background-color: black;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+
+    .video-wrapper {
+        position: relative;
+        height: 96%;
+        aspect-ratio: 16 / 9;
+
+        > div {
+            width: 80%;
+        }
+    }
+}
+
+button {
+    background-color: #4681c0;
+    color: white;
 }

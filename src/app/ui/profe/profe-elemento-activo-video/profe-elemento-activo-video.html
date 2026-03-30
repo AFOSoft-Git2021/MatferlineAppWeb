@@ -1,7 +1,11 @@
-<section id="section_profe_elemento_activo_video">
+<section [id]="fullscreen() ? 'section_profe_elemento_activo_video_fullscreen' : 'section_profe_elemento_activo_video'">
 
     <div class="video-wrapper">
         <div #playerContainer></div>
     </div>
+
+    <button (click)="fullscreen.set(!fullscreen())" mat-icon-button type="button">
+        <mat-icon>{{ fullscreen() ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
+    </button>
 
 </section>
