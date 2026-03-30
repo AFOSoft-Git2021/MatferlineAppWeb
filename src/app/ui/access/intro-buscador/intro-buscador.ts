@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, signal, viewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
@@ -15,7 +15,7 @@ import { ItemListAutoescuela } from "../item-list-autoescuela/item-list-autoescu
   templateUrl: './intro-buscador.html',
   styleUrl: './intro-buscador.scss',
 })
-export class IntroBuscador {
+export class IntroBuscador implements OnInit {
 
   public stateService = inject(StateService);
   private getAutoescuelasService = inject(GetAutoescuelasService);
@@ -23,6 +23,11 @@ export class IntroBuscador {
 
   txtSearch = '';
   listaAutoescuelas = signal<Autoescuela[]>([]);
+  inputBuscador = viewChild<ElementRef<HTMLInputElement>>('inputBuscador');
+
+  ngOnInit() {
+    this.inputBuscador()?.nativeElement.focus();
+  }
 
   buscarAES() {
     if (this.txtSearch.length > 2) {

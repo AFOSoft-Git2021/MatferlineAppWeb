@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewChecked, Component, ElementRef, input, output, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, input, output, viewChildren } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class ProfeListaElementos implements AfterViewChecked {
 
   // Obtenemos todos los elementos que tengan la referencia #item
-  @ViewChildren('listItem') listItems!: QueryList<ElementRef>;
+  listItems = viewChildren<ElementRef>('listItem');
 
   indexEA = input.required<number>();
   nombreTema = input.required<string>();
@@ -25,7 +25,7 @@ export class ProfeListaElementos implements AfterViewChecked {
   }
 
   scrollToIndex(index: number) {
-    const elementArray = this.listItems.toArray();
+    const elementArray = this.listItems();
 
     if (elementArray[index]) {
       elementArray[index].nativeElement.scrollIntoView({

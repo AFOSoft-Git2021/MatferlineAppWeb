@@ -29,7 +29,7 @@ export class Loader implements OnInit {
         next: (response) => {
           if (Array.isArray(response)) {
 
-            this.getAutoescuelasService.listaAutoescuelas = response;
+            this.getAutoescuelasService.limpiarNombreAEs(response);
             this.getAutoescuelasService.getProvincias();
             this.router.navigate(['intro']);
 

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, input, viewChild } from '@angular/core';
 
 @Component({
   selector: 'app-estadisticas-grafica-canvas',
@@ -9,7 +9,7 @@ import { AfterViewInit, Component, ElementRef, input, ViewChild } from '@angular
 })
 export class EstadisticasGraficaCanvas implements AfterViewInit {
 
-  @ViewChild('chartCanvas', { static: true }) chartCanvas!: ElementRef<HTMLCanvasElement>;
+  chartCanvas = viewChild<ElementRef<HTMLCanvasElement>>('chartCanvas');
 
   aptos = input.required<number>();
   noAptos = input.required<number>();
@@ -19,8 +19,8 @@ export class EstadisticasGraficaCanvas implements AfterViewInit {
   }
 
   private drawChart() {
-    const canvas = this.chartCanvas.nativeElement;
-    const ctx = canvas.getContext('2d');
+    const canvas = this.chartCanvas()?.nativeElement;
+    const ctx = canvas?.getContext('2d');
     if (!ctx) return;
 
     let aptosAngle = 0;
