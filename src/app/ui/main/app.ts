@@ -8,6 +8,7 @@ import { ConnectionError } from "../shared/connection-error/connection-error";
 import { ServerError } from "../shared/server-error/server-error";
 import { ConcurrenceError } from "../shared/concurrence-error/concurrence-error";
 import { Installation } from "../shared/installation/installation";
+import { PwaService } from '../../data/repository/pwa.service';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,7 @@ export class App {
 
   private router = inject(Router);
   private stateService = inject(StateService);
+  private pwaService = inject(PwaService);
 
   loading = computed(() => this.stateService.loadingSpinner());
   deviceOrientation = computed(() => this.stateService.deviceOrientation());
@@ -58,8 +60,15 @@ export class App {
   }
 
   checkMobile(): boolean {
-    // TODO: mejorar esta función para eliminar los tablets
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const ua = navigator.userAgent;
+
+    // 1. Detectar iPhone (excluyendo iPads que se hacen pasar por Mac)
+    const isIphone = /iPhone/i.test(ua);
+
+    // 2. Detectar Android solo si es teléfono (contiene "Mobile")
+    const isAndroidPhone = /Android/i.test(ua) && /Mobile/i.test(ua);
+
+    return isIphone || isAndroidPhone;
   }
 
   setOrientation() {
