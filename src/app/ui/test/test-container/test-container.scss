@@ -92,6 +92,6 @@
         z-index: 9;
 
         /* Añade espacio extra si el dispositivo lo requiere */
-        padding-bottom: env(safe-area-inset-bottom);
+        // padding-bottom: env(safe-area-inset-bottom);
     }
 }

@@ -104,8 +104,13 @@ html {
 
 html,
 body {
-  height: 100vh;
+  // height: 100vh;
+  height: 100%; 
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
   scroll-behavior: smooth;
+  height: -webkit-fill-available;
 }
 
 body {
@@ -115,11 +120,14 @@ body {
   background-position: center;
   background-size: cover;
   color: white;
-  margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: $font-size;
-  overflow: hidden;
-  overscroll-behavior-y: contain;
+/*   overflow: hidden;
+  overscroll-behavior-y: contain; */
+
+  // Usar min-height para asegurar que cubra todo
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
 
   // Compensar la barra de estado de iOS
   padding-top: env(safe-area-inset-top);
