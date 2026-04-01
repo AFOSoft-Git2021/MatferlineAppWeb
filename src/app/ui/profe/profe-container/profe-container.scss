@@ -3,15 +3,15 @@
 #section_profe_container {
     animation: fade 0.5s ease;
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 74px);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
 
     app-top-app-bar-logged {
         width: 100%;
-        padding: 1rem 1rem 0 1rem;
+        padding: 0 1rem;
     }
 
     main {
@@ -22,7 +22,7 @@
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
-        // border: 1px solid red;
+        border: 1px solid red;
 
         > div {
             width: 100%;
@@ -45,11 +45,10 @@
     }
 
     app-profe-bottom-menu {
+        position: fixed;
         width: 100%;
-        position: relative;
-        /* bottom: 0;
-        left: 0; */
-        width: 100%;
+        bottom: 0;
+        left: 0;
         z-index: 9;
 
         /* Añade espacio extra si el dispositivo lo requiere */

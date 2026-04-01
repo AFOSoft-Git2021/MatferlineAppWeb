@@ -1,4 +1,4 @@
-import { Component, computed, HostListener, inject } from '@angular/core';
+import { Component, computed, effect, HostListener, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { StateService } from '../../data/repository/state.service';
 import { SpinnerLoading } from "../shared/spinner-loading/spinner-loading";
@@ -9,6 +9,7 @@ import { ServerError } from "../shared/server-error/server-error";
 import { ConcurrenceError } from "../shared/concurrence-error/concurrence-error";
 import { Installation } from "../shared/installation/installation";
 import { PwaService } from '../../data/repository/pwa.service';
+import { DeviceSystem } from '../../data/model/deviceSystem';
 
 @Component({
   selector: 'app-root',
@@ -21,15 +22,22 @@ export class App {
   private router = inject(Router);
   private stateService = inject(StateService);
   private pwaService = inject(PwaService);
+  public DeviceSystem = DeviceSystem;
 
   loading = computed(() => this.stateService.loadingSpinner());
   deviceOrientation = computed(() => this.stateService.deviceOrientation());
   offline = computed(() => this.stateService.offline());
   isInstalled = computed(() => { return this.stateService.isInstalled === '1' });
 
+  constructor() {
+    effect(() => {
+      // TODO: verificar si la app esta instalada: grabar el estado el localstorage, para verificar al entrar
+      this.isInstalled() ? localStorage.setItem('isInstalled', '1') : localStorage.setItem('isInstalled', '0');
+    });
+  }
+
   ngOnInit() {
     if (this.checkMobile()) {
-
       // TODO: antes que nada verificar si la app esta instalada: grabar el estado el localstorage, para verificar al entrar
       console.log('isInstalled', this.isInstalled());
 
@@ -68,6 +76,9 @@ export class App {
     // 2. Detectar Android solo si es teléfono (contiene "Mobile")
     const isAndroidPhone = /Android/i.test(ua) && /Mobile/i.test(ua);
 
+    this.stateService.deviceSystem.set(isIphone ? DeviceSystem.iOS : DeviceSystem.Android);
+    console.log('deviceSystem', this.stateService.deviceSystem());
+
     return isIphone || isAndroidPhone;
   }
 
@@ -78,6 +89,12 @@ export class App {
 
   checkInitialNavigationState(): boolean {
     return this.stateService.token ? true : false;
+  }
+
+  // instala la PWA solo si es Android
+  installPWA() {
+    console.log('installPWA');
+    // this.pwaService.installPwa(); TODO:
   }
 
 }

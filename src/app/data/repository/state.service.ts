@@ -9,6 +9,7 @@ import { DataGetEstadisticas } from '../model/dataGetEstadisticas'
 import { TestRegenerado } from '../model/testRegenerado'
 import { ProfeDataGetTema } from '../model/profeDataGetTema'
 import { DataTestPredefinidoTemaProfe } from '../model/dataTestPredefinidoTemaProfe'
+import { DeviceSystem } from '../model/deviceSystem'
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +31,9 @@ export class StateService {
   /*****************/
   /**** SIGNALS ****/
   /*****************/
+
+  // SO del dispositivo
+  deviceSystem = signal<DeviceSystem | null>(null)
 
   // orientation de pantalla
   deviceOrientation = signal<DeviceOrientation | null>(null)

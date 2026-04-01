@@ -2,13 +2,25 @@
 
     <span></span>
 
-    <div>
-        <img src="./svg/logo_matferline.svg" alt="matferline">
-        <img src="./svg/image_error_acceso.svg" alt="loading">
-    </div>
-
     <div class="info">
-        <h2>¡ Instala la aplicación !</h2>
+        <img src="./svg/logo_matferline.svg" alt="matferline">
+
+        @if (deviceSystem() === 'android') {
+            <div class="bloque_android">
+                <img src="./svg/icon_install_pwa.svg" alt="loading">
+                <h2>Para comenzar instala la aplicación</h2>
+                <button (click)="installPWA()" mat-flat-button type="button">
+                    <mat-icon>install_mobile</mat-icon>
+                    Instalar app
+                </button>
+            </div>
+        }
+        @else {
+            <div class="bloque_ios">
+                <img src="./svg/icon_install_pwa.svg" alt="loading">
+            </div>
+        }
+
     </div>
 
     <p class="p_matfer">&copy; EDICIONES MATFER S.L. {{stateService.annoDomine}}</p>

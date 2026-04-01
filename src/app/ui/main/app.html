@@ -16,6 +16,6 @@
 
   <!-- INSTALLATION -->
   <!-- TODO: @if(!isInstalled()) { <app-installation /> } -->
-  @if(isInstalled()) { <app-installation /> }
+  @if(!isInstalled()) { <app-installation (installPWAEmitter)="installPWA()" /> }
 
 </section>
