@@ -32,7 +32,8 @@ export class AudioService {
 
   muteSound() {
     this.isMuted.set(!this.isMuted());
-    this.isMuted() ? this.audioPlayer.volume = 0 : this.audioPlayer.volume = 1;
+    this.audioPlayer.muted = this.isMuted();
+    // this.isMuted() ? this.audioPlayer.volume = 0 : this.audioPlayer.volume = 1;
   }
 
   destroyAudio() {
