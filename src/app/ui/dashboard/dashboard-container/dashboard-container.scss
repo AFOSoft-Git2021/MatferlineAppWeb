@@ -8,19 +8,23 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    // Compensar la barra de estado de iOS
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    // border: 1px solid red;
 
     app-top-app-bar-logged {
         width: 100%;
         padding: 0 1rem;
     }
 
-    >div {
+    > div {
         flex: 1;
         width: 100%;
         overflow-y: auto;
         justify-self: start;
         padding: 0 1rem;
-        border: 1px solid red;
+        // border: 1px solid red;
     }
 
     app-dashboard-bottom-navigation {

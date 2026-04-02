@@ -14,6 +14,9 @@
     background-color: rgba($color: #ecefd5, $alpha: 0.95);
     overflow: hidden;
     padding: 1.2rem;
+    // Compensar la barra de estado de iOS
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
     z-index: 10;
 
     header {
@@ -64,7 +67,7 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                background-color: #F5851F;
+                background-color: #f5851f;
                 width: 30px;
                 height: 30px;
                 border-radius: 50%;

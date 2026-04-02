@@ -423,13 +423,16 @@ export class TestContainer implements OnInit, OnDestroy {
   /****************************/
   checkTestCompleto(timeOut = false): boolean {
     let checkResult = true;
-    if (!timeOut) { // Las preguntas no contestadas por timeout -> pregunta.seleccion = 0, se dejan tal cual
+    if (!timeOut) {
       for (const PREGUNTA of this.test.preguntas) {
         if (PREGUNTA.seleccion === 0) {
           checkResult = false;
           break;
         }
       }
+    } else {
+      // llama a corregir test predefinido o aleatorio => las preguntas no contestadas por timeout -> pregunta.seleccion = 0, se dejan tal cual
+      (this.tipo() === TipoTest.TestPredefinido) ? this.correctTestPredefinido() : this.correctTestAleatorio();
     }
     return checkResult;
   }

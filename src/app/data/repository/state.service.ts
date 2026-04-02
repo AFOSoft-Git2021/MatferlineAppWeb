@@ -92,6 +92,13 @@ export class StateService {
     this.alumnoLogeado.set(null)
     this.loadingSpinner.set(false)
     this.offline.set(false)
+    this.serviceSelected.set(Servicio.TestPredefinidos)
+    this.testPredefinidoSelected.set(null)
+    this.testAleatorioSelected.set(null)
+    this.testRegeneradoSelected.set(null)
+    this.dataEstadisticas.set(null)
+    this.profeDataGetTema.set(null)
+    this.testPredefinidoTemaProfeSelected.set(null)
   }
 
   clearLocalStorageStorage() { localStorage.clear() }

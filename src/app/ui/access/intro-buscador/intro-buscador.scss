@@ -9,6 +9,9 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem 0;
+    // Compensar la barra de estado de iOS
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
 
     > div {
         width: 100%;

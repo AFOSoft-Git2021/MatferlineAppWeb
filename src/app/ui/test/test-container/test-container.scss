@@ -8,6 +8,9 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    // Compensar la barra de estado de iOS
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
     // border: 1px solid blue;
 
     app-top-app-bar-logged,
