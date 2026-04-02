@@ -431,6 +431,7 @@ export class TestContainer implements OnInit, OnDestroy {
         }
       }
     } else {
+      this.chronoTimeOut.set(false);
       // llama a corregir test predefinido o aleatorio => las preguntas no contestadas por timeout -> pregunta.seleccion = 0, se dejan tal cual
       (this.tipo() === TipoTest.TestPredefinido) ? this.correctTestPredefinido() : this.correctTestAleatorio();
     }
