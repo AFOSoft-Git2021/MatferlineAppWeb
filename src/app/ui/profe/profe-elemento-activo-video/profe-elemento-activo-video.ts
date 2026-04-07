@@ -45,16 +45,27 @@ export class ProfeElementoActivoVideo implements OnDestroy {
     this.player = new YT.Player(element, {
       height: '100%',
       width: '100%',
-      playerVars: { 'autoplay': 1, 'controls': 0, 'rel': 0, 'showinfo': 0 },
+      playerVars: {
+        'autoplay': 1,
+        'mute': 1,       // <--- Crucial para iOS
+        'controls': 0,
+        'rel': 0,
+        'showinfo': 0,
+        'playsinline': 1 // <--- Evita que se abra en pantalla completa automáticamente en iPhone
+      },
       videoId: video,
       events: {
-        'onReady': () => { this.isPlayerReady.set(true); this.playVideo(); },
+        'onReady': () => {
+          this.isPlayerReady.set(true);
+          this.playVideo();
+        },
         'onStateChange': (event) => console.log('Estado:', event.data)
       }
     });
   }
 
   playVideo() {
+    this.player?.unMute(); // Desmutear el video para que se escuche TODO: ???
     this.player?.playVideo();
   }
 

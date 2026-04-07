@@ -58,13 +58,15 @@ export class App {
   // detecta si se recupero la conexion
   @HostListener('window:online')
   onOnline() {
-    alert('online');
+    console.log('online');
+    this.stateService.offline.set(false);
   }
 
   // detecta si se perdio la conexion
   @HostListener('window:offline')
   onOffline() {
-    alert('offline');
+    console.log('offline');
+    this.stateService.offline.set(true);
   }
 
   checkMobile(): boolean {

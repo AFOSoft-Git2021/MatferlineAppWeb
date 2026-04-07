@@ -25,6 +25,18 @@
           "/**/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
         ]
       }
+    },
+    {
+      "name": "assets-essential",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/svg/fondo_oscuro.svg",
+          "/svg/logo_matferline.svg",
+          "/svg/image_error_conexion.svg",
+          "/svg/image_ico_info.svg"
+        ]
+      }
     }
   ]
 }

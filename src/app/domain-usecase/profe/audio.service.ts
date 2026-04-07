@@ -14,10 +14,18 @@ export class AudioService {
     this.audioPlayer.loop = false;
 
     // Escuchar eventos
+    this.audioPlayer.addEventListener('loadeddata', () => {
+      console.log('El audio se ha cargado correctamente');
+    });
+
+    this.audioPlayer.addEventListener('canplaythrough', () => {
+      console.log('El audio está listo para reproducirse', this.audioPlayer.paused);
+    });
+
     this.audioPlayer.addEventListener('ended', () => {
       console.log('El audio terminó');
       this.stop();
-    })
+    });
   }
 
   loadSound(sound: string) {
@@ -44,10 +52,12 @@ export class AudioService {
 
   play() {
     this.audioPlayer.play();
+    console.log(this.audioPlayer.paused);
   }
 
   pause() {
     this.audioPlayer.pause();
+    console.log(this.audioPlayer.paused);
   }
 
   stop() {

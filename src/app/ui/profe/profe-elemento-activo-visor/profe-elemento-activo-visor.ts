@@ -1,8 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, effect, input, signal } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-profe-elemento-activo-visor',
-  imports: [],
+  imports: [CommonModule, MatButtonModule, MatIconModule],
   templateUrl: './profe-elemento-activo-visor.html',
   styleUrl: './profe-elemento-activo-visor.scss',
 })
@@ -12,6 +15,7 @@ export class ProfeElementoActivoVisor {
   elemento = input.required<string>();
 
   foto = signal('');
+  fullscreen = signal(false);
 
   constructor() {
     effect(() => {

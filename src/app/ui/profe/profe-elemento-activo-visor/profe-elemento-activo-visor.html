@@ -1,10 +1,24 @@
-<section id="section_profe_elemento_activo_visor">
+<section (click)="fullscreen.set(!fullscreen())" id="section_profe_elemento_activo_visor">
 
     @if (!isLast() && foto().length > 0) {
     <img [src]="elemento().length > 0 ? foto() : 'svg/imagen_no_elemento_activo.svg'" #fotoEA (load)="fotoEA.style.opacity = '1'" alt="foto">
+    <button disabled="disabled" mat-icon-button type="button">
+        <mat-icon>fullscreen</mat-icon>
+    </button>
     }
     @else {
     <img src="svg/image_fin_tema.svg" class="foto_fin" alt="fin">
     }
 
 </section>
+
+@if (fullscreen() && !isLast() && foto().length > 0) {
+<section id="section_profe_elemento_activo_visor_fullscreen">
+    <div>
+        <img [src]="foto()" #fotoEAFS (load)="fotoEAFS.style.opacity = '1'" alt="foto">
+        <button (click)="fullscreen.set(!fullscreen())" mat-icon-button type="button">
+            <mat-icon>fullscreen_exit</mat-icon>
+        </button>
+    </div>
+</section>
+}
