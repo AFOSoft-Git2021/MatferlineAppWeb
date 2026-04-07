@@ -10,9 +10,6 @@ export class PwaService {
   private deferredPrompt = signal<any>(null);
   private stateService = inject(StateService);
 
-  // Signal para saber si mostramos las instrucciones
-  showInstallInstructions = signal<boolean>(false);
-
   constructor() {
     // Escuchamos el evento 'beforeinstallprompt' para capturar el evento de instalación
     window.addEventListener('beforeinstallprompt', (event) => {
@@ -21,19 +18,19 @@ export class PwaService {
       // Guardamos el evento para mostrarlo más tarde
       this.deferredPrompt.set(event);
       // Mostramos las instrucciones de instalación
-      this.showInstallInstructions.set(true);
     })
 
     window.addEventListener('appinstalled', () => {
+      this.stateService.isInstalled = '1'; // Actualizamos el estado de instalación
       // Limpiar cuando se instale con éxito
-      this.stateService.isInstalled = '1';
       this.deferredPrompt.set(null);
-      this.showInstallInstructions.set(false);
       console.log('PWA instalada correctamente');
     })
   }
 
   async installPwa() {
+    console.log('installPwa');
+
     const prompt = this.deferredPrompt();
     if (prompt) {
       prompt.prompt();

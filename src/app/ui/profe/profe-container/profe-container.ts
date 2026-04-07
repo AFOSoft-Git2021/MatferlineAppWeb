@@ -11,7 +11,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { PopupConfirmComponent } from '../../shared/popup-confirm/popup-confirm.component';
 import { ProfeMenuHeader } from "../profe-menu-header/profe-menu-header";
 import { ProfeElementoActivo } from "../profe-elemento-activo/profe-elemento-activo";
-import { AudioService } from '../../../domain-usecase/profe/audio.service';
 import { ProfeListaEpigrafes } from "../profe-lista-epigrafes/profe-lista-epigrafes";
 import { ProfeListaElementos } from "../profe-lista-elementos/profe-lista-elementos";
 import { SetReproduccionTemaProfeService } from '../../../data/repository/set-reproduccion-tema-profe.service';
@@ -25,7 +24,6 @@ import { Servicio } from '../../../data/model/servicioEnum';
   imports: [TopAppBarLogged, ProfeBottomMenu, ProfeMenuHeader, ProfeElementoActivo, ProfeListaEpigrafes, ProfeListaElementos],
   templateUrl: './profe-container.html',
   styleUrl: './profe-container.scss',
-  providers: [AudioService]
 })
 export class ProfeContainer implements OnInit, OnDestroy {
 
@@ -35,7 +33,6 @@ export class ProfeContainer implements OnInit, OnDestroy {
   private setReproduccionTemaProfeService = inject(SetReproduccionTemaProfeService);
   private dialog = inject(MatDialog);
   private matSnackbar = inject(MatSnackBar);
-  private audioService = inject(AudioService);
 
   alumno = computed(() => this.stateService.alumnoLogeado());
   profeDataGetTema: any;
@@ -44,7 +41,7 @@ export class ProfeContainer implements OnInit, OnDestroy {
   temaEstudiado = signal(false);
   indexEA = signal(0);
 
-  audioPlayer: HTMLAudioElement | null = null;
+  audioPlayer: HTMLAudioElement;
   isPlaying = signal(false);
   isMuted = signal(false);
 
@@ -55,9 +52,11 @@ export class ProfeContainer implements OnInit, OnDestroy {
   elementosEstudiadosList: boolean[] = [];
 
   constructor() {
+    this.audioPlayer = new Audio();
+    this.setAudioPlayer();
+
     effect(() => {
       if (this.temaLoaded()) {
-        this.audioService.loadSound(this.profeTema?.elementos[this.indexEA()]?.sonido ?? '', this.indexEA())
         if (!this.temaEstudiado()) {
           this.elementosEstudiadosList[this.indexEA()] = true;
           this.checkUmbralTema();
@@ -77,9 +76,7 @@ export class ProfeContainer implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.stateService.profeDataGetTema.set(null);
-    this.audioService.destroyAudio();
-
-    // TODO: reset de players y otras variables ???
+    this.destroyAudio();
   }
 
 
@@ -109,6 +106,8 @@ export class ProfeContainer implements OnInit, OnDestroy {
 
               this.elementosEstudiadosList = new Array(this.profeTema?.elementos.length).fill(false);
               this.temaLoaded.set(true);
+              this.isPlaying.set(true);
+              this.loadSound(this.profeTema?.elementos[0]?.sonido ?? '');
 
             } else {
               console.log('response', response.body.message);
@@ -179,17 +178,48 @@ export class ProfeContainer implements OnInit, OnDestroy {
   /*    GESTION DEL AUDIO PLAYER    */
   /**********************************/
   setAudioPlayer() {
-    this.audioPlayer = new Audio();
     this.audioPlayer.preload = 'auto';
     this.audioPlayer.loop = false;
 
     // Escuchar eventos
-    this.audioPlayer.addEventListener('ended', () => {
-      console.log('El audio terminó');
-      // this.stop();
-    })
+    this.audioPlayer.addEventListener('ended', () => { console.log('El audio terminó') })
   }
 
+  loadSound(sound: string) {
+    this.audioPlayer.src = sound;
+    if (this.isPlaying()) { this.play() }
+  }
+
+  repeatSound() {
+    this.stop();
+    this.play();
+  }
+
+  muteSound() {
+    this.isMuted.set(!this.isMuted());
+    this.audioPlayer.muted = this.isMuted();
+  }
+
+  destroyAudio() {
+    this.stop();
+    this.audioPlayer.src = '';
+    this.audioPlayer.load();
+  }
+
+  play() {
+    this.isPlaying.set(true);
+    this.audioPlayer.play();
+  }
+
+  pause() {
+    this.isPlaying.set(false);
+    this.audioPlayer.pause();
+  }
+
+  stop() {
+    this.pause();
+    this.audioPlayer.currentTime = 0;
+  }
 
 
 
@@ -278,6 +308,7 @@ export class ProfeContainer implements OnInit, OnDestroy {
   clickAtras() {
     if (this.indexEA() > 0) {
       this.indexEA.set(this.indexEA() - 1);
+      this.loadSound(this.profeTema?.elementos[this.indexEA()]?.sonido ?? '');
     }
   }
 
@@ -285,19 +316,20 @@ export class ProfeContainer implements OnInit, OnDestroy {
     const totalElementos = this.profeTema?.elementos?.length ?? 0;
     if (totalElementos > 0 && (this.indexEA() < (totalElementos - 1))) {
       this.indexEA.set(this.indexEA() + 1);
+      this.loadSound(this.profeTema?.elementos[this.indexEA()]?.sonido ?? '');
     }
   }
 
   clickPausa(playingState: boolean) {
-    playingState ? this.audioService.play() : this.audioService.pause();
+    playingState ? this.play() : this.pause();
   }
 
   clickRepetir(playingState: boolean) {
-    if (playingState) { this.audioService.repeatSound() }
+    if (playingState) { this.repeatSound(); }
   }
 
   clickSonido() {
-    this.audioService.muteSound();
+    this.muteSound();
   }
 
 
