@@ -21,7 +21,7 @@ export class PwaService {
     })
 
     window.addEventListener('appinstalled', () => {
-      this.stateService.isInstalled = '1'; // Actualizamos el estado de instalación
+      // this.stateService.isInstalled = '1'; // Actualizamos el estado de instalación
       // Limpiar cuando se instale con éxito
       this.deferredPrompt.set(null);
       console.log('PWA instalada correctamente');

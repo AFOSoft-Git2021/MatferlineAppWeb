@@ -27,14 +27,15 @@ export class App {
   loading = computed(() => this.stateService.loadingSpinner());
   deviceOrientation = computed(() => this.stateService.deviceOrientation());
   offline = computed(() => this.stateService.offline());
-  isInstalled = computed(() => { return this.stateService.isInstalled === '1' });
+  isInstalled = computed(() => this.pwaService.checkIfInstalled());
+  // isInstalled = computed(() => { return this.stateService.isInstalled === '1' });
 
   ngOnInit() {
     if (this.checkMobile()) {
 
-      console.log('isInstalled', this.pwaService.checkIfInstalled());
+      console.log('isInstalled', this.isInstalled());
       
-      if (this.pwaService.checkIfInstalled()) {
+      if (this.isInstalled()) {
         this.setOrientation();
         this.router.navigate([this.checkInitialNavigationState() ? 'enter' : 'loader']);
       } else {
