@@ -44,6 +44,10 @@ export class ProfeContainer implements OnInit, OnDestroy {
   temaEstudiado = signal(false);
   indexEA = signal(0);
 
+  audioPlayer: HTMLAudioElement | null = null;
+  isPlaying = signal(false);
+  isMuted = signal(false);
+
   showListaElementos = signal(false);
   showListaEpigrafes = signal(false);
   listaDeEpigrafes: [number, string][] = [];
@@ -168,6 +172,25 @@ export class ProfeContainer implements OnInit, OnDestroy {
     if (temaEstudiado) { temaEstudiado.reproducido = 1 }
     console.log('temaEstudiado', temaEstudiado?.titulo);
   }
+
+
+
+  /**********************************/
+  /*    GESTION DEL AUDIO PLAYER    */
+  /**********************************/
+  setAudioPlayer() {
+    this.audioPlayer = new Audio();
+    this.audioPlayer.preload = 'auto';
+    this.audioPlayer.loop = false;
+
+    // Escuchar eventos
+    this.audioPlayer.addEventListener('ended', () => {
+      console.log('El audio terminó');
+      // this.stop();
+    })
+  }
+
+
 
 
   /**********************************/
