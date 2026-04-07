@@ -8,14 +8,29 @@
         @if (deviceSystem() === 'android') {
             <div class="bloque_android">
                 <img src="./svg/icon_install_pwa.svg" alt="loading">
-                <h2>Para comenzar instala la aplicación</h2>
-                <button (click)="installPWA()" mat-flat-button type="button">
-                    <mat-icon>install_mobile</mat-icon>
-                    Instalar app
-                </button>
+
+                @if (!pwaInstallationSuccess()) {
+                    <ng-container>
+                        <h2>Para comenzar instala la aplicación</h2>
+                        <button (click)="installPWA()" mat-flat-button type="button">
+                            <mat-icon>install_mobile</mat-icon>
+                            Instalar app
+                        </button>
+                    </ng-container>
+                }
+                @else {
+                    <div>
+                        <h4>¡ Instalación completada !</h4>
+                        <div>
+                            <img src="./icons/icon-384x384.png" alt="logo">
+                            <p>Cierra el navegador y accede a tu app con el icono que encontrarás en el escritorio</p>
+                        </div>
+                    </div>
+                }
+
             </div>
         }
-        @else {
+            @else {
             <div class="bloque_ios">
                 <img src="./svg/icon_install_pwa.svg" alt="loading">
             </div>

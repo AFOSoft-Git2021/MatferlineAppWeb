@@ -1,4 +1,5 @@
 #section_installation {
+    animation: fade 0.5s ease;
     background-color: #0e6cf3;
     background-image: url("../../../../../public/svg/fondo_oscuro.svg");
     background-repeat: no-repeat;
@@ -7,7 +8,7 @@
     position: fixed;
     left: 0;
     top: 0;
-    z-index: 99;
+    z-index: 9999;
 
     display: flex;
     flex-direction: column;
@@ -16,22 +17,63 @@
 
     div.info {
         text-align: center;
+
         > img {
             width: 84%;
             padding-bottom: 3rem;
         }
 
-        h2 {
-            font-size: 1.5rem;
-            font-weight: 500;
-            margin: 0;
-            padding: 3rem 0;
-            color: white;
-        }
+        div.bloque_android {
+            h2 {
+                font-size: 1.5rem;
+                font-weight: 500;
+                margin: 0;
+                padding: 3rem 0;
+                color: white;
+            }
 
-        button {
-            background-color: #ff8a00;
-            width: 60%;
+            button {
+                background-color: #ff8a00;
+                width: 60%;
+                font-size: 1rem;
+            }
+
+            > div {
+                animation: fade 0.5s ease;
+                background-color: white;
+                width: 90dvw;
+                margin: 3rem auto 0 auto;
+                border-radius: 1.2rem;
+                padding: 1.2rem;
+
+                h4 {
+                    font-size: 1.4rem;
+                    font-weight: 500;
+                    margin: 0 !important;
+                    padding: .4rem 0 2rem 0;
+                    color: #a90094;
+                }
+
+                div {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 1rem;
+
+                    img {
+                        width: 14dvw;
+                        border-radius: .6rem;
+                    }
+
+                    p {
+                        flex: 1;
+                        margin: 0;
+                        color: #707070;
+                        text-align: left;
+                        padding-right: .4rem;
+                    }
+                }
+            }
         }
 
         div.bloque_ios {

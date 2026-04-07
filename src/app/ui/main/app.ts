@@ -27,19 +27,19 @@ export class App {
   loading = computed(() => this.stateService.loadingSpinner());
   deviceOrientation = computed(() => this.stateService.deviceOrientation());
   offline = computed(() => this.stateService.offline());
-  isInstalled = computed(() => this.pwaService.checkIfInstalled());
-  // isInstalled = computed(() => { return this.stateService.isInstalled === '1' });
+  isInstalled = computed(() => this.pwaService.checkIfInstalled()); // si ya esta instalada la PWA en iOS y Android
+  pwaInstallationSuccess = computed(() => this.stateService.pwaInstallationSuccess()); // para Android, si ya termino la instalacion desde el prompt
 
   ngOnInit() {
     if (this.checkMobile()) {
 
       console.log('isInstalled', this.isInstalled());
-      
+
       if (this.isInstalled()) {
         this.setOrientation();
         this.router.navigate([this.checkInitialNavigationState() ? 'enter' : 'loader']);
       } else {
-        this.stateService.isInstalled = '0';
+        this.stateService.pwaInstallationSuccess.set(false);
       }
 
     } else {
@@ -93,7 +93,6 @@ export class App {
 
   // instala la PWA solo si es Android
   installPWA() {
-    // console.log('installPWA');
     this.pwaService.installPwa();
   }
 

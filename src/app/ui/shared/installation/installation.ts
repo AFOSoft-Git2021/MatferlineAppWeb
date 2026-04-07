@@ -14,6 +14,8 @@ export class Installation {
 
   public stateService = inject(StateService);
   deviceSystem = computed(() => this.stateService.deviceSystem());
+
+  pwaInstallationSuccess = input.required<boolean>();
   installPWAEmitter = output();
 
   installPWA() {
