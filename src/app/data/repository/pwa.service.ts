@@ -1,4 +1,5 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
+import { StateService } from './state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -7,6 +8,7 @@ export class PwaService {
 
   // Guardamos el evento de instalación
   private deferredPrompt = signal<any>(null);
+  private stateService = inject(StateService);
 
   // Signal para saber si mostramos las instrucciones
   showInstallInstructions = signal<boolean>(false);
@@ -24,6 +26,7 @@ export class PwaService {
 
     window.addEventListener('appinstalled', () => {
       // Limpiar cuando se instale con éxito
+      this.stateService.isInstalled = '1';
       this.deferredPrompt.set(null);
       this.showInstallInstructions.set(false);
       console.log('PWA instalada correctamente');
@@ -38,6 +41,7 @@ export class PwaService {
       if (outcome === 'accepted') {
         this.deferredPrompt.set(null);
       }
+      console.log('Outcome:', outcome);
     }
   }
 

@@ -53,7 +53,7 @@ export class ProfeContainer implements OnInit, OnDestroy {
   constructor() {
     effect(() => {
       if (this.temaLoaded()) {
-        this.audioService.loadSound(this.profeTema?.elementos[this.indexEA()]?.sonido ?? '')
+        this.audioService.loadSound(this.profeTema?.elementos[this.indexEA()]?.sonido ?? '', this.indexEA())
         if (!this.temaEstudiado()) {
           this.elementosEstudiadosList[this.indexEA()] = true;
           this.checkUmbralTema();

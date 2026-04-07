@@ -65,8 +65,8 @@ export class ProfeElementoActivoVideo implements OnDestroy {
   }
 
   playVideo() {
-    this.player?.unMute(); // Desmutear el video para que se escuche TODO: ???
     this.player?.playVideo();
+    this.player?.unMute(); // Desmutear el video para que se escuche TODO: ???
   }
 
   /* pauseVideo() {

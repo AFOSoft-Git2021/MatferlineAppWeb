@@ -1,4 +1,4 @@
-import { Component, computed, effect, HostListener, inject } from '@angular/core';
+import { Component, computed, HostListener, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { StateService } from '../../data/repository/state.service';
 import { SpinnerLoading } from "../shared/spinner-loading/spinner-loading";
@@ -29,20 +29,17 @@ export class App {
   offline = computed(() => this.stateService.offline());
   isInstalled = computed(() => { return this.stateService.isInstalled === '1' });
 
-  constructor() {
-    effect(() => {
-      // TODO: verificar si la app esta instalada: grabar el estado el localstorage, para verificar al entrar
-      this.isInstalled() ? localStorage.setItem('isInstalled', '1') : localStorage.setItem('isInstalled', '0');
-    });
-  }
-
   ngOnInit() {
     if (this.checkMobile()) {
-      // TODO: antes que nada verificar si la app esta instalada: grabar el estado el localstorage, para verificar al entrar
-      console.log('isInstalled', this.isInstalled());
 
-      this.setOrientation();
-      this.router.navigate([this.checkInitialNavigationState() ? 'enter' : 'loader']);
+      console.log('isInstalled', this.pwaService.checkIfInstalled());
+      
+      if (this.pwaService.checkIfInstalled()) {
+        this.setOrientation();
+        this.router.navigate([this.checkInitialNavigationState() ? 'enter' : 'loader']);
+      } else {
+        this.stateService.isInstalled = '0';
+      }
 
     } else {
       location.href = 'https://matferline.com';
@@ -75,7 +72,7 @@ export class App {
     // 1. Detectar iPhone (excluyendo iPads que se hacen pasar por Mac)
     const isIphone = /iPhone/i.test(ua);
 
-    // 2. Detectar Android solo si es teléfono (contiene "Mobile")
+    // 2. Detectar Android solo si es telefono (contiene "Mobile")
     const isAndroidPhone = /Android/i.test(ua) && /Mobile/i.test(ua);
 
     this.stateService.deviceSystem.set(isIphone ? DeviceSystem.iOS : DeviceSystem.Android);
@@ -95,8 +92,8 @@ export class App {
 
   // instala la PWA solo si es Android
   installPWA() {
-    console.log('installPWA');
-    // this.pwaService.installPwa(); TODO:
+    // console.log('installPWA');
+    this.pwaService.installPwa();
   }
 
 }
