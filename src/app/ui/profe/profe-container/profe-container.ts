@@ -252,6 +252,7 @@ export class ProfeContainer implements OnInit, OnDestroy {
   clickGoToEpigrafe(index: number) {
     this.indexEA.set(index);
     this.closeListaEpigrafes();
+    this.loadSound(this.profeTema?.elementos[this.indexEA()]?.sonido ?? '');
   }
 
   closeListaEpigrafes() {
@@ -267,6 +268,7 @@ export class ProfeContainer implements OnInit, OnDestroy {
   clickGoToElemento(index: number) {
     this.indexEA.set(index);
     this.closeListaElementos();
+    this.loadSound(this.profeTema?.elementos[this.indexEA()]?.sonido ?? '');
   }
 
   closeListaElementos() {

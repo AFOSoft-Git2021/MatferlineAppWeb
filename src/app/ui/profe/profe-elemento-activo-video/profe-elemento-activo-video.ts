@@ -47,7 +47,6 @@ export class ProfeElementoActivoVideo implements OnDestroy {
       width: '100%',
       playerVars: {
         'autoplay': 1,
-        'mute': 1,       // <--- Crucial para iOS
         'controls': 0,
         'rel': 0,
         'showinfo': 0,
@@ -66,7 +65,6 @@ export class ProfeElementoActivoVideo implements OnDestroy {
 
   playVideo() {
     this.player?.playVideo();
-    this.player?.unMute(); // Desmutear el video para que se escuche TODO: ???
   }
 
   /* pauseVideo() {

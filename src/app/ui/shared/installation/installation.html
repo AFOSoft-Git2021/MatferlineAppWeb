@@ -2,7 +2,7 @@
 
     <span></span>
 
-    <div class="info">        
+    <div class="info">
 
         @if (deviceSystem() === 'android') {
         <div class="bloque_android">
@@ -11,7 +11,6 @@
 
             @if (!pwaInstallationSuccess()) {
             <ng-container>
-                <h2>Para comenzar instala la aplicación</h2>
                 <button (click)="installPWA()" mat-flat-button type="button">
                     <mat-icon>install_mobile</mat-icon>
                     Instalar app
@@ -32,27 +31,30 @@
         }
         @else {
         <div class="bloque_ios">
-            <img src="./svg/logo_matferline.svg" alt="matferline">
-            <h1>Instala la app en tu iPhone</h1>
-            <div>
-                <h2>Añádela a tu pantalla de inicio para acceso rápido</h2>
-                <p>
-                    <img src="./img/image_ios_1.webp" alt="icon">
-                    <span><strong>1. </strong>Pulsa el botón de opciones de Safari</span>
-                </p>
-                <p>
-                    <img src="./img/captura_2.webp" alt="icon">
-                    <span><strong>2. </strong>En el menú selecciona “Compartir”</span>
-                </p>
-                <p class="parrafo_columna">
-                    <span><strong>3. </strong>Haz scroll hacia abajo y selecciona “Añadir a página de inicio”</span>
-                    <img src="./img/captura_3.webp" alt="icon">
-                </p>
-                <p class="parrafo_columna">
-                    <span><strong>4. </strong>Confirma pulsando “Añadir” arriba a la derecha</span>
-                    <img src="./img/captura_4.webp" alt="icon">
-                </p>
-            </div>
+            @if(isSafari()) {
+                <img src="./svg/logo_matferline.svg" alt="matferline">
+                <h1>Instala la app en tu iPhone</h1>
+                <div>
+                    <h2>Añádela a tu pantalla de inicio para acceso rápido</h2>
+                    <p>
+                        <img src="./img/captura_2.webp" alt="icon">
+                        <span><strong>1. </strong>Busca este icono en las opciones de Safari y selecciona “Compartir”</span>
+                    </p>
+                    <p class="parrafo_columna">
+                        <span><strong>2. </strong>Haz scroll hacia abajo y selecciona “Añadir a página de inicio”</span>
+                        <img src="./img/captura_3.webp" alt="icon">
+                    </p>
+                    <p class="parrafo_columna">
+                        <span><strong>3. </strong>Confirma pulsando “Añadir” arriba a la derecha</span>
+                        <img src="./img/captura_4.webp" alt="icon">
+                    </p>
+                </div>
+            }
+            @else {
+                <img src="./svg/logo_matferline.svg" alt="matferline">
+                <img src="./img/safari_icon.webp" class="safari" alt="safari">
+                <h3>Para instalar esta app es necesario usar Safari</h3>
+            }
         </div>
         }
 
