@@ -104,13 +104,13 @@ html {
 
 html,
 body {
-  background-color: $BlueDark;
-  height: 100%;
+  background-color: red !important;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  height: 100%;
+  /* overflow: hidden;
   scroll-behavior: smooth;
-  height: -webkit-fill-available;
+  height: -webkit-fill-available; */
 }
 
 body {
@@ -118,14 +118,18 @@ body {
   background-image: url("../public/svg/fondo_oscuro.svg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
+  // background-size: cover;
+  background-size: 101% 101%;
   color: white;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: $font-size;
 
+  overflow: hidden;
+  scroll-behavior: smooth;
+
   // Usar min-height para asegurar que cubra todo
-  min-height: 100dvh;
   min-height: -webkit-fill-available;
+  min-height: 100dvh;
 
   // Fallback para navegadores que no soporten env()
   padding-top: constant(safe-area-inset-top);
