@@ -297,6 +297,7 @@ export class TestContainer implements OnInit, OnDestroy {
             if (response.body.datos_correcion) {
 
               this.dataTestCorregido = response.body as DataResponseCorregirTest;
+              this.modoCorreccion.set(true);
               this.showResultadoTest.set(true);
               this.testIsSaving.set(false);
 
@@ -347,6 +348,7 @@ export class TestContainer implements OnInit, OnDestroy {
             if (response.body.datos_correcion) {
 
               this.dataTestCorregido = response.body as DataResponseCorregirTest;
+              this.modoCorreccion.set(true);
               this.showResultadoTest.set(true);
               this.testIsSaving.set(false);
 

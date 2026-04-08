@@ -15,6 +15,6 @@
   @if(loading()) { <app-spinner-loading /> }
 
   <!-- INSTALLATION -->
-  @if(!isInstalled()) { <app-installation [pwaInstallationSuccess]="pwaInstallationSuccess()" (installPWAEmitter)="installPWA()" /> }
+  @if(isInstalled()) { <app-installation [pwaInstallationSuccess]="pwaInstallationSuccess()" (installPWAEmitter)="installPWA()" /> }
 
 </section>
