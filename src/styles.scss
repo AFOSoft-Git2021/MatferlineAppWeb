@@ -105,31 +105,27 @@ html {
 html,
 body {
   background-color: $BlueDark !important;
+  height: 100dvh;
   margin: 0;
   padding: 0;
-  height: 100%;
-  /* overflow: hidden;
+  overflow: hidden;
   scroll-behavior: smooth;
-  height: -webkit-fill-available; */
+  height: -webkit-fill-available;
 }
 
 body {
-  margin-top: -1px;
   background-color: $BlueDark;
-  background-image: url("../public/svg/fondo_oscuro.svg");
+  /* background-image: url("../public/svg/fondo_oscuro.svg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
+  background-size: cover; */
   color: white;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: $font-size;
 
-  overflow: hidden;
-  scroll-behavior: smooth;
-
   // Usar min-height para asegurar que cubra todo
-  min-height: -webkit-fill-available;
   min-height: 100dvh;
+  min-height: -webkit-fill-available;
 
   // Fallback para navegadores que no soporten env()
   padding-top: constant(safe-area-inset-top);
@@ -140,8 +136,6 @@ body {
   padding-bottom: env(safe-area-inset-bottom);
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);  
-
-  padding-top: calc(env(safe-area-inset-top) + 1px);
 }
 
 /***********************************/
