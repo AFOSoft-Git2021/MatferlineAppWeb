@@ -5,15 +5,13 @@ import { SpinnerLoading } from "../shared/spinner-loading/spinner-loading";
 import { DeviceOrientation } from '../../data/model/deviceOrientationEnum';
 import { HorizontalScreen } from "../shared/horizontal-screen/horizontal-screen";
 import { ConnectionError } from "../shared/connection-error/connection-error";
-import { ServerError } from "../shared/server-error/server-error";
-import { ConcurrenceError } from "../shared/concurrence-error/concurrence-error";
 import { Installation } from "../shared/installation/installation";
 import { PwaService } from '../../data/repository/pwa.service';
 import { DeviceSystem } from '../../data/model/deviceSystem';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SpinnerLoading, HorizontalScreen, ConcurrenceError, ServerError, ConnectionError, Installation],
+  imports: [RouterOutlet, SpinnerLoading, HorizontalScreen, ConnectionError, Installation],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -32,8 +30,6 @@ export class App {
 
   ngOnInit() {
     if (this.checkMobile()) {
-
-      console.log('isInstalled', this.isInstalled());
 
       if (this.isInstalled()) {
         this.setOrientation();

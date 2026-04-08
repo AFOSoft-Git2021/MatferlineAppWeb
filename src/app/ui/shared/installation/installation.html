@@ -2,38 +2,62 @@
 
     <span></span>
 
-    <div class="info">
-        <img src="./svg/logo_matferline.svg" alt="matferline">
+    <div class="info">        
 
         @if (deviceSystem() === 'android') {
-            <div class="bloque_android">
-                <img src="./svg/icon_install_pwa.svg" alt="loading">
+        <div class="bloque_android">
+            <img src="./svg/logo_matferline.svg" alt="matferline">
+            <img src="./svg/icon_install_pwa.svg" alt="loading">
 
-                @if (!pwaInstallationSuccess()) {
-                    <ng-container>
-                        <h2>Para comenzar instala la aplicación</h2>
-                        <button (click)="installPWA()" mat-flat-button type="button">
-                            <mat-icon>install_mobile</mat-icon>
-                            Instalar app
-                        </button>
-                    </ng-container>
-                }
-                @else {
-                    <div>
-                        <h4>¡ Instalación completada !</h4>
-                        <div>
-                            <img src="./icons/icon-384x384.png" alt="logo">
-                            <p>Cierra el navegador y accede a tu app con el icono que encontrarás en el escritorio</p>
-                        </div>
-                    </div>
-                }
-
-            </div>
-        }
+            @if (!pwaInstallationSuccess()) {
+            <ng-container>
+                <h2>Para comenzar instala la aplicación</h2>
+                <button (click)="installPWA()" mat-flat-button type="button">
+                    <mat-icon>install_mobile</mat-icon>
+                    Instalar app
+                </button>
+            </ng-container>
+            }
             @else {
-            <div class="bloque_ios">
-                <img src="./svg/icon_install_pwa.svg" alt="loading">
+            <div>
+                <h4>¡ Instalación completada !</h4>
+                <div>
+                    <img src="./icons/icon-384x384.png" alt="logo">
+                    <p>Cierra el navegador y accede a tu app con el icono que encontrarás en el escritorio</p>
+                </div>
             </div>
+            }
+
+        </div>
+        }
+        @else {
+        <div class="bloque_ios">
+            <img src="./svg/logo_matferline.svg" alt="matferline">
+            <h1>INSTALA LA APP EN TU IPHONE</h1>
+            <div>
+                <h2>Añádela a tu pantalla de inicio para acceso rápido</h2>
+                <p>
+                    <img src="./img/image_ios_1.webp" alt="icon">
+                    <span><strong>1. </strong>Pulsa el botón de opciones de Safari</span>
+                </p>
+                <p>
+                    <img src="./img/captura_2.webp" alt="icon">
+                    <span><strong>2. </strong>En el menú selecciona “Compartir”</span>
+                </p>
+                <p>
+                    <img src="./img/image_ios_1.webp" alt="icon">
+                    <span><strong>3. </strong>Pulsa el botón “Más”</span>
+                </p>
+                <p class="parrafo_columna">
+                    <span><strong>4. </strong>En el menú selecciona “Añadir a página de inicio”</span>
+                    <img src="./img/captura_3.webp" alt="icon">
+                </p>
+                <p class="parrafo_columna">
+                    <span><strong>5. </strong>Confirma pulsando “Añadir” arriba a la derecha</span>
+                    <img src="./img/captura_4.webp" alt="icon">
+                </p>
+            </div>
+        </div>
         }
 
     </div>
