@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, ElementRef, inject, input, OnDestroy, signal, viewChild } from '@angular/core';
+import { AfterViewInit, Component, computed, effect, ElementRef, inject, input, OnDestroy, OnInit, signal, viewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { StateService } from '../../../data/repository/state.service';
@@ -11,7 +11,7 @@ import { DeviceSystem } from '../../../data/model/deviceSystem';
   templateUrl: './profe-elemento-activo-video.html',
   styleUrl: './profe-elemento-activo-video.scss',
 })
-export class ProfeElementoActivoVideo implements OnDestroy {
+export class ProfeElementoActivoVideo implements AfterViewInit, OnDestroy {
 
   private stateService = inject(StateService);
   public DeviceSystem = DeviceSystem;
@@ -26,7 +26,11 @@ export class ProfeElementoActivoVideo implements OnDestroy {
 
   constructor() {
     effect(() => {
-      const container = this.playerContainer();
+      if (this.player) {
+        // Siguientes veces: El reproductor ya existe, solo cambiamos el video
+        this.player.loadVideoById(this.video());
+      }
+      /* const container = this.playerContainer();
       const videoId = this.video();
 
       if (container) {
@@ -37,8 +41,20 @@ export class ProfeElementoActivoVideo implements OnDestroy {
           // Siguientes veces: El reproductor ya existe, solo cambiamos el video
           this.player.loadVideoById(videoId);
         }
-      }
+      } */
     });
+  }
+
+  ngAfterViewInit() {
+    const container = this.playerContainer();
+    const videoId = this.video();
+
+    if (container) {
+      if (!this.player) {
+        // Primera vez: Creamos el reproductor
+        this.initYoutubePlayer(container.nativeElement, videoId);
+      }
+    }
   }
 
   ngOnDestroy() {
@@ -53,6 +69,7 @@ export class ProfeElementoActivoVideo implements OnDestroy {
       width: '100%',
       playerVars: {
         'autoplay': 1,
+        'mute': 1, // <--- Inicia silenciado
         'controls': 0,
         'rel': 0,
         'showinfo': 0,
