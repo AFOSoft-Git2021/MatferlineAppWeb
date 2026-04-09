@@ -127,7 +127,7 @@ body {
 
   // Usar min-height para asegurar que cubra todo
   min-height: 100dvh;
-  min-height: -webkit-fill-available;
+  // min-height: -webkit-fill-available;
 
   // Compensar la barra de estado de iOS
   padding-top: env(safe-area-inset-top);
