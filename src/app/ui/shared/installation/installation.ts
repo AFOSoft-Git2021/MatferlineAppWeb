@@ -24,6 +24,22 @@ export class Installation {
   }
 
   checkIfSafari(): boolean {
+    const ua = navigator.userAgent;
+    const platform = navigator.platform;
+
+    // Detecta Safari (excluye Chrome, Firefox, Edge en iOS)
+    const isSafari = /^((?!chrome|android|crios|fxios|edgios).)*safari/i.test(ua);
+
+    // Detecta iPhone clásico
+    const isIphone = /iPhone/.test(ua);
+
+    // Detecta iPad moderno (se identifica como Mac pero con soporte táctil)
+    const isIpadModern = platform === 'MacIntel' && navigator.maxTouchPoints > 1;
+
+    return isSafari && (isIphone || isIpadModern);
+  }
+
+  /* checkIfSafari(): boolean {
     const isSafariOnIPhone = () => {
       const ua = window.navigator.userAgent;
       const isIPhone = /iPhone/i.test(ua);
@@ -34,6 +50,6 @@ export class Installation {
       return isIPhone && isWebKit && !isChrome && !isFirefox;
     }
     return isSafariOnIPhone();
-  }
+  } */
 
 }
