@@ -4,8 +4,10 @@
         <div #playerContainer></div>
     </div>
 
-    <button (click)="fullscreen.set(!fullscreen())" mat-icon-button type="button">
-        <mat-icon>{{ fullscreen() ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
-    </button>
+    @if (deviceSystem() === DeviceSystem.Android) {
+        <button (click)="fullscreen.set(!fullscreen())" mat-icon-button type="button">
+            <mat-icon>{{ fullscreen() ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
+        </button>
+    }
 
 </section>

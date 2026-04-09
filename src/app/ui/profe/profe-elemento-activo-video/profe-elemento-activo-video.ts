@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, ElementRef, input, OnDestroy, signal, viewChild } from '@angular/core';
+import { Component, computed, effect, ElementRef, inject, input, OnDestroy, signal, viewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { StateService } from '../../../data/repository/state.service';
+import { DeviceSystem } from '../../../data/model/deviceSystem';
 
 @Component({
   selector: 'app-profe-elemento-activo-video',
@@ -11,7 +13,11 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class ProfeElementoActivoVideo implements OnDestroy {
 
+  private stateService = inject(StateService);
+  public DeviceSystem = DeviceSystem;
+
   video = input.required<string>();
+  deviceSystem = computed(() => this.stateService.deviceSystem());
   playerContainer = viewChild<ElementRef>('playerContainer');
 
   private player?: YT.Player;
