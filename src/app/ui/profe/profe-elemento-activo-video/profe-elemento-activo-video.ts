@@ -25,23 +25,12 @@ export class ProfeElementoActivoVideo implements AfterViewInit, OnDestroy {
   fullscreen = signal(false);
 
   constructor() {
+    // Efecto que reacciona SOLO al cambio de video
     effect(() => {
-      if (this.player) {
-        // Siguientes veces: El reproductor ya existe, solo cambiamos el video
-        this.player.loadVideoById(this.video());
-      }
-      /* const container = this.playerContainer();
       const videoId = this.video();
-
-      if (container) {
-        if (!this.player) {
-          // Primera vez: Creamos el reproductor
-          this.initYoutubePlayer(container.nativeElement, videoId);
-        } else {
-          // Siguientes veces: El reproductor ya existe, solo cambiamos el video
-          this.player.loadVideoById(videoId);
-        }
-      } */
+      if (this.player && this.isPlayerReady()) {
+        setTimeout(() => this.player!.loadVideoById(videoId), 100);
+      }
     });
   }
 
@@ -49,11 +38,8 @@ export class ProfeElementoActivoVideo implements AfterViewInit, OnDestroy {
     const container = this.playerContainer();
     const videoId = this.video();
 
-    if (container) {
-      if (!this.player) {
-        // Primera vez: Creamos el reproductor
-        this.initYoutubePlayer(container.nativeElement, videoId);
-      }
+    if (container && !this.player) {
+      this.initYoutubePlayer(container.nativeElement, videoId);
     }
   }
 
@@ -68,20 +54,20 @@ export class ProfeElementoActivoVideo implements AfterViewInit, OnDestroy {
       height: '100%',
       width: '100%',
       playerVars: {
-        'autoplay': 1,
-        'mute': 1, // <--- Inicia silenciado
-        'controls': 0,
-        'rel': 0,
-        'showinfo': 0,
-        'playsinline': 1 // <--- Evita que se abra en pantalla completa automáticamente en iPhone
+        autoplay: 1,
+        mute: 1,
+        controls: 0,
+        rel: 0,
+        showinfo: 0,
+        playsinline: 1
       },
       videoId: video,
       events: {
-        'onReady': () => {
+        onReady: () => {
           this.isPlayerReady.set(true);
           this.playVideo();
         },
-        'onStateChange': (event) => console.log('Estado:', event.data)
+        onStateChange: (event) => console.log('Estado:', event.data)
       }
     });
   }
