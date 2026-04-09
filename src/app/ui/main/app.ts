@@ -64,6 +64,33 @@ export class App {
   }
 
   checkMobile(): boolean {
+
+    let isMobile = false;
+    const ua = navigator.userAgent;
+
+    // --- Android ---
+    if (/Android/i.test(ua)) {
+      isMobile = true;
+      this.stateService.deviceSystem.set(DeviceSystem.Android);
+    }
+
+    // --- iOS clásico ---
+    if (/iPhone/i.test(ua) || /iPad/i.test(ua)) {
+      isMobile = true;
+      this.stateService.deviceSystem.set(DeviceSystem.iOS);
+    }
+
+    // --- iPadOS moderno (se anuncia como Mac) ---
+    const isIPadOS = /Macintosh/i.test(ua) && 'ontouchend' in document;
+    if (isIPadOS) {
+      isMobile = true;
+      this.stateService.deviceSystem.set(DeviceSystem.iOS);
+    }
+
+    return isMobile;
+  }
+
+  /* checkMobile(): boolean {
     const ua = navigator.userAgent;
 
     // 1. Detectar iPhone (excluyendo iPads que se hacen pasar por Mac)
@@ -76,7 +103,7 @@ export class App {
     console.log('deviceSystem', this.stateService.deviceSystem());
 
     return isIphone || isAndroidPhone;
-  }
+  } */
 
   setOrientation() {
     this.stateService.deviceOrientation.set((window.innerWidth < window.innerHeight) ? DeviceOrientation.Portrait : DeviceOrientation.Landscape);
