@@ -19,6 +19,10 @@ export class Installation {
   installPWAEmitter = output();
   isSafari = computed(() => this.checkIfSafari());
 
+  gotoPlayStore() {
+    window.open('https://play.google.com/store/apps/details?id=com.afosoft.matferlineappandroid&pcampaignid=web_share', '_blank');
+  }
+
   installPWA() {
     this.installPWAEmitter.emit();
   }
@@ -38,18 +42,5 @@ export class Installation {
 
     return isSafari && (isIphone || isIpadModern);
   }
-
-  /* checkIfSafari(): boolean {
-    const isSafariOnIPhone = () => {
-      const ua = window.navigator.userAgent;
-      const isIPhone = /iPhone/i.test(ua);
-      const isWebKit = /WebKit/i.test(ua);
-      const isChrome = /CriOS/i.test(ua); // Chrome en iOS usa "CriOS"
-      const isFirefox = /FxiOS/i.test(ua); // Firefox en iOS usa "FxiOS"
-
-      return isIPhone && isWebKit && !isChrome && !isFirefox;
-    }
-    return isSafariOnIPhone();
-  } */
 
 }

@@ -5,57 +5,60 @@
     <div class="info">
 
         @if (deviceSystem() === 'android') {
-        <div class="bloque_android">
-            <img src="./svg/logo_matferline.svg" alt="matferline">
-            <img src="./svg/icon_install_pwa.svg" alt="loading">
-
-            @if (!pwaInstallationSuccess()) {
-            <ng-container>
-                <button (click)="installPWA()" mat-flat-button type="button">
-                    <mat-icon>install_mobile</mat-icon>
-                    Instalar app
-                </button>
-            </ng-container>
-            }
-            @else {
-            <div>
-                <h4>¡ Instalación completada !</h4>
-                <div>
-                    <img src="./icons/icon-384x384.png" alt="logo">
-                    <p>Cierra el navegador y accede a tu app con el icono que encontrarás en el escritorio</p>
-                </div>
-            </div>
-            }
-
-        </div>
-        }
-        @else {
-        <div class="bloque_ios">
-            @if(isSafari()) {
+            <div class="bloque_android">
                 <img src="./svg/logo_matferline.svg" alt="matferline">
                 <h1>Instala la app en tu iPhone</h1>
-                <div>
-                    <h2>Añádela a tu pantalla de inicio para acceso rápido</h2>
-                    <p>
-                        <img src="./img/captura_2.webp" alt="icon">
-                        <span><strong>1. </strong>Busca este icono en las opciones de Safari</span>
-                    </p>
-                    <p class="parrafo_columna">
-                        <span><strong>2. </strong>Haz scroll hacia abajo y selecciona “Añadir a página de inicio”</span>
-                        <img src="./img/captura_3.webp" alt="icon">
-                    </p>
-                    <p class="parrafo_columna">
-                        <span><strong>3. </strong>Confirma pulsando “Añadir” arriba a la derecha</span>
-                        <img src="./img/captura_4.webp" alt="icon">
-                    </p>
-                </div>
-            }
-            @else {
-                <img src="./svg/logo_matferline.svg" alt="matferline">
-                <img src="./img/safari_icon.webp" class="safari" alt="safari">
-                <h3>Para instalar esta app es necesario usar Safari</h3>
-            }
-        </div>
+                <img src="./svg/icon_install_pwa.svg" alt="install">
+                <img (click)="gotoPlayStore()" src="./svg/logo_play_store.svg" alt="play_store">
+
+                @if (!pwaInstallationSuccess()) {
+                    <ng-container>
+                        <h2>Si prefieres usar la versión web haz clic en el botón de abajo</h2>
+                        <button (click)="installPWA()" mat-flat-button type="button">
+                            <mat-icon>install_mobile</mat-icon>
+                            Instalar aplicación web
+                        </button>
+                    </ng-container>
+                }
+                @else {
+                    <div>
+                        <h4>¡ Instalación completada !</h4>
+                        <div>
+                            <img src="./icons/icon-384x384.png" alt="logo">
+                            <p>Cierra el navegador y accede a tu app con el icono que encontrarás en el escritorio</p>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        }
+        @else {
+            <div class="bloque_ios">
+                @if(isSafari()) {
+                    <img src="./svg/logo_matferline.svg" alt="matferline">
+                    <h1>Instala la app en tu iPhone</h1>
+                    <div>
+                        <h2>Añádela a tu pantalla de inicio para acceso rápido</h2>
+                        <p>
+                            <img src="./img/captura_2.webp" alt="icon">
+                            <span><strong>1. </strong>Busca este icono en las opciones de Safari</span>
+                        </p>
+                        <p class="parrafo_columna">
+                            <span><strong>2. </strong>Haz scroll hacia abajo y selecciona “Añadir a página de inicio”</span>
+                            <img src="./img/captura_3.webp" alt="icon">
+                        </p>
+                        <p class="parrafo_columna">
+                            <span><strong>3. </strong>Confirma pulsando “Añadir” arriba a la derecha</span>
+                            <img src="./img/captura_4.webp" alt="icon">
+                        </p>
+                    </div>
+                }
+                @else {
+                    <img src="./svg/logo_matferline.svg" alt="matferline">
+                    <img src="./img/safari_icon.webp" class="safari" alt="safari">
+                    <h3>Para instalar esta app es necesario usar Safari</h3>
+                }
+            </div>
         }
 
     </div>
