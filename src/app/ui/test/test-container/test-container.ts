@@ -37,6 +37,7 @@ import { TestInfoRegenerado } from "../test-info-regenerado/test-info-regenerado
 import { Servicio } from '../../../data/model/servicioEnum';
 import { TestRegenerado } from '../../../data/model/testRegenerado';
 import { DataTestPredefinidoTemaProfe } from '../../../data/model/dataTestPredefinidoTemaProfe';
+import { ReloginService } from '../../../data/repository/relogin.service';
 
 @Component({
   selector: 'app-test-container',
@@ -61,6 +62,7 @@ import { DataTestPredefinidoTemaProfe } from '../../../data/model/dataTestPredef
 export class TestContainer implements OnInit, OnDestroy {
 
   private stateService = inject(StateService);
+  private reloginService = inject(ReloginService);
   private getTestPredefinidoService = inject(GetTestPredefinidoService);
   private getTestAleatorioService = inject(GetTestAleatorioService);
   private correctTestPredefinidoService = inject(CorrectTestPredefinidoService);
@@ -182,89 +184,109 @@ export class TestContainer implements OnInit, OnDestroy {
   /*   LLAMADAS A LA API   */
   /*************************/
   // descarga un test predefinido
-  getTestPredefinido(dataTestPredefinido: DataTestPredefinido) {
+  async getTestPredefinido(dataTestPredefinido: DataTestPredefinido) {
     this.stateService.loadingSpinner.set(true);
-    this.getTestPredefinidoService.getTestPredefinido(dataTestPredefinido).subscribe(
-      {
-        next: (response) => {
-          this.stateService.loadingSpinner.set(false);
 
-          if (response.status === 200) {
-            console.log(response.body);
+    // el flujo se detiene hasta que el servicio termine de hacer el relogin y retorne el resultado
+    let reloginOk = await this.reloginService.relogin();
+    console.log('Promise predefinido termino con: ', reloginOk);
 
-            if (response.body.tipo_test) {
+    if (reloginOk) {
+      this.getTestPredefinidoService.getTestPredefinido(dataTestPredefinido).subscribe(
+        {
+          next: (response) => {
+            this.stateService.loadingSpinner.set(false);
 
-              this.test = response.body as TestPredefinido;
+            if (response.status === 200) {
+              console.log(response.body);
 
-              if (this.isTestPredefinidoTemaProfe()) {
-                this.stateService.testPredefinidoTemaProfeSelected.set(null);
+              if (response.body.tipo_test) {
+
+                this.test = response.body as TestPredefinido;
+
+                if (this.isTestPredefinidoTemaProfe()) {
+                  this.stateService.testPredefinidoTemaProfeSelected.set(null);
+                } else {
+                  this.stateService.testPredefinidoSelected.set(null);
+                }
+
+                if (this.test.autocorreccion === 1) {
+                  this.listCorregidasAutocorreccion = new Array(this.test.preguntas.length).fill(false);
+                }
+
+                this.testLoaded.set(true);
+
+                if (this.hideInfoModoTest() && this.hideInfoModoTest() === '1') { this.startTest() }
+
               } else {
-                this.stateService.testPredefinidoSelected.set(null);
+                console.log('response', response.body.message);
+                this.router.navigate(['concurrencia', response.body.message]);
               }
-
-              if (this.test.autocorreccion === 1) {
-                this.listCorregidasAutocorreccion = new Array(this.test.preguntas.length).fill(false);
-              }
-
-              this.testLoaded.set(true);
-
-              if (this.hideInfoModoTest() && this.hideInfoModoTest() === '1') { this.startTest() }
-
-            } else {
-              console.log('response', response.body.message);
-              this.router.navigate(['concurrencia', response.body.message]);
             }
+          },
+          error: (error) => {
+            this.stateService.loadingSpinner.set(false);
+            console.log('error: ', error.message);
+            this.router.navigate(['error']);
           }
-        },
-        error: (error) => {
-          this.stateService.loadingSpinner.set(false);
-          console.log('error: ', error.message);
-          this.router.navigate(['error']);
         }
-      }
-    )
+      )
+    } else {
+      this.stateService.loadingSpinner.set(false);
+      console.log('relogin predefinido devolvio false');
+    }
   }
 
   // descarga un test aleatorio
-  getTestAleatorio(dataTestAleatorio: DataTestAleatorio) {
+  async getTestAleatorio(dataTestAleatorio: DataTestAleatorio) {
     this.stateService.loadingSpinner.set(true);
-    this.getTestAleatorioService.getTestAleatorio(dataTestAleatorio).subscribe(
-      {
-        next: (response) => {
-          this.stateService.loadingSpinner.set(false);
 
-          if (response.status === 200) {
-            console.log(response.body);
+    // el flujo se detiene hasta que el servicio termine de hacer el relogin y retorne el resultado
+    let reloginOk = await this.reloginService.relogin();
+    console.log('Promise aleatorio termino con: ', reloginOk);
 
-            if (response.body.tipo_test) {
+    if (reloginOk) {
+      this.getTestAleatorioService.getTestAleatorio(dataTestAleatorio).subscribe(
+        {
+          next: (response) => {
+            this.stateService.loadingSpinner.set(false);
 
-              this.test = response.body as TestAleatorio;
-              this.stateService.testAleatorioSelected.set(null);
+            if (response.status === 200) {
+              console.log(response.body);
 
-              if (this.test.autocorreccion === 1) {
-                this.listCorregidasAutocorreccion = new Array(this.test.preguntas.length).fill(false);
+              if (response.body.tipo_test) {
+
+                this.test = response.body as TestAleatorio;
+                this.stateService.testAleatorioSelected.set(null);
+
+                if (this.test.autocorreccion === 1) {
+                  this.listCorregidasAutocorreccion = new Array(this.test.preguntas.length).fill(false);
+                }
+
+                this.testLoaded.set(true);
+
+                if (this.hideInfoModoTest() && this.hideInfoModoTest() === '1') { this.startTest() }
+
+              } else {
+                console.log('response', response.body.message);
+                this.router.navigate(['concurrencia', response.body.message]);
               }
-
-              this.testLoaded.set(true);
-
-              if (this.hideInfoModoTest() && this.hideInfoModoTest() === '1') { this.startTest() }
-
-            } else {
-              console.log('response', response.body.message);
-              this.router.navigate(['concurrencia', response.body.message]);
             }
+          },
+          error: (error) => {
+            this.stateService.loadingSpinner.set(false);
+            console.log('error: ', error.message);
+            this.router.navigate(['error']);
           }
-        },
-        error: (error) => {
-          this.stateService.loadingSpinner.set(false);
-          console.log('error: ', error.message);
-          this.router.navigate(['error']);
         }
-      }
-    )
+      )
+    } else {
+      this.stateService.loadingSpinner.set(false);
+      console.log('relogin aleatorio devolvio false');
+    }
   }
 
-  // corrige un test predefinido
+  // corrige un test predefinido => sin relogin por servicio critico
   correctTestPredefinido() {
 
     // detiene chrono
@@ -316,7 +338,7 @@ export class TestContainer implements OnInit, OnDestroy {
     )
   }
 
-  // corrige un test aleatorio
+  // corrige un test aleatorio => sin relogin por servicio critico
   correctTestAleatorio() {
 
     // detiene chrono

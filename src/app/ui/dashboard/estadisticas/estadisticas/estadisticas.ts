@@ -20,6 +20,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PopupConfirmComponent } from '../../../shared/popup-confirm/popup-confirm.component';
 import { Servicio } from '../../../../data/model/servicioEnum';
 import { TestRegenerado } from '../../../../data/model/testRegenerado';
+import { ReloginService } from '../../../../data/repository/relogin.service';
 
 @Component({
   selector: 'app-estadisticas',
@@ -42,6 +43,7 @@ export class Estadisticas implements OnInit, OnDestroy {
 
   private stateService = inject(StateService);
   private getEstadisticasService = inject(GetEstadisticasService);
+  private reloginService = inject(ReloginService);
   private getTestRegeneradoService = inject(GetTestRegeneradoService);
   private router = inject(Router);
   private dialog = inject(MatDialog);
@@ -64,75 +66,96 @@ export class Estadisticas implements OnInit, OnDestroy {
   /*************************/
   /*   LLAMADAS A LA API   */
   /*************************/
-  getEstadisticas(data: DataGetEstadisticas) {
+  async getEstadisticas(data: DataGetEstadisticas) {
     this.stateService.loadingSpinner.set(true);
-    this.getEstadisticasService.getEstadisticas(data).subscribe(
-      {
-        next: (response) => {
-          this.stateService.loadingSpinner.set(false);
 
-          if (response.status === 200) {
-            console.log(response.body);
+    // el flujo se detiene hasta que el servicio termine de hacer el relogin y retorne el resultado
+    let reloginOk = await this.reloginService.relogin();
+    console.log('Promise estadisticas termino con: ', reloginOk);
 
-            if (response.body.num_test_aleatorios >= 0) {
+    if (reloginOk) {
+      this.getEstadisticasService.getEstadisticas(data).subscribe(
+        {
+          next: (response) => {
+            this.stateService.loadingSpinner.set(false);
 
-              this.estadisticas = response.body as EstadisticasPermiso;
-              this.stateService.dataEstadisticas.set(null);
+            if (response.status === 200) {
+              console.log(response.body);
 
-            } else {
-              console.log('response', response.body.message);
-              this.router.navigate(['concurrencia', response.body.message ?? 'Oops ... algo ha ido mal']);
+              if (response.body.num_test_aleatorios >= 0) {
+
+                this.estadisticas = response.body as EstadisticasPermiso;
+                this.stateService.dataEstadisticas.set(null);
+
+              } else {
+                console.log('response', response.body.message);
+                this.router.navigate(['concurrencia', response.body.message ?? 'Oops ... algo ha ido mal']);
+              }
             }
+          },
+          error: (error) => {
+            this.stateService.loadingSpinner.set(false);
+            console.log('error: ', error.message);
+            this.router.navigate(['error']);
           }
-        },
-        error: (error) => {
-          this.stateService.loadingSpinner.set(false);
-          console.log('error: ', error.message);
-          this.router.navigate(['error']);
         }
-      }
-    )
+      )
+    } else {
+      this.stateService.loadingSpinner.set(false);
+      console.log('relogin estadisticas devolvio false');
+    }
   }
 
-  getTestRegenerado(event: any) {
-    const cdiTest = event.cditest as string;
-    const tipoTest = event.tipo as string;
-    console.log(`cditest: ${cdiTest} tipo: ${tipoTest}`);
-
-    const DATA = { cditest: cdiTest }
-
+  async getTestRegenerado(event: any) {
     this.stateService.loadingSpinner.set(true);
-    this.getTestRegeneradoService.getTestRegenerado(JSON.stringify(DATA)).subscribe(
-      {
-        next: (response) => {
-          this.stateService.loadingSpinner.set(false);
 
-          if (response.status === 200) {
-            console.log(response.body);
+    // el flujo se detiene hasta que el servicio termine de hacer el relogin y retorne el resultado
+    let reloginOk = await this.reloginService.relogin();
+    console.log('Promise regenerado termino con: ', reloginOk);
 
-            if (response.body.test) {
+    if (reloginOk) {
 
-              const TEST_REGENERADO: TestRegenerado = {
-                test: response.body.test,
-                correccion: response.body.correccion
+      const cdiTest = event.cditest as string;
+      const tipoTest = event.tipo as string;
+      console.log(`cditest: ${cdiTest} tipo: ${tipoTest}`);
+
+      const DATA = { cditest: cdiTest }
+
+      this.getTestRegeneradoService.getTestRegenerado(JSON.stringify(DATA)).subscribe(
+        {
+          next: (response) => {
+            this.stateService.loadingSpinner.set(false);
+
+            if (response.status === 200) {
+              console.log(response.body);
+
+              if (response.body.test) {
+
+                const TEST_REGENERADO: TestRegenerado = {
+                  test: response.body.test,
+                  correccion: response.body.correccion
+                }
+
+                this.stateService.testRegeneradoSelected.set(TEST_REGENERADO);
+                const TIPO_TEST = tipoTest.toLowerCase().includes('predefinido') ? TipoTest.TestPredefinido : TipoTest.TestAleatorio;
+                this.router.navigate(['test', TIPO_TEST]);
+
+              } else {
+                this.popUpTestNoEncontrado(response.body.message);
               }
-
-              this.stateService.testRegeneradoSelected.set(TEST_REGENERADO);
-              const TIPO_TEST = tipoTest.toLowerCase().includes('predefinido') ? TipoTest.TestPredefinido : TipoTest.TestAleatorio;
-              this.router.navigate(['test', TIPO_TEST]);
-
-            } else {
-              this.popUpTestNoEncontrado(response.body.message);
             }
+          },
+          error: (error) => {
+            this.stateService.loadingSpinner.set(false);
+            console.log('error: ', error.message);
+            this.router.navigate(['error']);
           }
-        },
-        error: (error) => {
-          this.stateService.loadingSpinner.set(false);
-          console.log('error: ', error.message);
-          this.router.navigate(['error']);
         }
-      }
-    )
+      )
+    } else {
+      this.stateService.loadingSpinner.set(false);
+      console.log('relogin regenerado devolvio false');
+    }
   }
 
   /*************************/

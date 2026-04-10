@@ -18,6 +18,7 @@ import { DataSetReproduccionTemaProfe } from '../../../data/model/dataSetReprodu
 import { DataTestPredefinidoTemaProfe } from '../../../data/model/dataTestPredefinidoTemaProfe';
 import { TipoTest } from '../../../data/model/tipoTestEnum';
 import { Servicio } from '../../../data/model/servicioEnum';
+import { ReloginService } from '../../../data/repository/relogin.service';
 
 @Component({
   selector: 'app-profe-container',
@@ -29,6 +30,7 @@ export class ProfeContainer implements OnInit, OnDestroy {
 
   private router = inject(Router);
   private stateService = inject(StateService);
+  private reloginService = inject(ReloginService);
   private getTemaProfeService = inject(GetTemaProfeService);
   private setReproduccionTemaProfeService = inject(SetReproduccionTemaProfeService);
   private dialog = inject(MatDialog);
@@ -84,47 +86,57 @@ export class ProfeContainer implements OnInit, OnDestroy {
   /*   LLAMADAS A LA API   */
   /*************************/
   // descarga un tema
-  getTemaProfe() {
+  async getTemaProfe() {
     this.stateService.loadingSpinner.set(true);
-    this.getTemaProfeService.getTemaProfe(this.profeDataGetTema).subscribe(
-      {
-        next: (response) => {
-          this.stateService.loadingSpinner.set(false);
 
-          if (response.status === 200) {
-            console.log(response.body);
+    // el flujo se detiene hasta que el servicio termine de hacer el relogin y retorne el resultado
+    let reloginOk = await this.reloginService.relogin();
+    console.log('Promise profeweb termino con: ', reloginOk);
 
-            if (response.body.id_curso) {
+    if (reloginOk) {
+      this.getTemaProfeService.getTemaProfe(this.profeDataGetTema).subscribe(
+        {
+          next: (response) => {
+            this.stateService.loadingSpinner.set(false);
 
-              this.profeTema = response.body;
-              this.stateService.profeDataGetTema.set(null);
+            if (response.status === 200) {
+              console.log(response.body);
 
-              this.profeTema?.elementos.map((elemento, index) => {
-                if (elemento.texto_epigrafe.length > 0) { this.listaDeEpigrafes.push([index, elemento.texto_epigrafe]) };
-                this.listaDeElementos.push([elemento.tipo, elemento.thumbnail]);
-              })
+              if (response.body.id_curso) {
 
-              this.elementosEstudiadosList = new Array(this.profeTema?.elementos.length).fill(false);
-              this.temaLoaded.set(true);
-              this.isPlaying.set(true);
-              this.loadSound(this.profeTema?.elementos[0]?.sonido ?? '');
+                this.profeTema = response.body;
+                this.stateService.profeDataGetTema.set(null);
 
-            } else {
-              console.log('response', response.body.message);
-              this.router.navigate(['concurrencia', response.body.message]);
+                this.profeTema?.elementos.map((elemento, index) => {
+                  if (elemento.texto_epigrafe.length > 0) { this.listaDeEpigrafes.push([index, elemento.texto_epigrafe]) };
+                  this.listaDeElementos.push([elemento.tipo, elemento.thumbnail]);
+                })
+
+                this.elementosEstudiadosList = new Array(this.profeTema?.elementos.length).fill(false);
+                this.temaLoaded.set(true);
+                this.isPlaying.set(true);
+                this.loadSound(this.profeTema?.elementos[0]?.sonido ?? '');
+
+              } else {
+                console.log('response', response.body.message);
+                this.router.navigate(['concurrencia', response.body.message]);
+              }
             }
+          },
+          error: (error) => {
+            this.stateService.loadingSpinner.set(false);
+            console.log('error: ', error.message);
+            this.router.navigate(['error']);
           }
-        },
-        error: (error) => {
-          this.stateService.loadingSpinner.set(false);
-          console.log('error: ', error.message);
-          this.router.navigate(['error']);
         }
-      }
-    )
+      )
+    } else {
+      this.stateService.loadingSpinner.set(false);
+      console.log('relogin profeweb devolvio false');
+    }
   }
 
-  // graba el tema como visto
+  // graba el tema como visto => sin relogin por servicio critico
   setReproduccionTemaProfe() {
     // this.stateService.loadingSpinner.set(true);
     const DATA: DataSetReproduccionTemaProfe = {

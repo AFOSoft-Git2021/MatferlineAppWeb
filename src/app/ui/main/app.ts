@@ -90,26 +90,12 @@ export class App {
     return isMobile;
   }
 
-  /* checkMobile(): boolean {
-    const ua = navigator.userAgent;
-
-    // 1. Detectar iPhone (excluyendo iPads que se hacen pasar por Mac)
-    const isIphone = /iPhone/i.test(ua);
-
-    // 2. Detectar Android solo si es telefono (contiene "Mobile")
-    const isAndroidPhone = /Android/i.test(ua) && /Mobile/i.test(ua);
-
-    this.stateService.deviceSystem.set(isIphone ? DeviceSystem.iOS : DeviceSystem.Android);
-    console.log('deviceSystem', this.stateService.deviceSystem());
-
-    return isIphone || isAndroidPhone;
-  } */
-
   setOrientation() {
     this.stateService.deviceOrientation.set((window.innerWidth < window.innerHeight) ? DeviceOrientation.Portrait : DeviceOrientation.Landscape);
     console.log(this.stateService.deviceOrientation());
   }
 
+  // checkea si ya hay un token para navegar directo a dashboard, sino va a loader para hacer el login
   checkInitialNavigationState(): boolean {
     return this.stateService.token ? true : false;
   }

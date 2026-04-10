@@ -9,6 +9,7 @@ import { ProfewebReproCabecera } from "../profeweb-repro-cabecera/profeweb-repro
 import { ProfewebReproTitulo } from "../profeweb-repro-titulo/profeweb-repro-titulo";
 import { ProfewebReproLista } from "../profeweb-repro-lista/profeweb-repro-lista";
 import { ProfewebReproCabeceraLista } from "../profeweb-repro-cabecera-lista/profeweb-repro-cabecera-lista";
+import { ReloginService } from '../../../../data/repository/relogin.service';
 
 @Component({
   selector: 'app-profeweb-lista-reproducciones',
@@ -20,6 +21,7 @@ export class ProfewebListaReproducciones implements OnInit {
 
   private router = inject(Router);
   private stateService = inject(StateService);
+  private reloginService = inject(ReloginService);
   private getReproduccionesTemaProfeService = inject(GetReproduccionesTemaProfeService);
 
   data = input.required<string>();
@@ -52,40 +54,50 @@ export class ProfewebListaReproducciones implements OnInit {
     this.getReproduccionesTemaProfe();
   }
 
-  getReproduccionesTemaProfe() {
-    const data: DataGetProfeReproduccion = {
-      cdicurso: this.cdicurso,
-      cdiprofe: this.cdiprofe,
-      cdicategoria: this.cdicategoria
-    }
+  async getReproduccionesTemaProfe() {
     this.stateService.loadingSpinner.set(true);
-    this.getReproduccionesTemaProfeService.getReproduccionesTemaProfe(data).subscribe(
-      {
-        next: (response) => {
-          this.stateService.loadingSpinner.set(false);
 
-          if (response.status === 200) {
-            console.log(response.body);
-            
+    // el flujo se detiene hasta que el servicio termine de hacer el relogin y retorne el resultado
+    let reloginOk = await this.reloginService.relogin();
+    console.log('Promise reproducciones termino con: ', reloginOk);
 
-            if (response.body.reproducciones) {
-
-              // procesa response.body para crear la lista de reproducciones
-              this.listaReproducciones = response.body.reproducciones;
-
-            } else {
-              console.log('response', response.body.message);
-              this.router.navigate(['concurrencia', response.body.message]);
-            }
-          }
-        },
-        error: (error) => {
-          this.stateService.loadingSpinner.set(false);
-          console.log('error: ', error.message);
-          this.router.navigate(['error']);
-        }
+    if (reloginOk) {
+      const data: DataGetProfeReproduccion = {
+        cdicurso: this.cdicurso,
+        cdiprofe: this.cdiprofe,
+        cdicategoria: this.cdicategoria
       }
-    )
+      this.getReproduccionesTemaProfeService.getReproduccionesTemaProfe(data).subscribe(
+        {
+          next: (response) => {
+            this.stateService.loadingSpinner.set(false);
+
+            if (response.status === 200) {
+              console.log(response.body);
+
+
+              if (response.body.reproducciones) {
+
+                // procesa response.body para crear la lista de reproducciones
+                this.listaReproducciones = response.body.reproducciones;
+
+              } else {
+                console.log('response', response.body.message);
+                this.router.navigate(['concurrencia', response.body.message]);
+              }
+            }
+          },
+          error: (error) => {
+            this.stateService.loadingSpinner.set(false);
+            console.log('error: ', error.message);
+            this.router.navigate(['error']);
+          }
+        }
+      )
+    } else {
+      this.stateService.loadingSpinner.set(false);
+      console.log('relogin reproducciones devolvio false');
+    }
   }
 
   setShowListaReproducciones(show: boolean) {
