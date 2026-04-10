@@ -20,7 +20,8 @@ export class ConcurrenceError {
 
   logout() {
     this.stateService.resetData();
-    this.router.navigate(['inicio']);
+    this.router.navigate(['login']);
+    // this.router.navigate(['inicio']);
   }
 
 }

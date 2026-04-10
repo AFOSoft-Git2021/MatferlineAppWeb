@@ -10,10 +10,11 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withInterceptors([appInterceptor])),
-    provideRouter(routes, withComponentInputBinding()), 
+    provideRouter(routes, withComponentInputBinding()),
     provideServiceWorker('ngsw-worker.js', {
-            enabled: !isDevMode(),
-            registrationStrategy: 'registerWhenStable:30000'
-          })
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerImmediately'
+      // registrationStrategy: 'registerWhenStable:30000'
+    })
   ]
 };
