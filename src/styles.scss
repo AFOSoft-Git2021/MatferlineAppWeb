@@ -87,7 +87,6 @@ $font-size-button: 15px;
 }
 
 html {
-  // height: 100%;
   @include mat.theme(
     (
       color: (
@@ -102,18 +101,19 @@ html {
 
 /* You can add global styles to this file, and also import other style files */
 
-html,
+html {
+  /* Evita que el viewport cambie de tamaño de forma extraña al rotar */
+  height: -webkit-fill-available;  
+}
+
 body {
   height: 100dvh;
-  background-color: $BlueDark;
   margin: 0;
   padding: 0;
   overflow: hidden;
   scroll-behavior: smooth;
-}
-
-body {
-  // background-color: $BlueDark;
+  
+  background-color: $BlueDark;
   background-image: url("../public/svg/fondo_oscuro.svg");
   background-repeat: no-repeat;
   background-position: center;
@@ -121,12 +121,6 @@ body {
   color: white;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: $font-size;
-  // overflow: hidden;
-  // overscroll-behavior-y: contain;
-
-  // Usar min-height para asegurar que cubra todo
-  // min-height: 100dvh;
-  min-height: -webkit-fill-available;
 
   // Fallback para navegadores que no soporten env()
   padding-top: constant(safe-area-inset-top);

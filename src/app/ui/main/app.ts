@@ -1,4 +1,4 @@
-import { Component, computed, HostListener, inject } from '@angular/core';
+import { Component, computed, DOCUMENT, HostListener, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { StateService } from '../../data/repository/state.service';
 import { SpinnerLoading } from "../shared/spinner-loading/spinner-loading";
@@ -21,6 +21,7 @@ export class App {
   private stateService = inject(StateService);
   private pwaService = inject(PwaService);
   public DeviceSystem = DeviceSystem;
+  private document = inject(DOCUMENT);
 
   loading = computed(() => this.stateService.loadingSpinner());
   deviceOrientation = computed(() => this.stateService.deviceOrientation());
@@ -47,6 +48,26 @@ export class App {
   @HostListener('window:resize')
   onResize() {
     this.setOrientation();
+  }
+
+  // detecta la rotacion del navegador
+  @HostListener('window:orientationchange')
+  onOrientationChange() {
+    // 1. Esperamos a que la animación de rotación termine
+    setTimeout(() => {
+      // 2. Truco de "sacudida" visual para WebKit
+      // Cambiamos el color de fondo un ápice y lo volvemos a poner
+      const originalBg = this.document.body.style.backgroundColor;
+      this.document.body.style.backgroundColor = '#0E6CF2'; // un tono casi igual
+
+      // 3. Forzamos un scroll mínimo que Safari detecta como actividad de UI
+      window.scrollTo(0, 1);
+
+      setTimeout(() => {
+        this.document.body.style.backgroundColor = originalBg;
+        window.scrollTo(0, 0);
+      }, 50);
+    }, 500); // El delay es importante en iOS
   }
 
   // detecta si se recupero la conexion
@@ -93,14 +114,6 @@ export class App {
   setOrientation() {
     this.stateService.deviceOrientation.set((window.innerWidth < window.innerHeight) ? DeviceOrientation.Portrait : DeviceOrientation.Landscape);
     console.log(this.stateService.deviceOrientation());
-
-    /* // Forzamos un pequeño ajuste de scroll o estilo para que Safari despierte
-    window.scrollTo(0, 0);
-
-    // A veces, aplicar un cambio mínimo al body ayuda a redibujar la UI
-    document.body.style.display = 'none';
-    document.body.offsetHeight; // trigger reflow
-    document.body.style.display = 'block'; */
   }
 
   // checkea si ya hay un token para navegar directo a dashboard, sino va a loader para hacer el login
