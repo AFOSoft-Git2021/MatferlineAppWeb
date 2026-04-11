@@ -93,6 +93,14 @@ export class App {
   setOrientation() {
     this.stateService.deviceOrientation.set((window.innerWidth < window.innerHeight) ? DeviceOrientation.Portrait : DeviceOrientation.Landscape);
     console.log(this.stateService.deviceOrientation());
+
+    // Forzamos un pequeño ajuste de scroll o estilo para que Safari despierte
+    window.scrollTo(0, 0);
+
+    // A veces, aplicar un cambio mínimo al body ayuda a redibujar la UI
+    /* document.body.style.display = 'none';
+    document.body.offsetHeight; // trigger reflow
+    document.body.style.display = 'block'; */
   }
 
   // checkea si ya hay un token para navegar directo a dashboard, sino va a loader para hacer el login
