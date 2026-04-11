@@ -1,4 +1,4 @@
-import { Component, computed, DOCUMENT, HostListener, inject } from '@angular/core';
+import { Component, computed, HostListener, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { StateService } from '../../data/repository/state.service';
 import { SpinnerLoading } from "../shared/spinner-loading/spinner-loading";
@@ -21,7 +21,6 @@ export class App {
   private stateService = inject(StateService);
   private pwaService = inject(PwaService);
   public DeviceSystem = DeviceSystem;
-  private document = inject(DOCUMENT);
 
   loading = computed(() => this.stateService.loadingSpinner());
   deviceOrientation = computed(() => this.stateService.deviceOrientation());
@@ -38,13 +37,6 @@ export class App {
       } else {
         this.stateService.pwaInstallationSuccess.set(false);
       }
-
-      // Escuchamos el cambio a portrait específicamente
-      window.matchMedia('(orientation: portrait)').addEventListener('change', (e) => {
-        if (e.matches) {
-          this.forceStatusBarRefresh();
-        }
-      });
 
     } else {
       location.href = 'https://matferline.com';
@@ -111,22 +103,6 @@ export class App {
   // instala la PWA solo si es Android
   installPWA() {
     this.pwaService.installPwa();
-  }
-
-  forceStatusBarRefresh() {
-    const meta = this.document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
-    if (meta) {
-      // El "truco definitivo": alternar el modo y forzar un redibujado de la altura
-      meta.setAttribute('content', 'black-translucent');
-
-      this.document.body.style.display = 'none';
-      this.document.body.offsetHeight; // Force reflow
-      this.document.body.style.display = 'block';
-
-      setTimeout(() => {
-        meta.setAttribute('content', 'default');
-      }, 100);
-    }
   }
 
 }
