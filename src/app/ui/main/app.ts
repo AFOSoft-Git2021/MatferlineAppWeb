@@ -39,6 +39,13 @@ export class App {
         this.stateService.pwaInstallationSuccess.set(false);
       }
 
+      // Escuchamos el cambio a portrait específicamente
+      window.matchMedia('(orientation: portrait)').addEventListener('change', (e) => {
+        if (e.matches) {
+          this.forceStatusBarRefresh();
+        }
+      });
+
     } else {
       location.href = 'https://matferline.com';
     }
@@ -48,26 +55,6 @@ export class App {
   @HostListener('window:resize')
   onResize() {
     this.setOrientation();
-  }
-
-  // detecta la rotacion del navegador
-  @HostListener('window:orientationchange')
-  onOrientationChange() {
-    console.log('rotating');
-
-    // Aplicamos un ligero cambio de opacidad al contenedor principal
-    // Esto obliga al motor gráfico (GPU) de iOS a recomponer todas las capas
-    document.body.style.opacity = '0.99';
-
-    setTimeout(() => {
-      // Restauramos y forzamos un reflow
-      document.body.style.opacity = '1';
-      window.scrollTo(0, 0);
-
-      // Si usas un scroll interno, asegúrate de que se mueva un píxel
-      const container = document.querySelector('.scroll-container');
-      if (container) container.scrollTop = 1;
-    }, 400);
   }
 
   // detecta si se recupero la conexion
@@ -124,6 +111,22 @@ export class App {
   // instala la PWA solo si es Android
   installPWA() {
     this.pwaService.installPwa();
+  }
+
+  forceStatusBarRefresh() {
+    const meta = this.document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+    if (meta) {
+      // El "truco definitivo": alternar el modo y forzar un redibujado de la altura
+      meta.setAttribute('content', 'black-translucent');
+
+      this.document.body.style.display = 'none';
+      this.document.body.offsetHeight; // Force reflow
+      this.document.body.style.display = 'block';
+
+      setTimeout(() => {
+        meta.setAttribute('content', 'default');
+      }, 100);
+    }
   }
 
 }

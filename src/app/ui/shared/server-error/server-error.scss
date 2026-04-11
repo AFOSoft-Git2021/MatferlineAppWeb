@@ -1,7 +1,7 @@
 @import "../../../../styles.scss";
 
 #server_error {
-    background-color: $BlueLight;
+    background-color: $BlueDark;
     background-image: url("../../../../../public/svg/fondo_oscuro.svg");
     background-repeat: no-repeat;
     background-position: center;
@@ -14,7 +14,7 @@
     > div:not(.info) {
         text-align: center;
         > img {
-            width: 86%;
+            width: 80%;
 
             &:first-child {
                 width: 84%;
