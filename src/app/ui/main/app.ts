@@ -53,21 +53,21 @@ export class App {
   // detecta la rotacion del navegador
   @HostListener('window:orientationchange')
   onOrientationChange() {
-    // 1. Esperamos a que la animación de rotación termine
+    console.log('rotating');
+
+    // Aplicamos un ligero cambio de opacidad al contenedor principal
+    // Esto obliga al motor gráfico (GPU) de iOS a recomponer todas las capas
+    document.body.style.opacity = '0.99';
+
     setTimeout(() => {
-      // 2. Truco de "sacudida" visual para WebKit
-      // Cambiamos el color de fondo un ápice y lo volvemos a poner
-      const originalBg = this.document.body.style.backgroundColor;
-      this.document.body.style.backgroundColor = '#0E6CF2'; // un tono casi igual
+      // Restauramos y forzamos un reflow
+      document.body.style.opacity = '1';
+      window.scrollTo(0, 0);
 
-      // 3. Forzamos un scroll mínimo que Safari detecta como actividad de UI
-      window.scrollTo(0, 1);
-
-      setTimeout(() => {
-        this.document.body.style.backgroundColor = originalBg;
-        window.scrollTo(0, 0);
-      }, 50);
-    }, 500); // El delay es importante en iOS
+      // Si usas un scroll interno, asegúrate de que se mueva un píxel
+      const container = document.querySelector('.scroll-container');
+      if (container) container.scrollTop = 1;
+    }, 400);
   }
 
   // detecta si se recupero la conexion
