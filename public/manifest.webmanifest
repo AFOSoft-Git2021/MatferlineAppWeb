@@ -4,7 +4,7 @@
   "description": "Aplicación Matferline para alumnos",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#0E6CF3",
+  "theme_color": "#FFFFFF",
   "background_color": "#0E6CF3",
   "scope": "./",
   "start_url": "./",
