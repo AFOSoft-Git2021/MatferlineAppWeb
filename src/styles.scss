@@ -106,15 +106,16 @@ html,
 body {
   // height: 100vh;
   height: 100dvh;
+  background-color: $BlueDark;
   margin: 0;
   padding: 0;
   overflow: hidden;
   scroll-behavior: smooth;
-  height: -webkit-fill-available;
+  // height: -webkit-fill-available;
 }
 
 body {
-  background-color: $BlueDark;
+  // background-color: $BlueDark;
   background-image: url("../public/svg/fondo_oscuro.svg");
   background-repeat: no-repeat;
   background-position: center;
@@ -126,8 +127,8 @@ body {
   // overscroll-behavior-y: contain;
 
   // Usar min-height para asegurar que cubra todo
-  min-height: 100dvh;
-  // min-height: -webkit-fill-available;
+  // min-height: 100dvh;
+  min-height: -webkit-fill-available;
 
   // Compensar la barra de estado de iOS
   padding-top: env(safe-area-inset-top);
