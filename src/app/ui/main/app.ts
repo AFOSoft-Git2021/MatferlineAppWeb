@@ -98,9 +98,9 @@ export class App {
     window.scrollTo(0, 0);
 
     // A veces, aplicar un cambio mínimo al body ayuda a redibujar la UI
-    /* document.body.style.display = 'none';
+    document.body.style.display = 'none';
     document.body.offsetHeight; // trigger reflow
-    document.body.style.display = 'block'; */
+    document.body.style.display = 'block';
   }
 
   // checkea si ya hay un token para navegar directo a dashboard, sino va a loader para hacer el login
