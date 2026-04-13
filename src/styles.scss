@@ -103,7 +103,8 @@ html {
 
 html {
   height: -webkit-fill-available; /* Safari iOS */
-  height: 100%; /* fallback */
+  height: 100dvh; /* Chrome Android y modernos */
+  height: 100vh; /* fallback */
 }
 
 body {
