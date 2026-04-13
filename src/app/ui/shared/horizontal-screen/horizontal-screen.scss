@@ -4,9 +4,12 @@
     position: fixed;
     left: 0;
     top: 0;
-    width: 100dvw;
-    height: 100dvh;
+    width: 100%;
+    height: -webkit-fill-available;
+    // width: 100dvw;
+    // height: 100dvh;
     z-index: 999999;
+    // border: 2px solid yellow;
 
     > div {
         position: absolute;

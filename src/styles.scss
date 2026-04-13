@@ -102,17 +102,18 @@ html {
 /* You can add global styles to this file, and also import other style files */
 
 html {
-  /* Evita que el viewport cambie de tamaño de forma extraña al rotar */
-  height: -webkit-fill-available;  
+  height: -webkit-fill-available; /* Safari iOS */
+  height: 100%; /* fallback */
 }
 
 body {
-  height: 100dvh;
+  min-height: -webkit-fill-available; /* Safari iOS */
+  min-height: 100dvh; /* Chrome Android y modernos */
+  min-height: 100vh; /* fallback */
   margin: 0;
-  padding: 0;
   overflow: hidden;
   scroll-behavior: smooth;
-  
+
   background-color: $BlueDark;
   background-image: url("../public/svg/fondo_oscuro.svg");
   background-repeat: no-repeat;
