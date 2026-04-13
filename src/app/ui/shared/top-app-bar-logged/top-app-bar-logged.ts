@@ -26,7 +26,8 @@ export class TopAppBarLogged implements OnInit {
 
   ngOnInit() {
     // this.fotoAlumno.set('svg/icon_avatar.svg');
-    this.fotoAlumno.set(this.alumno()?.foto ?? 'svg/icon_avatar.svg');
+    const foto = this.alumno()?.foto;
+    this.fotoAlumno.set(foto && foto.length > 0 ? foto : 'svg/icon_avatar.svg');
   }
 
   // abre popup de confirm
