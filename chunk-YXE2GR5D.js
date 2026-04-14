@@ -1,1 +1,0 @@
-import{c as i}from"./chunk-HLKTYS3P.js";import{a as n}from"./chunk-24RG3ZF2.js";import{S as o,X as e}from"./chunk-E2DVP62R.js";var p=class t{http=e(i);url=n.BASE_URL;login(r){return this.http.post(this.url+"login",r,{observe:"response"})}static \u0275fac=function(s){return new(s||t)};static \u0275prov=o({token:t,factory:t.\u0275fac,providedIn:"root"})};export{p as a};

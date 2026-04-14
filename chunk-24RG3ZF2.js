@@ -1,1 +1,0 @@
-var t={production:!0,manifest_scope:"/web_pwapp/",manifest_start_url:"/web_pwapp/index.html",BASE_URL:"https://matferline.com/api_matferlineapp/api/api/",BASE_STORAGE:"https://matferline.com/panel/aes/adjuntos/thumb1/",BASE_STORAGE_PREGUNTAS:"https://matferline.com/panel/preguntas/adjuntos/thumb1/"};export{t as a};
