@@ -2,10 +2,14 @@
 
     <ul>
         @for(servicio of serviciosDisponibles(); track $index) {
-        <li (click)="(servicioActual() !== $index) && gotoServicio(servicio)" [ngClass]="(servicioActual() === $index) ? 'servicio_activo' : ''">
+        <li (click)="(servicioSeleccionado() !== servicio) && gotoServicio(servicio)" [ngClass]="(servicioActual() === $index) ? 'servicio_activo' : ''">
+            <img [src]="(servicioSeleccionado() === servicio) ? ('svg/' + listaIconos[$index]) : ('svg/off_' + listaIconos[$index])" alt="icon">
+            <span [ngStyle]="{color: (servicioSeleccionado() === servicio) ? '#a90094' : '#707070'}">{{servicio}}</span>
+        </li>
+        <!-- <li (click)="(servicioActual() !== $index) && gotoServicio(servicio)" [ngClass]="(servicioActual() === $index) ? 'servicio_activo' : ''">
             <img [src]="(servicioActual() === $index) ? ('svg/' + listaIconos[$index]) : ('svg/off_' + listaIconos[$index])" alt="icon">
             <span [ngStyle]="{color: (servicioActual() === $index) ? '#a90094' : '#707070'}">{{servicio}}</span>
-        </li>
+        </li> -->
         }
     </ul>
 

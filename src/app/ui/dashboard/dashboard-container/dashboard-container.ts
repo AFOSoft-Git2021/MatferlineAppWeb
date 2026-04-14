@@ -30,10 +30,12 @@ export class DashboardContainer implements OnInit {
         this.listaServicios.push(Servicio.TestAleatorios);
       }
       if (this.alumno.profeweb && this.alumno.profeweb.length > 0) {
-        this.listaServicios.push(Servicio.Profeweb);
+        this.listaServicios.push(Servicio.Profeweb);        
       }
     }
     console.log(this.listaServicios);
+    this.stateService.serviceSelected.set(this.listaServicios[0]);
+    this.navigateService(this.stateService.serviceSelected());
   }
 
   navigateService(servicio: Servicio) {
@@ -52,6 +54,7 @@ export class DashboardContainer implements OnInit {
         break;
     }
 
+    console.log(route);    
     this.router.navigate([`dashboard/${route}`]);
   }
 

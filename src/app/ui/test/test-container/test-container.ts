@@ -221,7 +221,8 @@ export class TestContainer implements OnInit, OnDestroy {
 
               } else {
                 console.log('response', response.body.message);
-                this.router.navigate(['concurrencia', response.body.message]);
+                this.popUpNavigateBack(response.body.message);
+                // this.router.navigate(['concurrencia', response.body.message]);
               }
             }
           },
@@ -270,7 +271,8 @@ export class TestContainer implements OnInit, OnDestroy {
 
               } else {
                 console.log('response', response.body.message);
-                this.router.navigate(['concurrencia', response.body.message]);
+                this.popUpNavigateBack(response.body.message);
+                // this.router.navigate(['concurrencia', response.body.message]);
               }
             }
           },
@@ -625,16 +627,16 @@ export class TestContainer implements OnInit, OnDestroy {
     this.router.navigate([`/dashboard/${ROUTE}`]);
   }
 
-  popUpNavigateBack() {
+  popUpNavigateBack(message = '') {
     const dialogRef = this.dialog.open(PopupConfirmComponent, {
       disableClose: true,
       width: '80%',
       maxHeight: '80vh',
       data: {
-        titulo: 'Salir del test',
-        mensaje: 'Vas a salir del test. No se guardarán los resultados. ¿Deseas continuar?',
+        titulo: (message.length > 0) ? 'Oops ...' :'Salir del test',
+        mensaje: (message.length > 0) ? message : 'Vas a salir del test. No se guardarán los resultados. ¿Deseas continuar?',
         modo: 1,
-        tipo: 1
+        tipo: (message.length > 0) ? 0 : 1
       }
     });
 

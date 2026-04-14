@@ -32,13 +32,16 @@ export class DashboardBottomNavigation implements OnInit {
         indexServicio = 2;
         break;
     }
+    console.log('indexServicio', indexServicio);
     return indexServicio;
   })
 
   listaIconos: string[] = [];
 
   ngOnInit() {
-    this.serviciosDisponibles().map((_, index) => {
+    console.log(this.servicioSeleccionado());
+
+    /* this.serviciosDisponibles().map((_, index) => {
       switch (index) {
         case 0:
           this.listaIconos.push('icon_predefinidos.svg');
@@ -52,7 +55,23 @@ export class DashboardBottomNavigation implements OnInit {
           this.listaIconos.push('icon_profeweb.svg');
           break;
       }
+    }) */
+    this.serviciosDisponibles().map((servicio) => {
+      switch (servicio) {
+        case Servicio.TestPredefinidos:
+          this.listaIconos.push('icon_predefinidos.svg');
+          break;
+
+        case Servicio.TestAleatorios:
+          this.listaIconos.push('icon_aleatorios.svg');
+          break;
+
+        case Servicio.Profeweb:
+          this.listaIconos.push('icon_profeweb.svg');
+          break;
+      }
     })
+    console.log('listaIconos', this.listaIconos);
   }
 
   gotoServicio(servicio: Servicio) {

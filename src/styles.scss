@@ -279,13 +279,14 @@ body {
   border-top-right-radius: 32px;
 }
 
+
 /******************************/
 /* MAQUETA TABLETS HORIZONTAL */
 /******************************/
 
 @media (min-width: 600px) and (max-width: 900px) and (orientation: portrait) {
   body {
-    max-width: 80dvw; /* viewport dinámico, evita bugs de Safari/Chrome */
+    max-width: 80dvw;
     font-size: 1.1rem;
     margin: 0 auto;
 
