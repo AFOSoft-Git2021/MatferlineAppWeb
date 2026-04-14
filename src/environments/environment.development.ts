@@ -1,8 +1,8 @@
 export const environment = {
     production: false,
 
-    manifest_scope: './',
-    manifest_start_url: './',
+    /* manifest_scope: './',
+    manifest_start_url: './', */
 
     // Constantes relacionadas con la API
     BASE_URL: 'https://matferline.com/api_matferlineapp/api/api/',

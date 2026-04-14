@@ -38,6 +38,7 @@ import { Servicio } from '../../../data/model/servicioEnum';
 import { TestRegenerado } from '../../../data/model/testRegenerado';
 import { DataTestPredefinidoTemaProfe } from '../../../data/model/dataTestPredefinidoTemaProfe';
 import { ReloginService } from '../../../data/repository/relogin.service';
+import { DeviceSystem } from '../../../data/model/deviceSystem';
 
 @Component({
   selector: 'app-test-container',
@@ -304,7 +305,8 @@ export class TestContainer implements OnInit, OnDestroy {
       idioma: this.test.idioma,
       ayuda: this.test.ayuda,
       autocorreccion: this.test.autocorreccion,
-      preguntas: this.test.preguntas
+      preguntas: this.test.preguntas,
+      pwa: this.stateService.deviceSystem() === DeviceSystem.iOS ? 'pwi' : 'pwa'
     }
 
     this.stateService.loadingSpinner.set(true);
@@ -355,7 +357,8 @@ export class TestContainer implements OnInit, OnDestroy {
       idioma: this.test.idioma,
       ayuda: this.test.ayuda,
       autocorreccion: this.test.autocorreccion,
-      preguntas: this.test.preguntas
+      preguntas: this.test.preguntas,
+      pwa: this.stateService.deviceSystem() === DeviceSystem.iOS ? 'pwi' : 'pwa'  
     }
 
     this.stateService.loadingSpinner.set(true);

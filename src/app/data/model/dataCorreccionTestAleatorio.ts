@@ -11,4 +11,5 @@ export interface DataCorreccionTestAleatorio {
     ayuda: number;
     autocorreccion: number;
     preguntas: Array<TestPregunta>;
+    pwa: string;
 }

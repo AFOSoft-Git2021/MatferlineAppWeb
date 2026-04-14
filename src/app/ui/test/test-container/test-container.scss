@@ -98,3 +98,15 @@
         // padding-bottom: env(safe-area-inset-bottom);
     }
 }
+
+
+/******************************/
+/* MAQUETA TABLETS HORIZONTAL */
+/******************************/
+
+@media (min-width: 600px) and (max-width: 900px) and (orientation: portrait) {
+    #test_container_section {
+        width: 100%;
+        height: calc(98dvh - 60px);;
+    }
+}

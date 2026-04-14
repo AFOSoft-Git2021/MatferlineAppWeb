@@ -69,3 +69,21 @@
         }
     }
 }
+
+
+/******************************/
+/* MAQUETA TABLETS HORIZONTAL */
+/******************************/
+
+@media (min-width: 600px) and (max-width: 900px) and (orientation: portrait) {
+    #section_profe_elemento_activo_visor {
+        height: auto;
+    }
+
+    #section_profe_elemento_activo_visor_fullscreen {
+         > div {
+            justify-content: space-evenly;
+            gap: 2rem;
+         }
+    }
+}

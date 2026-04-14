@@ -12,4 +12,5 @@ export interface DataCorreccionTestPredefinido {
     ayuda: number;
     autocorreccion: number;
     preguntas: Array<TestPregunta>;
+    pwa: string;
 }

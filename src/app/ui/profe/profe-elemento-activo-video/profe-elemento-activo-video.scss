@@ -62,3 +62,20 @@ button {
     background-color: #4681c0;
     color: white;
 }
+
+/******************************/
+/* MAQUETA TABLETS HORIZONTAL */
+/******************************/
+
+@media (min-width: 600px) and (max-width: 900px) and (orientation: portrait) {
+    #section_profe_elemento_activo_video {
+        height: auto;
+        padding: 4px;
+    }
+
+    .is-fullscreen {
+        .video-wrapper {
+            height: 76%;
+        }
+    }
+}

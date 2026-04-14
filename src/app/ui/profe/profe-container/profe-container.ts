@@ -19,6 +19,7 @@ import { DataTestPredefinidoTemaProfe } from '../../../data/model/dataTestPredef
 import { TipoTest } from '../../../data/model/tipoTestEnum';
 import { Servicio } from '../../../data/model/servicioEnum';
 import { ReloginService } from '../../../data/repository/relogin.service';
+import { DeviceSystem } from '../../../data/model/deviceSystem';
 
 @Component({
   selector: 'app-profe-container',
@@ -142,7 +143,8 @@ export class ProfeContainer implements OnInit, OnDestroy {
     const DATA: DataSetReproduccionTemaProfe = {
       cdicurso: this.profeDataGetTema.cdicurso,
       cdicategoria: this.profeDataGetTema.cdicategoria,
-      cditema: this.profeDataGetTema.cditema
+      cditema: this.profeDataGetTema.cditema,
+      pwa: this.stateService.deviceSystem() === DeviceSystem.iOS ? 'pwi' : 'pwa'
     }
 
     this.setReproduccionTemaProfeService.setReproduccionTemaProfe(DATA).subscribe(

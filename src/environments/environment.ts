@@ -1,8 +1,8 @@
 export const environment = {
     production: true,
 
-    manifest_scope: '/web_pwapp/',
-    manifest_start_url: '/web_pwapp/index.html',
+    /* manifest_scope: '/web_app/',
+    manifest_start_url: '/web_app/index.html', */
 
     // Constantes relacionadas con la API
     BASE_URL: 'https://matferline.com/api_matferlineapp/api/api/',

@@ -112,3 +112,20 @@
         }
     }
 }
+
+/******************************/
+/* MAQUETA TABLETS HORIZONTAL */
+/******************************/
+
+@media (min-width: 600px) and (max-width: 900px) and (orientation: portrait) {
+    #section_profe_lista_elementos {
+        padding: 2rem 3.6rem;
+
+        main {
+            > div {
+                grid-template-columns: repeat(3, 1fr);
+                gap: .8rem; /* separación entre filas y columnas */
+            }
+        }
+    }
+}
