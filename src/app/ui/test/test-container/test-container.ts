@@ -624,6 +624,7 @@ export class TestContainer implements OnInit, OnDestroy {
     // TODO: reset del crono y otras variables ???
     const SERVICIO = this.stateService.serviceSelected();
     const ROUTE = SERVICIO === Servicio.TestPredefinidos ? 'predefinidos' : 'aleatorios';
+    console.log('ROUTE', ROUTE);
     this.router.navigate([`/dashboard/${ROUTE}`]);
   }
 

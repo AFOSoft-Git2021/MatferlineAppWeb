@@ -2,6 +2,7 @@
 
 #test_container_section {
     animation: fade 0.5s ease;
+    background-color: $BlueDark;
     width: 100dvw;
     height: calc(100dvh - 74px);
     display: flex;
