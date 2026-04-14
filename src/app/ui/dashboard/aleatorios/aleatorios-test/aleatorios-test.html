@@ -19,7 +19,7 @@
     <div class="lista_test">
 
         <div class="botones_test">
-            @if (permiso?.test_examen?.ayuda) {
+            @if (permiso?.test_examen?.ayuda != null) {
                 <!-- boton examen -->
                 <app-boton-test-aleatorio
                     [tipo]="0"
