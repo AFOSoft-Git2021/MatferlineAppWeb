@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { Component, inject, input, linkedSignal, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { StateService } from '../../../../data/repository/state.service';
@@ -44,7 +44,8 @@ export class PredefinidosTest implements OnInit {
   listaCategorias: PredefinidoPermisoCategoria[] = [];
   showState = signal<boolean[]>([]);
   autocorreccionState = signal<number[]>([]);
-  idiomaSelected = signal(0);
+  idiomaSelected = linkedSignal(() => { return this.stateService.alumnoLogeado()?.idioma.defecto ?? 0 });
+  // idiomaSelected = signal(0);
 
   nombreCurso = '';
   idCurso = '';

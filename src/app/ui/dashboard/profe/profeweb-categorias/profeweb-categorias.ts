@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, numberAttribute, signal } from '@angular/core';
+import { Component, inject, input, OnInit, numberAttribute, signal, linkedSignal } from '@angular/core';
 import { DashboardAppBar } from "../../dashboard-app-bar/dashboard-app-bar";
 import { Router } from '@angular/router';
 import { StateService } from '../../../../data/repository/state.service';
@@ -32,7 +32,8 @@ export class ProfewebCategorias implements OnInit {
   profeweb: ProfewebProfe | null = null;
   showState = signal<boolean[]>([]);
   autocorreccionState = signal<number[]>([]);
-  idiomaSelected = signal(0);
+  idiomaSelected = linkedSignal(() => { return this.stateService.alumnoLogeado()?.idioma.defecto ?? 0 });
+  // idiomaSelected = signal(0);
 
   ngOnInit() {
     const PROFEWEB_ARRAY = this.stateService.alumnoLogeado()?.profeweb;

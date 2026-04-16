@@ -402,8 +402,8 @@ export class TestContainer implements OnInit, OnDestroy {
   /*****************************/
   startTest() {
     this.hideInfoModoTest.set('1');
-    // this.chronoTime.set(this.test.preguntas.length * 1);
-    this.chronoTime.set(this.test.preguntas.length * 60); // TODO: reponer para distro
+    this.chronoTime.set(this.test.preguntas.length * 1);
+    // this.chronoTime.set(this.test.preguntas.length * 60); // TODO: reponer para distro
     this.chronoCounter.set(this.chronoTime());
     console.log('chronoTime', this.chronoTime());
 

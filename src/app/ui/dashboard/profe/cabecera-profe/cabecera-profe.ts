@@ -22,9 +22,7 @@ export class CabeceraProfe implements OnInit {
   nombreProfeweb = signal('');
   nombreProfe = signal('');
 
-  idioma = computed(() => {
-    return this.stateService.alumnoLogeado()?.idioma
-  });
+  idioma = computed(() => { return this.stateService.alumnoLogeado()?.idioma });
   idiomaSelected = signal(0);
   idiomaExists = computed(() => {
     const nombre = this.idioma()?.nombre;

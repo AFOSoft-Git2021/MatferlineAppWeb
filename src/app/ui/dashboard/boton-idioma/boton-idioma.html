@@ -1,6 +1,6 @@
 <section id="section_boton_idioma">
 
-    <div class="idioma_selected" [ngStyle]="{background: (idiomaSelected() === 0) ? '#70BF53' : '#CCC'}">
+    <div (click)="setIdiomaSelected(0)" class="idioma_selected" [ngStyle]="{background: (idiomaSelected() === 0) ? '#70BF53' : '#CCC'}">
         @if (idiomaSelected() === 0) { <span>&check;</span> }
     </div>
 
@@ -9,7 +9,7 @@
         <img (click)="setIdiomaSelected(1)" #bandera2 (load)="bandera2.style.opacity = '1'" [src]="bandera()" alt="bandera">
     </div>
 
-    <div class="idioma_selected" [ngStyle]="{background: (idiomaSelected() === 1) ? '#70BF53' : '#CCC'}">
+    <div (click)="setIdiomaSelected(1)" class="idioma_selected" [ngStyle]="{background: (idiomaSelected() === 1) ? '#70BF53' : '#CCC'}">
         @if (idiomaSelected() === 1) { <span>&check;</span> }
     </div>
 

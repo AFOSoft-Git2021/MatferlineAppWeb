@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, input, linkedSignal, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { BotonExamenEstudio } from '../../boton-examen-estudio/boton-examen-estudio';
@@ -45,7 +45,8 @@ export class AleatoriosTest implements OnInit {
   cdipermiso = input.required<string>();
   showState = signal(true);
   autocorreccionState = signal(0);
-  idiomaSelected = signal(0);
+  idiomaSelected = linkedSignal(() => { return this.stateService.alumnoLogeado()?.idioma.defecto ?? 0 });
+  // idiomaSelected = signal(0);
 
   nombreCurso = '';
   idCurso = '';
