@@ -2,7 +2,7 @@
 
 #test_container_section {
     animation: fade 0.5s ease;
-    background-color: $BlueDark;
+    // background-color: $BlueDark;
     width: 100dvw;
     height: calc(100dvh - 74px);
     display: flex;
@@ -100,14 +100,14 @@
     }
 }
 
-
 /******************************/
 /* MAQUETA TABLETS HORIZONTAL */
 /******************************/
 
-@media (min-width: 600px) and (max-width: 900px) and (orientation: portrait) {
+// @media (min-width: 600px) and (max-width: 900px) and (orientation: portrait) {
+@media only screen and (min-width: 600px) and (orientation: portrait) {
     #test_container_section {
         width: 100%;
-        height: calc(98dvh - 60px);;
+        height: calc(98dvh - 60px);
     }
 }

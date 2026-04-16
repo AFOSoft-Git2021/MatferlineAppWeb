@@ -8,12 +8,12 @@ import { ItemListaTest } from "../item-lista-profe-tema/item-lista-profe-tema";
 import { ItemCategoriaProfe } from "../item-categoria-profe/item-categoria-profe";
 import { BotonExamenEstudio } from "../../boton-examen-estudio/boton-examen-estudio";
 import { ProfeDataGetTema } from '../../../../data/model/profeDataGetTema';
-import { Profeweb } from '../../../../data/model/profeweb';
 import { ProfewebProfeCategoriaTema } from '../../../../data/model/profewebProfeCategoriaTema';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-profeweb-categorias',
-  imports: [DashboardAppBar, CabeceraProfe, ItemListaTest, ItemCategoriaProfe, BotonExamenEstudio],
+  imports: [CommonModule, DashboardAppBar, CabeceraProfe, ItemListaTest, ItemCategoriaProfe, BotonExamenEstudio],
   templateUrl: './profeweb-categorias.html',
   styleUrl: './profeweb-categorias.scss',
 })
@@ -84,7 +84,7 @@ export class ProfewebCategorias implements OnInit {
       cditest: tema.cditest.toString(),
       traducir: this.idiomaSelected().toString(),
       idioma: (this.idiomaSelected() === 1 ? this.stateService.alumnoLogeado()?.idioma?.code : '') ?? '',
-      ayuda: '1',
+      ayuda: this.profeweb?.categorias[indexCategoria].ayuda.toString() ?? '0',
       autocorreccion: this.autocorreccionState()[indexCategoria].toString() ?? '0'
     }
     this.stateService.profeDataGetTema.set(profeDataGetTema);

@@ -18,5 +18,4 @@ export class TestInfoResult {
   numeroPregunta = input.required<number>();
   resultado = input.required<DataResponseCorregirTestDatosCorreccion | null>();
 
-
 }

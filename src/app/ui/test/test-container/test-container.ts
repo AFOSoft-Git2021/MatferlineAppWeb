@@ -87,7 +87,9 @@ export class TestContainer implements OnInit, OnDestroy {
   isTestPredefinidoTemaProfe = computed(() => { return this.stateService.testPredefinidoTemaProfeSelected() !== null });
   showInfoTestRegenerado = signal(false);
 
-  alumno: (Alumno | null) = null;
+  // alumno: (Alumno | null) = null;
+  alumno = computed(() => { return this.stateService.alumnoLogeado() });
+
   test: any;
   dataTest: any;
   BASE_STORAGE_PREGUNTAS = environment.BASE_STORAGE_PREGUNTAS
@@ -128,7 +130,7 @@ export class TestContainer implements OnInit, OnDestroy {
 
   loadTest() {
     console.log(this.tipo());
-    this.alumno = this.stateService.alumnoLogeado();
+    // this.alumno = this.stateService.alumnoLogeado();
 
     if (this.tipo() === TipoTest.TestPredefinido) {
 
@@ -360,7 +362,7 @@ export class TestContainer implements OnInit, OnDestroy {
       ayuda: this.test.ayuda,
       autocorreccion: this.test.autocorreccion,
       preguntas: this.test.preguntas,
-      pwa: this.stateService.deviceSystem() === DeviceSystem.iOS ? 'pwi' : 'pwa'  
+      pwa: this.stateService.deviceSystem() === DeviceSystem.iOS ? 'pwi' : 'pwa'
     }
 
     this.stateService.loadingSpinner.set(true);
@@ -400,7 +402,8 @@ export class TestContainer implements OnInit, OnDestroy {
   /*****************************/
   startTest() {
     this.hideInfoModoTest.set('1');
-    this.chronoTime.set(this.test.preguntas.length * 60);
+    // this.chronoTime.set(this.test.preguntas.length * 1);
+    this.chronoTime.set(this.test.preguntas.length * 60); // TODO: reponer para distro
     this.chronoCounter.set(this.chronoTime());
     console.log('chronoTime', this.chronoTime());
 
@@ -561,7 +564,12 @@ export class TestContainer implements OnInit, OnDestroy {
             if (this.checkTestCompleto()) {
               this.popUpCorregirTest();
             } else {
-              this.showInfoSnackbar('Tienes que completar el test antes de enviarlo a corrección');
+
+              if (this.test.id_curso === 'CAP') {
+                this.popUpCorregirTest(true);
+              } else {
+                this.showInfoSnackbar('Tienes que completar el test antes de enviarlo a corrección');
+              }
             }
           }
 
@@ -634,7 +642,7 @@ export class TestContainer implements OnInit, OnDestroy {
       width: '80%',
       maxHeight: '80vh',
       data: {
-        titulo: (message.length > 0) ? 'Oops ...' :'Salir del test',
+        titulo: (message.length > 0) ? 'Oops ...' : 'Salir del test',
         mensaje: (message.length > 0) ? message : 'Vas a salir del test. No se guardarán los resultados. ¿Deseas continuar?',
         modo: 1,
         tipo: (message.length > 0) ? 0 : 1
@@ -671,14 +679,23 @@ export class TestContainer implements OnInit, OnDestroy {
   }
 
   // Alert corregir el test
-  popUpCorregirTest() {
+  popUpCorregirTest(cap = false) {
+
+    const MESSAGE = !cap ? 'Vamos a corregir tu test. ¿Deseas continuar?' : `
+    Vas a corregir el test aunque aún no lo has completado. Recuerda que:<br>
+    <br>- Las preguntas acertadas suman 1 punto
+    <br>- Las preguntas falladas restan 0,5 puntos
+    <br>- Las preguntas no contestadas suman 0 puntos
+    <br><br>Pulsa <strong>Continuar</strong> para corregir o <strong>Cancelar</strong> para completar el test
+    `;
+
     const dialogRef = this.dialog.open(PopupConfirmComponent, {
       disableClose: true,
       width: '80%',
       maxHeight: '80vh',
       data: {
         titulo: 'Corrección del test',
-        mensaje: 'Vamos a corregir tu test. ¿Deseas continuar?',
+        mensaje: MESSAGE,
         modo: 0,
         tipo: 1
       }

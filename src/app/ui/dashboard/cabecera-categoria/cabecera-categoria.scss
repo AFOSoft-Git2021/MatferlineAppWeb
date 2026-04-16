@@ -7,7 +7,7 @@
     border: 3px solid #bcd7ff;
     border-radius: 0.8rem;
     background-color: white;
-    padding: .6rem;
+    padding: 0.6rem;
     transition: opacity 0.2s ease;
 
     &:active {
@@ -31,7 +31,6 @@
                 white-space: nowrap;
             }
 
-
             &:last-child {
                 display: flex;
                 justify-content: flex-start;
@@ -39,7 +38,7 @@
                 gap: 1rem;
                 color: #394b94;
                 font-size: 0.86rem;
-                padding-top: .3rem;
+                padding-top: 0.3rem;
 
                 span {
                     img {
@@ -49,12 +48,28 @@
                 }
 
                 .no_traduccion {
-                    color: #D80000;
+                    color: #d80000;
                 }
             }
         }
     }
     > mat-icon {
         color: #70aaff;
+    }
+}
+
+/******************************/
+/* MAQUETA TABLETS HORIZONTAL */
+/******************************/
+
+@media only screen and (min-width: 600px) and (orientation: portrait) {
+    #section_cabecera_categoria {
+        > div {
+            p {
+                &:first-child {
+                    max-width: 66vw;
+                }
+            }
+        }
     }
 }

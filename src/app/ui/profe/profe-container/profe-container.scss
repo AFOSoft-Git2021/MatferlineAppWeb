@@ -60,12 +60,12 @@
     }
 }
 
-
 /******************************/
 /* MAQUETA TABLETS HORIZONTAL */
 /******************************/
 
-@media (min-width: 600px) and (max-width: 900px) and (orientation: portrait) {
+// @media (min-width: 600px) and (max-width: 900px) and (orientation: portrait) {
+@media only screen and (min-width: 600px) and (orientation: portrait) {
     #section_profe_container {
         width: 100%;
         height: calc(98dvh - 60px);

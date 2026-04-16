@@ -10,4 +10,8 @@
         </button>
     }
 
+    @if (deviceSystem() === DeviceSystem.iOS) {
+        <img (click)="openYoutube()" class="boton_youtube" src="./svg/icon_youtube.svg" alt="youtube">
+    }
+
 </section>

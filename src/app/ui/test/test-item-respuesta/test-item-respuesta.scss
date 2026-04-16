@@ -42,6 +42,10 @@
             background-color: #ff0000 !important;
             color: white !important;
         }
+
+        &.no_contestada {
+            color: red !important;
+        }
     }
 
     p {

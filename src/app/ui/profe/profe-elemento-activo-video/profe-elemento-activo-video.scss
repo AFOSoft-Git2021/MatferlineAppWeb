@@ -26,6 +26,17 @@
             height: 100%;
         }
     }
+
+    .boton_youtube {
+        vertical-align: middle;
+        margin: -4px;
+        height: 48px;
+        transition: opacity 0.3s ease-in-out;
+
+        &:active {
+            opacity: 0.5;
+        }
+    }
 }
 
 .is-fullscreen {
@@ -67,7 +78,8 @@ button {
 /* MAQUETA TABLETS HORIZONTAL */
 /******************************/
 
-@media (min-width: 600px) and (max-width: 900px) and (orientation: portrait) {
+// @media (min-width: 600px) and (max-width: 900px) and (orientation: portrait) {
+@media only screen and (min-width: 600px) and (orientation: portrait) {
     #section_profe_elemento_activo_video {
         height: auto;
         padding: 4px;

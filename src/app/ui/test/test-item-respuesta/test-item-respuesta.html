@@ -47,7 +47,7 @@
             </span>
         }
         @else {
-            <span>
+            <span [ngClass]="seleccion() === 0 ? 'no_contestada' : ''">
                 {{answerChar[index()]}}
             </span>
         }

@@ -35,6 +35,8 @@ export class ProfeElementoActivoVideo implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+    console.log(this.video());
+
     const container = this.playerContainer();
     const videoId = this.video();
 
@@ -76,8 +78,8 @@ export class ProfeElementoActivoVideo implements AfterViewInit, OnDestroy {
     this.player?.playVideo();
   }
 
-  /* pauseVideo() {
-    this.player?.pauseVideo();
-  } */
+  openYoutube() {
+    window.open(`https://www.youtube.com/watch?v=${this.video()}`, '_blank');
+  }
 
 }

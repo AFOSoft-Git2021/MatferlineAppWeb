@@ -29,9 +29,11 @@
                                 <img (click)="navigateEstadisticas(categoria.cdi, categoria.nombre, categoria.icono)" src="svg/icon_lista_reproducciones.svg" alt="reproducciones">
                             </li>
                             <li>
-                                <div>
+                                <div [ngStyle]="{visibility: categoria.autocorreccion === 1 ? 'visible' : 'hidden'}">
                                     <span>Tipo test</span>
-                                    <app-boton-examen-estudio [buttonEnabled]="true" (onClickEmitter)="setAutocorreccionCategoria($index, $event)" />
+                                    <app-boton-examen-estudio
+                                        [buttonEnabled]="categoria.autocorreccion === 1"
+                                        (onClickEmitter)="setAutocorreccionCategoria($index, $event)" />
                                 </div>
                             </li>
                         </ul>

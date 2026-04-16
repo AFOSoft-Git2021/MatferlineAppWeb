@@ -1,12 +1,11 @@
 #section_profeweb_repro_lista_item {
-
     background-color: white;
     border-radius: 8px;
     padding: 6px;
 
-    >p {
+    > p {
         margin: 0;
-        font-size: .9rem;
+        font-size: 0.9rem;
 
         &:first-child {
             color: black;
@@ -28,5 +27,19 @@
             }
         }
     }
+}
 
+/******************************/
+/* MAQUETA TABLETS HORIZONTAL */
+/******************************/
+
+@media only screen and (min-width: 600px) and (orientation: portrait) {
+    #section_profeweb_repro_lista_item {
+        > p {
+
+            &:first-child {
+                max-width: 66vw;
+            }
+        }
+    }
 }
