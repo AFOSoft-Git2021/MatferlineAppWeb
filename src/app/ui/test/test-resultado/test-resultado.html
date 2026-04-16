@@ -22,7 +22,7 @@
             <p>Preguntas: {{numeroPreguntas()}}</p>
             <p>
                 @if (resultado()?.datos_correcion?.id === 'CAP') {
-                    <span>Puntos: {{resultado()?.datos_correcion?.puntuacion}}</span>
+                    <span>Puntos: {{resultado()?.datos_correcion?.puntuacion?.toString()?.replace('.', ',')}}</span>
                     @if (tipoTestSeleccionado() !== TipoTest.TestAleatorioPreguntasFalladas) {
                         {{' - Mínimo: ' + resultado()?.datos_correcion?.umbral}}
                     }

@@ -13,7 +13,7 @@
                 </span>
             </div>
             <div class="resultado_puntuacion">
-                <span>{{resultado()?.id === 'CAP' ? 'Puntos: ' : 'Fallos: '}} {{resultado()?.puntuacion}}</span>
+                <span>{{resultado()?.id === 'CAP' ? 'Puntos: ' : 'Fallos: '}} {{resultado()?.puntuacion?.toString()?.replace('.', ',')}}</span>
                 @if(tipoTest() !== TipoTest.TestAleatorioPreguntasFalladas) {<strong> de {{resultado()?.umbral}}</strong>}
             </div>
         </div>
