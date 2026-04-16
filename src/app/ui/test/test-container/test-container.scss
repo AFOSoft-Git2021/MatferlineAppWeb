@@ -109,5 +109,20 @@
     #test_container_section {
         width: 100%;
         height: calc(98dvh - 60px);
+
+        main {
+            div.test_container_pregunta {
+                div.test_container_pregunta_contenido {
+                    > div {
+                        &:first-child {
+                            img {
+                                height: 320px;
+                                max-width: 100%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
