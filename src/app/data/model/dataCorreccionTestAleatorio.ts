@@ -12,4 +12,5 @@ export interface DataCorreccionTestAleatorio {
     autocorreccion: number;
     preguntas: Array<TestPregunta>;
     pwa: string;
+    grabar_preguntas_falladas: number; //0->regenerado; 1->no
 }

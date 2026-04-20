@@ -362,7 +362,8 @@ export class TestContainer implements OnInit, OnDestroy {
       ayuda: this.test.ayuda,
       autocorreccion: this.test.autocorreccion,
       preguntas: this.test.preguntas,
-      pwa: this.stateService.deviceSystem() === DeviceSystem.iOS ? 'pwi' : 'pwa'
+      pwa: this.stateService.deviceSystem() === DeviceSystem.iOS ? 'pwi' : 'pwa',
+      grabar_preguntas_falladas: this.isTestRegenerado() ? 0 : 1
     }
 
     this.stateService.loadingSpinner.set(true);

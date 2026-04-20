@@ -31,7 +31,7 @@ export class App {
   ngOnInit() {
     if (this.checkMobile()) {
 
-      if (this.isInstalled()) {  // TODO: quitar la negacion para version final
+      if (!this.isInstalled()) {  // TODO: quitar la negacion para version final
         this.setOrientation();
         this.router.navigate([this.checkInitialNavigationState() ? 'enter' : 'loader']);
       } else {
