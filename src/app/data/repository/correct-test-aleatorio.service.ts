@@ -18,8 +18,8 @@ export class CorrectTestAleatorioService {
     const formData = new FormData();
     formData.append('json', JSON.stringify(data));
 
-    // return this.http.post(this.url + 'correct-test-aleatorio', formData, { observe: 'response' });
-    return this.http.post(this.url + 'correct-test-aleatorio-2', formData, { observe: 'response' });
+    return this.http.post(this.url + 'correct-test-aleatorio', formData, { observe: 'response' });
+    // return this.http.post(this.url + 'correct-test-aleatorio-2', formData, { observe: 'response' });
   }
 
 }
