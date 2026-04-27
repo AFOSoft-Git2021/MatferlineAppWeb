@@ -93,6 +93,7 @@ export class TestContainer implements OnInit, OnDestroy {
   test: any;
   dataTest: any;
   BASE_STORAGE_PREGUNTAS = environment.BASE_STORAGE_PREGUNTAS
+  BASE_STORAGE_DRIVE = environment.BASE_STORAGE_DRIVE;
   listCorregidasAutocorreccion: boolean[] = [];
 
   chrono: any;
