@@ -6,8 +6,8 @@
   "orientation": "portrait",
   "theme_color": "#0E6CF3",
   "background_color": "#0E6CF3",
-  "scope": "/web_app/",
-  "start_url": "/web_app/index.html', *",
+  "scope": "./",
+  "start_url": "./",
   "icons": [
     {
       "src": "icons/icon-72x72.png",
